@@ -1,18 +1,23 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/05/31 11:55:33 by oboucher         ###   ########.fr        #
+#    Updated: 2023/05/31 15:04:23 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# ➜  ~ git clone https://github.com/codam-coding-college/MLX42.git
+# ➜  ~ cd MLX42
+# ➜  ~ cmake -B build # build here refers to the outputfolder.
+# ➜  ~ cmake --build build -j4 # or do make -C build -j4
+
 #--- LIBRARY NAME ---#
 NAME = so_long
-LDIR = inc/libft/
+LDIR = lib/libft/
 LIBFT = libft.a
 
 #--- COMMAND VARIABLES ---#
@@ -23,8 +28,10 @@ AR = ar rcs
 MK = mkdir -p
 
 #--- MLX42 CODAM ---#
-MLX = MLX42/build/libmlx42.a
-MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
+MLXDIR = lib/MLX42/build/
+MLXA = libmlx42.a
+MLX = $(MLXDIR)$(MLXA)
+MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$USER/.brew/opt/glfw/lib/"
 
 #--- COLORS ---#
 GREEN	=	\033[1;32m
@@ -47,7 +54,7 @@ OBJ = $(addprefix ${OBJDIR}/, ${SRC:.c=.o})
 ${OBJDIR}/%.o:	%.c
 	@${CC} ${CFLAGS} -I${INCDIR} -I. -c $< -o $@
 	
-all:	init update $(NAME)
+all:	init update mlx42 libft $(NAME)
 	
 ${NAME}:	$(OBJDIR) $(OBJ)
 	@${CC} ${CFLAGS} -I${INCDIR} -o ${NAME} ${OBJ}
@@ -56,6 +63,10 @@ ${NAME}:	$(OBJDIR) $(OBJ)
 $(OBJDIR):
 	@$(MK) ${OBJDIR}
 
+mlx42:
+	@cmake lib/MLX42/ -B lib/MLX42/build
+	@cmake --build lib/MLX42/build -j4
+	
 libft:
 	@$(MAKE) -C $(LDIR)
 	
@@ -69,10 +80,13 @@ run:	all
 	@./${NAMES}
 	
 clean:
+	@$(MAKE) -C $(LDIR) clean
 	@$(RM) $(OBJ)
 	@$(RM)r $(OBJDIR)
+	@$(RM)r $(MLXDIR)
 	
 fclean:	clean	
+	@$(MAKE) -C $(LDIR) fclean
 	@$(RM) $(NAME)
 	@echo "$(NAME)${GREEN} object files and executable successfully removed 🗑.${RESET}"
 
