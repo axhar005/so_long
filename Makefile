@@ -6,7 +6,7 @@
 #    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/05/31 11:53:16 by oboucher         ###   ########.fr        #
+#    Updated: 2023/05/31 11:55:33 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ OBJ = $(addprefix ${OBJDIR}/, ${SRC:.c=.o})
 ${OBJDIR}/%.o:	%.c
 	@${CC} ${CFLAGS} -I${INCDIR} -I. -c $< -o $@
 	
-all:	$(NAME)
+all:	init update $(NAME)
 	
 ${NAME}:	$(OBJDIR) $(OBJ)
 	@${CC} ${CFLAGS} -I${INCDIR} -o ${NAME} ${OBJ}
@@ -59,11 +59,11 @@ $(OBJDIR):
 libft:
 	@$(MAKE) -C $(LDIR)
 	
-# update:
-# 	@git submodule update --remote --recursive
+update:
+	@git submodule update --remote --recursive
 
-# init:
-# 	@git submodule update --init --recursive
+init:
+	@git submodule update --init --recursive
 
 run:	all
 	@./${NAMES}
