@@ -6,7 +6,7 @@
 #    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/05/31 15:04:23 by oboucher         ###   ########.fr        #
+#    Updated: 2023/06/05 14:33:50 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ MK = mkdir -p
 MLXDIR = lib/MLX42/build/
 MLXA = libmlx42.a
 MLX = $(MLXDIR)$(MLXA)
-MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$USER/.brew/opt/glfw/lib/"
+MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 #--- COLORS ---#
 GREEN	=	\033[1;32m
@@ -44,24 +44,24 @@ INCDIR = inc
 #--- SOURCE ---#
 SRCDIR	=	src
 SRC		= 	main.c
-VPATH	=	${SRCDIR}
+VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#
 OBJDIR  =   obj
-OBJ = $(addprefix ${OBJDIR}/, ${SRC:.c=.o})
+OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 #--- RULES ---#
-${OBJDIR}/%.o:	%.c
-	@${CC} ${CFLAGS} -I${INCDIR} -I. -c $< -o $@
+$(OBJDIR)/%.o:	%.c
+	@$(CC) $(CFLAGS) -I$(INCDIR) -I. -c $< -o $@
 	
 all:	init update mlx42 libft $(NAME)
 	
 ${NAME}:	$(OBJDIR) $(OBJ)
-	@${CC} ${CFLAGS} -I${INCDIR} -o ${NAME} ${OBJ}
-	@echo "$(NAME)${GREEN} sucessefully compiled 📁.${RESET}"
+	@$(CC) $(CFLAGS) $(MLXFLAGS) -I$(INCDIR) -o $(NAME) $(MLX) $(OBJ) $(LDIR)$(LIBFT)
+	@echo "$(NAME)$(GREEN) sucessefully compiled 📁.$(RESET)"
 
 $(OBJDIR):
-	@$(MK) ${OBJDIR}
+	@$(MK) $(OBJDIR)
 
 mlx42:
 	@cmake lib/MLX42/ -B lib/MLX42/build
@@ -77,7 +77,7 @@ init:
 	@git submodule update --init --recursive
 
 run:	all
-	@./${NAMES}
+	@./$(NAMES)
 	
 clean:
 	@$(MAKE) -C $(LDIR) clean
@@ -88,7 +88,7 @@ clean:
 fclean:	clean	
 	@$(MAKE) -C $(LDIR) fclean
 	@$(RM) $(NAME)
-	@echo "$(NAME)${GREEN} object files and executable successfully removed 🗑.${RESET}"
+	@echo "$(NAME)$(GREEN) object files and executable successfully removed 🗑.$(RESET)"
 
 re:	fclean all
 
