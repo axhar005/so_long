@@ -9,67 +9,83 @@
 #define WIDTH 512
 #define HEIGHT 512
 
-static t_img img;
+static t_game game;
 
 
-void ft_draw_grid(void *param)
+void ft_draw_grid(int posX, int posY)
 {
-	mlx_t* mlx;
-	mlx = param;
-	static double time = 0;
-	time += mlx->delta_time;
-	printf("%f\n", time);
-	if (time >= 1)
-		time = 0;
-	if (time == 0)
+	(void)posX;
+	(void)posY;
+	int j;
+	int i;
+
+	j = 0;
+	while (j < 4)
 	{
-		//mlx_delete_image(mlx, img.floor);
-		mlx_image_to_window(mlx, img.floor, 0*32, 0*32);
-		mlx_image_to_window(mlx, img.floor, 2*32, 2*32);
-		mlx_image_to_window(mlx, img.player, 4*32, 2*32);
-		time  = 0;
+		i = 0;
+		while (i < 4)
+		{
+			mlx_image_to_window(game.mlx, game.img.floor, i*32, j*32);
+			i++;
+		}
+		j++;
 	}
-	//ft_printf("%d\n", img.floor->count);
+	
+	// mlx_image_to_window(mlx, game.img.floor, 0*32, 0*32);
+	// mlx_image_to_window(mlx, game.img.floor, 2*32, 2*32);
+	// mlx_image_to_window(mlx, game.img.player, 4*32, 2*32);
 }
 
-void ft_hook(void* param)
+void step(void* param)
 {
 	mlx_t* mlx = param;
-	//printf("%f\n", mlx->delta_time);
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_W))
-		img.player->instances[0].y -= 1;
+		game.playerY -= 1;
 	if (mlx_is_key_down(mlx, MLX_KEY_S))
-		img.player->instances[0].y += 1;
+		game.playerY += 1;
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
-		img.player->instances[0].x -= 1;
+		game.playerX -= 1;
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
-		img.player->instances[0].x += 1;
+		game.playerX += 1;
+
+	if (game.img.player->count > 0)
+	{
+		game.img.player->instances[0].x = game.playerX;
+		game.img.player->instances[0].y = game.playerY;
+	}
 }
 
 
 
 int32_t main(void)
 {
-	mlx_t* mlx;
-	t_texture texture;
-	//int map[5][5];
+	game.playerX = 32;
+	game.playerY = 32;
 
+	// game.grid[1][1] = 1;
+	// game.grid[2][2] = 1;
+	// game.grid[3][3] = 1;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
-	texture.floor = mlx_load_png("./asset/greenRectangle.png");
-	texture.player = mlx_load_png("./asset/redRectangle.png");
+	game.tex.floor = mlx_load_png("./asset/greenRectangle.png");
+	game.tex.player = mlx_load_png("./asset/redRectangle.png");
 
-	img.floor = mlx_texture_to_image(mlx, texture.floor);
-	img.player = mlx_texture_to_image(mlx, texture.player);
+	game.img.floor = mlx_texture_to_image(game.mlx, game.tex.floor);
+	game.img.player = mlx_texture_to_image(game.mlx, game.tex.player);
 
-	mlx_loop_hook(mlx, ft_draw_grid, mlx);
-	mlx_loop_hook(mlx, ft_hook, mlx);
+	//mlx_image_to_window(game.mlx, game.img.floor, 0*32, 0*32);
+	mlx_image_to_window(game.mlx, game.img.player, 0*32, 0*32);
+	// game.img.player->instances[0].z = 20;
+	// mlx_set_instance_depth(game.img.player->instances, 100);
+	ft_draw_grid(0, 0);
 
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop_hook(game.mlx, step, game.mlx);
+
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
 	return (EXIT_SUCCESS);
 }

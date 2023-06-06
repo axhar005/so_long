@@ -24,6 +24,16 @@ typedef struct s_img
 
 }					t_img;
 
+typedef struct s_game
+{
+	t_img			img;
+	t_texture		tex;
+	mlx_t			*mlx;
+	int				grid[5][5];
+	int32_t			playerX;
+	int32_t			playerY;
+}					t_game;
+
 //prototype
 
 #endif
