@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "../inc/so_long.h"
 
 
@@ -12,29 +7,31 @@
 static t_game game;
 
 
-void ft_draw_grid(int posX, int posY)
-{
-	(void)posX;
-	(void)posY;
-	int j;
-	int i;
+// void ft_draw_grid(int32_t posX, int32_t posY)
+// {
+// 	int32_t j;
+// 	int32_t i;
 
-	j = 0;
-	while (j < 4)
-	{
-		i = 0;
-		while (i < 4)
-		{
-			mlx_image_to_window(game.mlx, game.img.floor, i*32, j*32);
-			i++;
-		}
-		j++;
-	}
+// 	j = 0;
+// 	while (j <= 9-posY)
+// 	{
+// 		i = 0;
+// 		while (i <= 9-posX)
+// 		{
+// 			if (game.grid[posX*i][posY*j] == 0)
+// 				mlx_image_to_window(game.mlx, game.img.floor, i*32, j*32);
+// 			// else if (game.grid[posX*i][posY*j] == 1)
+// 			// 	mlx_image_to_window(game.mlx, game.img.player, i*32, j*32);
+// 			i++;
+// 		}
+// 		j++;
+// 	}
+// 	ft_printf("%d\n", game.img.floor->count);
 	
-	// mlx_image_to_window(mlx, game.img.floor, 0*32, 0*32);
-	// mlx_image_to_window(mlx, game.img.floor, 2*32, 2*32);
-	// mlx_image_to_window(mlx, game.img.player, 4*32, 2*32);
-}
+// 	// mlx_image_to_window(mlx, game.img.floor, 0*32, 0*32);
+// 	// mlx_image_to_window(mlx, game.img.floor, 2*32, 2*32);
+// 	// mlx_image_to_window(mlx, game.img.player, 4*32, 2*32);
+// }
 
 void step(void* param)
 {
@@ -64,11 +61,12 @@ int32_t main(void)
 {
 	game.playerX = 32;
 	game.playerY = 32;
+	game.grid = allocate_2d_int_array(10, 10);
 
 	// game.grid[1][1] = 1;
 	// game.grid[2][2] = 1;
-	// game.grid[3][3] = 1;
-
+	//game.grid[8][8] = 1;
+	print_2d_int_array(game.grid, 5, 5);
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
 	game.tex.floor = mlx_load_png("./asset/greenRectangle.png");
@@ -77,11 +75,8 @@ int32_t main(void)
 	game.img.floor = mlx_texture_to_image(game.mlx, game.tex.floor);
 	game.img.player = mlx_texture_to_image(game.mlx, game.tex.player);
 
-	//mlx_image_to_window(game.mlx, game.img.floor, 0*32, 0*32);
-	mlx_image_to_window(game.mlx, game.img.player, 0*32, 0*32);
-	// game.img.player->instances[0].z = 20;
-	// mlx_set_instance_depth(game.img.player->instances, 100);
-	ft_draw_grid(0, 0);
+	// ft_draw_grid(5, 5);
+	//mlx_image_to_window(game.mlx, game.img.player, 0*32, 0*32);
 
 	mlx_loop_hook(game.mlx, step, game.mlx);
 

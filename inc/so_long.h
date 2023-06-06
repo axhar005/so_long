@@ -3,7 +3,12 @@
 
 //include
 
+# include "../lib/MLX42/include/MLX42/MLX42.h"
 # include "../lib/libft/inc/libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
 
 //struct
 
@@ -29,11 +34,15 @@ typedef struct s_game
 	t_img			img;
 	t_texture		tex;
 	mlx_t			*mlx;
-	int				grid[5][5];
+	int32_t			**grid;
 	int32_t			playerX;
 	int32_t			playerY;
 }					t_game;
 
 //prototype
+
+void				print_2d_int_array(int32_t **array, int32_t rows,
+						int32_t cols);
+int32_t				**allocate_2d_int_array(int32_t rows, int32_t cols);
 
 #endif
