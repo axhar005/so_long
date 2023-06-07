@@ -22,6 +22,7 @@ typedef struct s_texture
 	mlx_texture_t	*floor;
 	mlx_texture_t	*wall;
 	mlx_texture_t	*player;
+	mlx_texture_t	*camera;
 }					t_texture;
 
 //storage of all image (instance)
@@ -30,12 +31,14 @@ typedef struct s_img
 	mlx_image_t		*floor;
 	mlx_image_t		*wall;
 	mlx_image_t		*player;
+	mlx_image_t		*camera;
 
 }					t_img;
 
 typedef struct s_game
 {
 	t_img			img;
+	t_img			old_img;
 	t_texture		tex;
 	mlx_t			*mlx;
 	double			delta_time;
