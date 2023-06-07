@@ -24,6 +24,9 @@ void	draw_grid(int32_t posX, int32_t posY)
 	int32_t	i;
 
 	j = 0;
+	del_img(&game.old_img);
+	game.old_img = game.img;
+	init_img(&game.img);
 	while (j < 15)
 	{
 		i = 0;
@@ -43,18 +46,15 @@ void	draw_grid(int32_t posX, int32_t posY)
 
 void draw(void)
 {
-	static double frame = 0;
+	// static double frame = 0;
 
-	if (frame >= 5)
-	{
-		del_img(&game.old_img);
-		game.old_img = game.img;
-		init_img(&game.img);
+	// if (frame >= 5)
+	// {
 	 	draw_grid(game.cameraX, game.cameraY);
 
-		frame = 0;
-	}
-	frame += game.delta_time;
+	// 	frame = 0;
+	// }
+	// frame += game.delta_time;
 }
 
 void	step(void *param)
