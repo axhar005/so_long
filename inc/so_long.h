@@ -5,12 +5,16 @@
 
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 # include "../lib/libft/inc/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 //struct
+
+# define SPRITE_SIZE 32
+# define WIDTH 672
+# define HEIGHT 480
 
 //storage of all texture (png)
 typedef struct s_texture
@@ -34,15 +38,19 @@ typedef struct s_game
 	t_img			img;
 	t_texture		tex;
 	mlx_t			*mlx;
-	int32_t			**grid;
+	double			delta_time;
+	char			**grid;
 	int32_t			playerX;
 	int32_t			playerY;
+	int32_t			cameraX;
+	int32_t			cameraY;
 }					t_game;
 
 //prototype
 
-void				print_2d_int_array(int32_t **array, int32_t rows,
-						int32_t cols);
-int32_t				**allocate_2d_int_array(int32_t rows, int32_t cols);
+char				**allocate_2d_char_array(int32_t rows, int32_t cols);
+void				print_2d_char_array(char **array);
+void				fill_2d_char_array(char **array, int32_t rows, int32_t cols,
+						char c);
 
 #endif

@@ -1,42 +1,60 @@
 #include "../inc/so_long.h"
 
+static t_game	game;
 
-#define WIDTH 512
-#define HEIGHT 512
-
-static t_game game;
-
-
-// void ft_draw_grid(int32_t posX, int32_t posY)
-// {
-// 	int32_t j;
-// 	int32_t i;
-
-// 	j = 0;
-// 	while (j <= 9-posY)
-// 	{
-// 		i = 0;
-// 		while (i <= 9-posX)
-// 		{
-// 			if (game.grid[posX*i][posY*j] == 0)
-// 				mlx_image_to_window(game.mlx, game.img.floor, i*32, j*32);
-// 			// else if (game.grid[posX*i][posY*j] == 1)
-// 			// 	mlx_image_to_window(game.mlx, game.img.player, i*32, j*32);
-// 			i++;
-// 		}
-// 		j++;
-// 	}
-// 	ft_printf("%d\n", game.img.floor->count);
-	
-// 	// mlx_image_to_window(mlx, game.img.floor, 0*32, 0*32);
-// 	// mlx_image_to_window(mlx, game.img.floor, 2*32, 2*32);
-// 	// mlx_image_to_window(mlx, game.img.player, 4*32, 2*32);
-// }
-
-void step(void* param)
+void init_img(void)
 {
-	mlx_t* mlx = param;
+	game.img.floor = mlx_texture_to_image(game.mlx, game.tex.floor);
+	game.img.wall = mlx_texture_to_image(game.mlx, game.tex.wall);
+	game.img.player = mlx_texture_to_image(game.mlx, game.tex.player);
+}
 
+void del_img(void)
+{
+	mlx_delete_image(game.mlx, game.img.floor);
+	mlx_delete_image(game.mlx, game.img.wall);
+	mlx_delete_image(game.mlx, game.img.player);
+}
+
+void	ft_draw_grid(int32_t posX, int32_t posY)
+{
+	int32_t	j;
+	int32_t	i;
+	static double frame = 0;
+
+	j = 0;
+	if (frame >= 10)
+	{
+		del_img();
+		init_img();
+		while (j < 15)
+		{
+			i = 0;
+			while (i < 21)
+			{
+				if (game.grid[i + posX][j + posY] == '0')
+					mlx_image_to_window(game.mlx, game.img.floor, i * 32, j * 32);
+				else if (game.grid[i + posX][j + posY] == '1')
+					mlx_image_to_window(game.mlx, game.img.wall, i * 32, j * 32);
+				i++;
+			}
+			j++;
+		}
+		mlx_image_to_window(game.mlx, game.img.player, 0, 0);
+		frame = 0;
+	}
+	frame += game.delta_time;
+	printf("%f \n", frame);
+	
+}
+
+void	step(void *param)
+{
+	mlx_t	*mlx;
+
+	mlx = param;
+
+	game.delta_time = game.mlx->delta_time * 30;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_W))
@@ -53,30 +71,33 @@ void step(void* param)
 		game.img.player->instances[0].x = game.playerX;
 		game.img.player->instances[0].y = game.playerY;
 	}
+	ft_draw_grid(game.cameraX, game.cameraY);
 }
 
-
-
-int32_t main(void)
+int32_t	main(void)
 {
-	game.playerX = 32;
-	game.playerY = 32;
-	game.grid = allocate_2d_int_array(10, 10);
+	game.playerX = SPRITE_SIZE * 8;
+	game.playerY = SPRITE_SIZE * 8;
+	game.cameraX = 0;
+	game.cameraY = 0;
 
-	// game.grid[1][1] = 1;
-	// game.grid[2][2] = 1;
-	//game.grid[8][8] = 1;
-	print_2d_int_array(game.grid, 5, 5);
+	//GRID
+	game.grid = allocate_2d_char_array(100, 100);
+	fill_2d_char_array(game.grid, 100, 100, '0');
+	game.grid[5][5] = '1';
+	game.grid[10][7] = '1';
+	print_2d_char_array(game.grid);
+
+
+	//MLX
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
 	game.tex.floor = mlx_load_png("./asset/greenRectangle.png");
 	game.tex.player = mlx_load_png("./asset/redRectangle.png");
+	game.tex.wall = mlx_load_png("./asset/wall.png");
+	init_img();
 
-	game.img.floor = mlx_texture_to_image(game.mlx, game.tex.floor);
-	game.img.player = mlx_texture_to_image(game.mlx, game.tex.player);
-
-	// ft_draw_grid(5, 5);
-	//mlx_image_to_window(game.mlx, game.img.player, 0*32, 0*32);
+	// ft_draw_grid(0, 0);
 
 	mlx_loop_hook(game.mlx, step, game.mlx);
 
