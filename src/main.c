@@ -60,9 +60,7 @@ void draw(void)
 void	step(void *param)
 {
 	mlx_t	*mlx;
-	int32_t u;
 
-	u = 0;
 	mlx = param;
 	game.delta_time = game.mlx->delta_time * 30;
 
