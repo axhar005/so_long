@@ -2,6 +2,15 @@
 
 static t_game	game;
 
+//
+// bool tile_collision(int x1, int y1, int x2, int y2, char c)
+// {
+// 	if (game.grid[x1/SPRITE_SIZE][y1/SPRITE_SIZE] != c && game.grid[x2/SPRITE_SIZE][y2/SPRITE_SIZE] != c)
+// 	{
+
+// 	}
+// }
+
 void init_img(t_img *img)
 {
 		img->floor = mlx_texture_to_image(game.mlx, game.tex.floor);
@@ -43,7 +52,8 @@ void	draw_grid(int32_t posX, int32_t posY)
 			i++;
 		}
 		j++;
-	}	
+	}
+	// mlx_image_to_window(game.mlx, game.img.camera, game.player.x, game.player.y);
 	mlx_image_to_window(game.mlx, game.img.player, 10*SPRITE_SIZE, 7*SPRITE_SIZE);
 	// mlx_image_to_window(game.mlx, game.img.camera, game.cameraGridX*SPRITE_SIZE, game.cameraGridY*SPRITE_SIZE);
 }
@@ -55,7 +65,6 @@ void draw(void)
 	// if (frame >= 5)
 	// {
 	 	draw_grid(game.cameraGrid.x, game.cameraGrid.y);
-
 	// 	frame = 0;
 	// }
 	// frame += game.delta_time;
@@ -66,7 +75,8 @@ void	step(void *param)
 	mlx_t	*mlx;
 	int hspd = 0;
 	int vspd = 0;
-	int spd = 9;
+	int spd = 10;
+	static double frame = 0;
 
 	mlx = param;
 	game.delta_time = game.mlx->delta_time * 30;
@@ -76,46 +86,53 @@ void	step(void *param)
 	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A)) * spd;
 	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W)) * spd;
 
-	if (hspd != 0)
+
+	if (frame >= 1)
 	{
-		if (game.player.x+hspd >= 0 && game.player.x+hspd <= R_WIDTH*SPRITE_SIZE)
+		if (hspd != 0)
 		{
-			if (game.grid[(game.player.x+hspd)/SPRITE_SIZE][(game.player.y)/SPRITE_SIZE] != '1')
-				game.player.x += hspd;
+			if (game.player.x+hspd >= 0 && game.player.x+hspd <= R_WIDTH*SPRITE_SIZE)
+			{
+				if (game.grid[(game.player.x+hspd)/SPRITE_SIZE][(game.player.y/SPRITE_SIZE)] != '1')
+					game.player.x += hspd;
+				else
+				{
+					if (game.offSet.x != 0)
+						game.player.x += hspd/spd;
+				}
+			}
 			else
 			{
 				if (game.offSet.x != 0)
 					game.player.x += hspd/spd;
 			}
 		}
-	}
-	else
-	{
-		if (game.offSet.x != 0)
-			game.player.x += hspd/spd;
-	}
 
-	if (vspd != 0)
-	{
-		if (game.player.y+vspd >= 0 && game.player.y+vspd <= R_HEIGHT*SPRITE_SIZE)
+		if (vspd != 0)
 		{
-			if (game.grid[(game.player.x)/SPRITE_SIZE][(game.player.y+vspd)/SPRITE_SIZE] != '1')
-				game.player.y += vspd;
+			if (game.player.y+vspd >= 0 && game.player.y+vspd <= R_HEIGHT*SPRITE_SIZE)
+			{
+				if (game.grid[game.player.x/SPRITE_SIZE][(game.player.y+vspd)/SPRITE_SIZE] != '1')
+					game.player.y += vspd;
+				else
+				{
+					if (game.offSet.y != 0)
+						game.player.y += vspd/spd;
+				}
+			}
 			else
 			{
 				if (game.offSet.y != 0)
 					game.player.y += vspd/spd;
 			}
 		}
-		else
-		{
-			if (game.offSet.y != 0)
-				game.player.y += vspd/spd;
-		}
+		frame = 0;
 	}
-
-	// ft_printf("player X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
-	// ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
+	frame += game.delta_time;
+	ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
+	ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
+	ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
+	ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
 
 	// update player grid pos
 	game.playerGrid.x = game.player.x / SPRITE_SIZE;
@@ -125,7 +142,7 @@ void	step(void *param)
 	game.offSet.x = game.player.x % SPRITE_SIZE;
 	game.offSet.y = game.player.y % SPRITE_SIZE;
 	
-
+	// update cameraGrid pos
 	game.cameraGrid.x = game.playerGrid.x - C_WIDTH/2;
 	game.cameraGrid.y = game.playerGrid.y - C_HEIGHT/2;
 	draw();
