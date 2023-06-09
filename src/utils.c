@@ -23,7 +23,7 @@ char	**allocate_2d_char_array(int32_t rows, int32_t cols)
 
 	arr = ft_calloc(cols + 1, sizeof(char *));
 	i = 0;
-	while (i < cols)
+	while (i <= cols)
 		arr[i++] = ft_calloc(rows + 1, sizeof(char));
 	return (arr);
 }
@@ -35,14 +35,14 @@ void	print_2d_char_array(char **array)
 	int32_t	i;
 	int32_t	j;
 
-	j = 0;
-	while (array[j])
+	i = 0;
+	while (array[i])
 	{
-		i = 0;
-		while (array[j][i])
-			ft_printf("%c ", array[j][i++]);
+		j = 0;
+		while (array[i][j])
+			ft_printf("%c ", array[j++][i]);
 		ft_printf("\n");
-		j++;
+		i++;
 	}
 }
 
@@ -57,10 +57,10 @@ void	fill_2d_char_array(char **array, int32_t rows, int32_t cols, char c)
 	int32_t	j;
 
 	j = 0;
-	while (j < cols)
+	while (j <= cols)
 	{
 		i = 0;
-		while (i < rows)
+		while (i <= rows)
 			array[j][i++] = c;
 		ft_printf("\n");
 		j++;
