@@ -40,7 +40,7 @@ void	print_2d_char_array(char **array)
 	{
 		j = 0;
 		while (array[i][j])
-			ft_printf("%c ", array[j++][i]);
+			ft_printf("%c ", array[i][j++]);
 		ft_printf("\n");
 		i++;
 	}
