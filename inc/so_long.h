@@ -13,11 +13,12 @@
 
 // struct
 
-#define SPRITE_SIZE 32
-#define WIDTH 672
-#define HEIGHT 480
-#define C_WIDTH 21
-#define C_HEIGHT 15
+#define SPRITE_SIZE 64
+#define HITBOX 28
+#define WIDTH 832
+#define HEIGHT 576
+#define C_WIDTH 13
+#define C_HEIGHT 9
 #define R_WIDTH 100
 #define R_HEIGHT 100
 

@@ -68,28 +68,19 @@ void	draw_grid(int32_t posX, int32_t posY)
 			{
 				if (game.grid[i + posX][j + posY] == '0')
 					mlx_image_to_window(game.mlx, game.img.floor, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
-				else if (game.grid[i + posX][j + posY] == '1')
-					mlx_image_to_window(game.mlx, game.img.wall, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+				// else if (game.grid[i + posX][j + posY] == '1')
+				// 	mlx_image_to_window(game.mlx, game.img.wall, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
 			}
 			i++;
 		}
 		j++;
 	}
-	// mlx_image_to_window(game.mlx, game.img.camera, game.player.x, game.player.y);
-	mlx_image_to_window(game.mlx, game.img.player, 10*SPRITE_SIZE, 7*SPRITE_SIZE);
-	// mlx_image_to_window(game.mlx, game.img.camera, game.cameraGridX*SPRITE_SIZE, game.cameraGridY*SPRITE_SIZE);
+	mlx_image_to_window(game.mlx, game.img.player, (C_WIDTH/2)*SPRITE_SIZE, (C_HEIGHT/2)*SPRITE_SIZE);
 }
 
 void draw(void)
 {
-	// static double frame = 0;
-
-	// if (frame >= 5)
-	// {
 	 	draw_grid(game.cameraGrid.x, game.cameraGrid.y);
-	// 	frame = 0;
-	// }
-	// frame += game.delta_time;
 }
 
 void	step(void *param)
@@ -158,10 +149,13 @@ void	step(void *param)
 		frame = 0;
 	}
 	frame += game.delta_time;
-	// ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
-	// ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
-	// ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
-	// ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
+	ft_printf("----------------------------\n");
+	ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
+	ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
+	ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
+	ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
+	ft_printf("----------------------------\n");
+
 
 	// update player grid pos
 	game.playerGrid.x = game.player.x / SPRITE_SIZE;
@@ -207,8 +201,8 @@ int32_t	main(void)
 	//MLX
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
-	game.tex.floor = mlx_load_png("./asset/greenRectangle.png");
-	game.tex.player = mlx_load_png("./asset/redRectangle.png");
+	game.tex.floor = mlx_load_png("./asset/grass/grass0.png");
+	game.tex.player = mlx_load_png("./asset/player/player.png");
 	game.tex.wall = mlx_load_png("./asset/wall.png");
 	game.tex.camera = mlx_load_png("./asset/origin.png");
 	init_img(&game.img);
