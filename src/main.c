@@ -36,18 +36,17 @@ bool tile_collision(int x, int y, int w, int h, char c)
 
 void init_img(t_img *img)
 {
-		img->floor = mlx_texture_to_image(game.mlx, game.tex.floor);
+		img->floor = mlx_texture_to_image(game.mlx, game.tex.floor[4]);
 		img->wall = mlx_texture_to_image(game.mlx, game.tex.wall);
-		img->player = mlx_texture_to_image(game.mlx, game.tex.player);
-		img->camera = mlx_texture_to_image(game.mlx, game.tex.camera);
+		img->player = mlx_texture_to_image(game.mlx, game.tex.player[0]);
 }
 
 void del_img(t_img *img)
 {
 		mlx_delete_image(game.mlx, img->floor);
+
 		mlx_delete_image(game.mlx, img->wall);
 		mlx_delete_image(game.mlx, img->player);
-		mlx_delete_image(game.mlx, img->camera);
 }
 
 void	draw_grid(int32_t posX, int32_t posY)
@@ -58,6 +57,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 	del_img(&game.old_img);
 	game.old_img = game.img;
 	init_img(&game.img);
+	mlx_image_to_window(game.mlx, game.img.floor, -1000, 0);
 	j = -1;
 	while (j < C_HEIGHT + 1)
 	{
@@ -68,8 +68,8 @@ void	draw_grid(int32_t posX, int32_t posY)
 			{
 				if (game.grid[i + posX][j + posY] == '0')
 					mlx_image_to_window(game.mlx, game.img.floor, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
-				// else if (game.grid[i + posX][j + posY] == '1')
-				// 	mlx_image_to_window(game.mlx, game.img.wall, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+				else if (game.grid[i + posX][j + posY] == '1')
+					mlx_image_to_window(game.mlx, game.img.wall, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
 			}
 			i++;
 		}
@@ -201,10 +201,26 @@ int32_t	main(void)
 	//MLX
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
-	game.tex.floor = mlx_load_png("./asset/grass/grass0.png");
-	game.tex.player = mlx_load_png("./asset/player/player.png");
-	game.tex.wall = mlx_load_png("./asset/wall.png");
-	game.tex.camera = mlx_load_png("./asset/origin.png");
+	game.tex.floor[0] = mlx_load_png("./asset/grass/grass_0.png");
+	game.tex.floor[1] = mlx_load_png("./asset/grass/grass_1.png");
+	game.tex.floor[2] = mlx_load_png("./asset/grass/grass_2.png");
+	game.tex.floor[3] = mlx_load_png("./asset/grass/grass_3.png");
+	game.tex.floor[4] = mlx_load_png("./asset/grass/grass_4.png");
+	game.tex.floor[5] = mlx_load_png("./asset/grass/grass_5.png");
+	game.tex.floor[6] = mlx_load_png("./asset/grass/grass_6.png");
+	game.tex.floor[7] = mlx_load_png("./asset/grass/grass_7.png");
+	game.tex.floor[8] = mlx_load_png("./asset/grass/grass_8.png");
+	game.tex.floor[9] = mlx_load_png("./asset/grass/grass_9.png");
+	game.tex.floor[10] = mlx_load_png("./asset/grass/grass_10.png");
+	game.tex.floor[11] = mlx_load_png("./asset/grass/grass_11.png");
+	game.tex.floor[12] = mlx_load_png("./asset/grass/grass_12.png");
+	game.tex.floor[13] = mlx_load_png("./asset/grass/grass_13.png");
+	game.tex.floor[14] = mlx_load_png("./asset/grass/grass_14.png");
+	game.tex.floor[15] = mlx_load_png("./asset/grass/grass_15.png");
+
+	game.tex.player[0] = mlx_load_png("./asset/player/player_down.png");
+
+	game.tex.wall = mlx_load_png("./asset/wall/wall_11.png");
 	init_img(&game.img);
 
 	mlx_loop_hook(game.mlx, step, game.mlx);

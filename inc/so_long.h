@@ -32,9 +32,9 @@ typedef struct s_vec2
 // storage of all texture (png)
 typedef struct s_texture
 {
-	mlx_texture_t *floor;
+	mlx_texture_t *floor[16];
 	mlx_texture_t *wall;
-	mlx_texture_t *player;
+	mlx_texture_t *player[10];
 	mlx_texture_t *camera;
 } t_texture;
 
@@ -48,6 +48,14 @@ typedef struct s_img
 
 } t_img;
 
+typedef struct s_map
+{
+	char	type;
+	int32_t	tile_index;
+}t_map;
+
+
+// all game struct
 typedef struct s_game
 {
 	t_img img;
