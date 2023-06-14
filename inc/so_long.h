@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
+/*   Updated: 2023/06/14 13:43:47 by oboucher         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -32,8 +44,8 @@ typedef struct s_vec2
 // storage of all texture (png)
 typedef struct s_texture
 {
-	mlx_texture_t	*floor[16];
-	mlx_texture_t	*wall;
+	mlx_texture_t	*grass[16];
+	mlx_texture_t	*wall[16];
 	mlx_texture_t	*player[10];
 	mlx_texture_t	*camera;
 }					t_texture;
@@ -41,8 +53,8 @@ typedef struct s_texture
 // storage of all image (instance)
 typedef struct s_img
 {
-	mlx_image_t		*floor;
-	mlx_image_t		*wall;
+	mlx_image_t		*grass[16];
+	mlx_image_t		*wall[16];
 	mlx_image_t		*player;
 	mlx_image_t		*camera;
 
@@ -77,5 +89,7 @@ t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_map ***array, int32_t rows,
 						int32_t cols, char c);
 void				print_2d_map_array(t_map ***array);
+void				init_grass_texture(mlx_texture_t **grass);
+void				init_wall_texture(mlx_texture_t **wall);
 
 #endif

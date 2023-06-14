@@ -2,6 +2,78 @@
 
 static t_game	game;
 
+int32_t	calculate_auto_tiling(int32_t x, int32_t y, char c)
+{
+	int32_t	val;
+
+	val = 0;
+	if ((x >= 0 && x <= R_WIDTH) && (y >= 0 && y <= R_HEIGHT))
+	{
+		if (y - 1 >= 0 && game.grid[x][y - 1]->id == c)
+			val += 1;
+		if (x + 1 < R_WIDTH && game.grid[x + 1][y]->id == c)
+			val += 10;
+		if (y + 1 < R_HEIGHT && game.grid[x][y + 1]->id == c)
+			val += 100;
+		if (x - 1 >= 0 && game.grid[x - 1][y]->id == c)
+			val += 1000;
+		return (val);
+	}
+	return (-1);
+}
+
+int32_t	index_auto_tiling(int32_t val)
+{
+	int32_t	i;
+	int		numMappings;
+
+	i = 0;
+	int32_t mapping[][2] = {
+		{110, 0},
+		{1110, 1},
+		{1100, 2},
+		{111, 3},
+		{1111, 4},
+		{1101, 5},
+		{11, 6},
+		{1011, 7},
+		{1001, 8},
+		{101, 9},
+		{1010, 10},
+		{0, 11},
+		{1, 12},
+		{10, 13},
+		{100, 14},
+		{1000, 15}
+	};
+	numMappings = sizeof(mapping) / sizeof(mapping[0]);
+	while (i < numMappings)
+	{
+		if (val == mapping[i][0])
+			return (mapping[i][1]);
+		i++;
+	}
+	return (-1);
+}
+
+void	auto_tiling(void)
+{
+	int32_t	x;
+	int32_t	y;
+
+	x = 0;
+	while (x < R_WIDTH)
+	{
+		y = 0;
+		while (y < R_HEIGHT)
+		{
+			game.grid[x][y]->tile_index = index_auto_tiling(calculate_auto_tiling(x, y, game.grid[x][y]->id));
+			y++;
+		}
+		x++;
+	}
+}
+
 int	sign(int nb)
 {
 	return ((nb > 0) - (nb < 0));
@@ -25,7 +97,8 @@ bool	tile_collision(int x, int y, int w, int h, char c)
 		i = 0;
 		while (i < w)
 		{
-			if (game.grid[(x + i) / SPRITE_SIZE][(y + j) / SPRITE_SIZE]->id == c)
+			if (game.grid[(x + i) / SPRITE_SIZE][(y + j)
+				/ SPRITE_SIZE]->id == c)
 				return (true);
 			i++;
 		}
@@ -36,15 +109,30 @@ bool	tile_collision(int x, int y, int w, int h, char c)
 
 void	init_img(t_img *img)
 {
-	img->floor = mlx_texture_to_image(game.mlx, game.tex.floor[4]);
-	img->wall = mlx_texture_to_image(game.mlx, game.tex.wall);
+	int i;
+	
+	i = 0;
+	while (i < 16)
+	{
+		img->grass[i] = mlx_texture_to_image(game.mlx, game.tex.grass[i]);
+		img->wall[i] = mlx_texture_to_image(game.mlx, game.tex.wall[i]);
+		i++;
+	}
+	
 	img->player = mlx_texture_to_image(game.mlx, game.tex.player[0]);
 }
 
 void	del_img(t_img *img)
 {
-	mlx_delete_image(game.mlx, img->floor);
-	mlx_delete_image(game.mlx, img->wall);
+	int i;
+
+	i = 0;
+	while (i < 16)
+	{
+		mlx_delete_image(game.mlx, img->grass[i]);
+		mlx_delete_image(game.mlx, img->wall[i]);
+		i++;
+	}
 	mlx_delete_image(game.mlx, img->player);
 }
 
@@ -56,7 +144,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 	del_img(&game.old_img);
 	game.old_img = game.img;
 	init_img(&game.img);
-	mlx_image_to_window(game.mlx, game.img.floor, -1000, 0);
+	mlx_image_to_window(game.mlx, game.img.grass[0], -1000, 0);
 	j = -1;
 	while (j < C_HEIGHT + 1)
 	{
@@ -67,11 +155,11 @@ void	draw_grid(int32_t posX, int32_t posY)
 					+ posY <= R_HEIGHT))
 			{
 				if (game.grid[i + posX][j + posY]->id == '0')
-					mlx_image_to_window(game.mlx, game.img.floor, (i
+					mlx_image_to_window(game.mlx, game.img.grass[game.grid[i + posX][j + posY]->tile_index], (i
 								* SPRITE_SIZE) - game.offSet.x, (j
 								* SPRITE_SIZE) - game.offSet.y);
 				else if (game.grid[i + posX][j + posY]->id == '1')
-					mlx_image_to_window(game.mlx, game.img.wall, (i
+					mlx_image_to_window(game.mlx, game.img.wall[game.grid[i + posX][j + posY]->tile_index], (i
 								* SPRITE_SIZE) - game.offSet.x, (j
 								* SPRITE_SIZE) - game.offSet.y);
 			}
@@ -118,8 +206,10 @@ void	step(void *param)
 						+ 24, SPRITE_SIZE - 24, SPRITE_SIZE - 24, '1'))
 				{
 					while (!tile_collision((game.player.x + 12) + sign(hspd),
-							game.player.y + 24, SPRITE_SIZE - 24, SPRITE_SIZE
-							- 24, '1'))
+											game.player.y + 24,
+											SPRITE_SIZE - 24,
+											SPRITE_SIZE - 24,
+											'1'))
 						game.player.x += sign(hspd);
 					hspd = 0;
 				}
@@ -190,39 +280,37 @@ int32_t	main(void)
 	//GRID
 	game.grid = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
 	fill_2d_map_array(game.grid, R_WIDTH, R_HEIGHT, '0');
-	game.grid[1][0]->id = '1';
-	game.grid[2][0]->id = '1';
-	game.grid[3][0]->id = '1';
-	game.grid[6][6]->id = '1';
-	game.grid[8][6]->id = '1';
-	game.grid[8][5]->id = '1';
-	game.grid[10][5]->id = '1';
-	game.grid[12][5]->id = '1';
+	game.grid[4][2]->id = '1';
+	game.grid[5][2]->id = '1';
+	game.grid[6][2]->id = '1';
+	game.grid[5][3]->id = '1';
+
+	game.grid[8][2]->id = '1';
+	game.grid[9][2]->id = '1';
+	game.grid[10][2]->id = '1';
+	game.grid[11][2]->id = '1';
+	game.grid[8][3]->id = '1';
+	game.grid[9][3]->id = '1';
+	game.grid[10][3]->id = '1';
+	game.grid[11][3]->id = '1';
+
+
+
+
+
+	auto_tiling();
 	print_2d_map_array(game.grid);
+	printf("tile : %d\n", game.grid[23][20]->tile_index);
+	// printf("njsad:%d\n",calculate_auto_tiling(4, 4, '0'));
 
 	//MLX
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
-	game.tex.floor[0] = mlx_load_png("./asset/grass/grass_0.png");
-	game.tex.floor[1] = mlx_load_png("./asset/grass/grass_1.png");
-	game.tex.floor[2] = mlx_load_png("./asset/grass/grass_2.png");
-	game.tex.floor[3] = mlx_load_png("./asset/grass/grass_3.png");
-	game.tex.floor[4] = mlx_load_png("./asset/grass/grass_4.png");
-	game.tex.floor[5] = mlx_load_png("./asset/grass/grass_5.png");
-	game.tex.floor[6] = mlx_load_png("./asset/grass/grass_6.png");
-	game.tex.floor[7] = mlx_load_png("./asset/grass/grass_7.png");
-	game.tex.floor[8] = mlx_load_png("./asset/grass/grass_8.png");
-	game.tex.floor[9] = mlx_load_png("./asset/grass/grass_9.png");
-	game.tex.floor[10] = mlx_load_png("./asset/grass/grass_10.png");
-	game.tex.floor[11] = mlx_load_png("./asset/grass/grass_11.png");
-	game.tex.floor[12] = mlx_load_png("./asset/grass/grass_12.png");
-	game.tex.floor[13] = mlx_load_png("./asset/grass/grass_13.png");
-	game.tex.floor[14] = mlx_load_png("./asset/grass/grass_14.png");
-	game.tex.floor[15] = mlx_load_png("./asset/grass/grass_15.png");
+	init_grass_texture(game.tex.grass);
+	init_wall_texture(game.tex.wall);
 
 	game.tex.player[0] = mlx_load_png("./asset/player/player_down.png");
 
-	game.tex.wall = mlx_load_png("./asset/wall/wall_11.png");
 	init_img(&game.img);
 
 	mlx_loop_hook(game.mlx, step, game.mlx);
