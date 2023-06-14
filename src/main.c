@@ -268,8 +268,8 @@ void	step(void *param)
 
 int32_t	main(void)
 {
-	game.playerGrid.x = C_WIDTH / 2;
-	game.playerGrid.y = C_HEIGHT / 2;
+	game.playerGrid.x = 0;
+	game.playerGrid.y = 0;
 	game.player.x = game.playerGrid.x * SPRITE_SIZE;
 	game.player.y = game.playerGrid.y * SPRITE_SIZE;
 	game.cameraGrid.x = 0;

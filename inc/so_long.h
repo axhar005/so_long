@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 13:43:47 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:19:13 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define HEIGHT 576
 # define C_WIDTH 13
 # define C_HEIGHT 9
-# define R_WIDTH 100
-# define R_HEIGHT 100
+# define R_WIDTH 30
+# define R_HEIGHT 30
 
 // storage of pos x and y
 typedef struct s_vec2
