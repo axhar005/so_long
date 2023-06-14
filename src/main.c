@@ -7,7 +7,7 @@ int32_t	calculate_auto_tiling(int32_t x, int32_t y, char c)
 	int32_t	val;
 
 	val = 0;
-	if ((x >= 0 && x <= R_WIDTH) && (y >= 0 && y <= R_HEIGHT))
+	if ((x >= 0 && x < R_WIDTH) && (y >= 0 && y < R_HEIGHT))
 	{
 		if (y - 1 >= 0 && game.grid[x][y - 1]->id == c)
 			val += 1;
@@ -73,6 +73,24 @@ void	auto_tiling(void)
 		x++;
 	}
 }
+
+// void place_auto_tiling_corner()
+// {
+// 	int x;
+// 	int y;
+
+// 	x = 0;
+// 	while (x < R_WIDTH)
+// 	{
+// 		y = 0;
+// 		while (y < )
+// 		{
+// 			/* code */
+// 		}
+		
+// 	}
+	
+// }
 
 int	sign(int nb)
 {
@@ -151,8 +169,8 @@ void	draw_grid(int32_t posX, int32_t posY)
 		i = -1;
 		while (i < C_WIDTH + 1)
 		{
-			if ((i + posX >= 0 && i + posX <= R_WIDTH) && (j + posY >= 0 && j
-					+ posY <= R_HEIGHT))
+			if ((i + posX >= 0 && i + posX < R_WIDTH) && (j + posY >= 0 && j
+					+ posY < R_HEIGHT))
 			{
 				if (game.grid[i + posX][j + posY]->id == '0')
 					mlx_image_to_window(game.mlx, game.img.grass[game.grid[i + posX][j + posY]->tile_index], (i
@@ -199,7 +217,7 @@ void	step(void *param)
 	{
 		if (hspd != 0)
 		{
-			if (game.player.x + hspd >= 0 && game.player.x + hspd <= R_WIDTH
+			if (game.player.x + hspd >= 0 && (game.player.x + SPRITE_SIZE) + hspd <= R_WIDTH
 				* SPRITE_SIZE)
 			{
 				if (tile_collision((game.player.x + 12) + hspd, game.player.y
@@ -217,14 +235,14 @@ void	step(void *param)
 			}
 			else
 			{
-				while (game.player.x + sign(hspd) >= 0 && game.player.x
+				while (game.player.x + sign(hspd) >= 0 && (game.player.x + SPRITE_SIZE)
 					+ sign(hspd) <= R_WIDTH * SPRITE_SIZE)
 					game.player.x += sign(hspd);
 			}
 		}
 		if (vspd != 0)
 		{
-			if (game.player.y + vspd >= 0 && game.player.y + vspd <= R_HEIGHT
+			if (game.player.y + vspd >= 0 && (game.player.y + SPRITE_SIZE) + vspd <= R_HEIGHT
 				* SPRITE_SIZE)
 			{
 				if (tile_collision(game.player.x + 12, (game.player.y + 24)
@@ -240,7 +258,7 @@ void	step(void *param)
 			}
 			else
 			{
-				while (game.player.y + sign(vspd) >= 0 && game.player.y
+				while (game.player.y + sign(vspd) >= 0 && (game.player.y + SPRITE_SIZE)
 					+ sign(vspd) <= R_HEIGHT * SPRITE_SIZE)
 					game.player.y += sign(vspd);
 			}
@@ -248,12 +266,12 @@ void	step(void *param)
 		frame = 0;
 	}
 	frame += game.delta_time;
-	// ft_printf("----------------------------\n");
-	// ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
-	// ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
-	// ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
-	// ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
-	// ft_printf("----------------------------\n");
+	ft_printf("----------------------------\n");
+	ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
+	ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
+	ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
+	ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
+	ft_printf("----------------------------\n");
 	// update player grid pos
 	game.playerGrid.x = game.player.x / SPRITE_SIZE;
 	game.playerGrid.y = game.player.y / SPRITE_SIZE;
@@ -294,13 +312,8 @@ int32_t	main(void)
 	game.grid[10][3]->id = '1';
 	game.grid[11][3]->id = '1';
 
-
-
-
-
 	auto_tiling();
 	print_2d_map_array(game.grid);
-	printf("tile : %d\n", game.grid[23][20]->tile_index);
 	// printf("njsad:%d\n",calculate_auto_tiling(4, 4, '0'));
 
 	//MLX

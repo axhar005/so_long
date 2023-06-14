@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 15:19:13 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:09:13 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 // struct
 
 # define SPRITE_SIZE 64
-# define HITBOX 28
 # define WIDTH 832
 # define HEIGHT 576
 # define C_WIDTH 13
