@@ -1,81 +1,81 @@
 #ifndef SO_LONG_H
-#define SO_LONG_H
+# define SO_LONG_H
 
 // include
 
-#include "../lib/MLX42/include/MLX42/MLX42.h"
-#include "../lib/libft/inc/libft.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
+# include "../lib/MLX42/include/MLX42/MLX42.h"
+# include "../lib/libft/inc/libft.h"
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 // struct
 
-#define SPRITE_SIZE 64
-#define HITBOX 28
-#define WIDTH 832
-#define HEIGHT 576
-#define C_WIDTH 13
-#define C_HEIGHT 9
-#define R_WIDTH 100
-#define R_HEIGHT 100
+# define SPRITE_SIZE 64
+# define HITBOX 28
+# define WIDTH 832
+# define HEIGHT 576
+# define C_WIDTH 13
+# define C_HEIGHT 9
+# define R_WIDTH 100
+# define R_HEIGHT 100
 
 // storage of pos x and y
 typedef struct s_vec2
 {
-	int32_t x;
-	int32_t y;
-} t_vec2;
+	int32_t			x;
+	int32_t			y;
+}					t_vec2;
 
 // storage of all texture (png)
 typedef struct s_texture
 {
-	mlx_texture_t *floor[16];
-	mlx_texture_t *wall;
-	mlx_texture_t *player[10];
-	mlx_texture_t *camera;
-} t_texture;
+	mlx_texture_t	*floor[16];
+	mlx_texture_t	*wall;
+	mlx_texture_t	*player[10];
+	mlx_texture_t	*camera;
+}					t_texture;
 
 // storage of all image (instance)
 typedef struct s_img
 {
-	mlx_image_t *floor;
-	mlx_image_t *wall;
-	mlx_image_t *player;
-	mlx_image_t *camera;
+	mlx_image_t		*floor;
+	mlx_image_t		*wall;
+	mlx_image_t		*player;
+	mlx_image_t		*camera;
 
-} t_img;
+}					t_img;
 
 typedef struct s_map
 {
-	char	type;
-	int32_t	tile_index;
-}t_map;
+	char			id;
+	int32_t			tile_index;
 
+}					t_map;
 
 // all game struct
 typedef struct s_game
 {
-	t_img img;
-	t_img old_img;
-	t_texture tex;
-	mlx_t *mlx;
-	double delta_time;
-	char **grid;
-	t_vec2 playerGrid;
-	t_vec2 player;
-	t_vec2 cameraGrid;
-	t_vec2 camera;
-	t_vec2 offSet;
-} t_game;
+	t_img			img;
+	t_img			old_img;
+	t_texture		tex;
+	mlx_t			*mlx;
+	double			delta_time;
+	t_map			***grid;
+	t_vec2			playerGrid;
+	t_vec2			player;
+	t_vec2			cameraGrid;
+	t_vec2			camera;
+	t_vec2			offSet;
+}					t_game;
 
 // prototype
 
-char **allocate_2d_char_array(int32_t rows, int32_t cols);
-void print_2d_char_array(char **array);
-void fill_2d_char_array(char **array, int32_t rows, int32_t cols,
-						char c);
+t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
+void				fill_2d_map_array(t_map ***array, int32_t rows,
+						int32_t cols, char c);
+void				print_2d_map_array(t_map ***array);
 
 #endif

@@ -2,22 +2,22 @@
 
 static t_game	game;
 
-int sign(int nb)
+int	sign(int nb)
 {
 	return ((nb > 0) - (nb < 0));
 }
 
-bool is_even(int nb)
+bool	is_even(int nb)
 {
 	if (nb % 2 == 0)
 		return (true);
 	return (false);
 }
 
-bool tile_collision(int x, int y, int w, int h, char c)
+bool	tile_collision(int x, int y, int w, int h, char c)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 0;
 	while (j < h)
@@ -25,7 +25,7 @@ bool tile_collision(int x, int y, int w, int h, char c)
 		i = 0;
 		while (i < w)
 		{
-			if (game.grid[(x+i)/SPRITE_SIZE][(y+j)/SPRITE_SIZE] == c)
+			if (game.grid[(x + i) / SPRITE_SIZE][(y + j) / SPRITE_SIZE]->id == c)
 				return (true);
 			i++;
 		}
@@ -34,19 +34,18 @@ bool tile_collision(int x, int y, int w, int h, char c)
 	return (false);
 }
 
-void init_img(t_img *img)
+void	init_img(t_img *img)
 {
-		img->floor = mlx_texture_to_image(game.mlx, game.tex.floor[4]);
-		img->wall = mlx_texture_to_image(game.mlx, game.tex.wall);
-		img->player = mlx_texture_to_image(game.mlx, game.tex.player[0]);
+	img->floor = mlx_texture_to_image(game.mlx, game.tex.floor[4]);
+	img->wall = mlx_texture_to_image(game.mlx, game.tex.wall);
+	img->player = mlx_texture_to_image(game.mlx, game.tex.player[0]);
 }
 
-void del_img(t_img *img)
+void	del_img(t_img *img)
 {
-		mlx_delete_image(game.mlx, img->floor);
-
-		mlx_delete_image(game.mlx, img->wall);
-		mlx_delete_image(game.mlx, img->player);
+	mlx_delete_image(game.mlx, img->floor);
+	mlx_delete_image(game.mlx, img->wall);
+	mlx_delete_image(game.mlx, img->player);
 }
 
 void	draw_grid(int32_t posX, int32_t posY)
@@ -64,118 +63,123 @@ void	draw_grid(int32_t posX, int32_t posY)
 		i = -1;
 		while (i < C_WIDTH + 1)
 		{
-			if ((i + posX >= 0 && i + posX <= R_WIDTH) && (j + posY >= 0 && j + posY <= R_HEIGHT))
+			if ((i + posX >= 0 && i + posX <= R_WIDTH) && (j + posY >= 0 && j
+					+ posY <= R_HEIGHT))
 			{
-				if (game.grid[i + posX][j + posY] == '0')
-					mlx_image_to_window(game.mlx, game.img.floor, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
-				else if (game.grid[i + posX][j + posY] == '1')
-					mlx_image_to_window(game.mlx, game.img.wall, (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+				if (game.grid[i + posX][j + posY]->id == '0')
+					mlx_image_to_window(game.mlx, game.img.floor, (i
+								* SPRITE_SIZE) - game.offSet.x, (j
+								* SPRITE_SIZE) - game.offSet.y);
+				else if (game.grid[i + posX][j + posY]->id == '1')
+					mlx_image_to_window(game.mlx, game.img.wall, (i
+								* SPRITE_SIZE) - game.offSet.x, (j
+								* SPRITE_SIZE) - game.offSet.y);
 			}
 			i++;
 		}
 		j++;
 	}
-	mlx_image_to_window(game.mlx, game.img.player, (C_WIDTH/2)*SPRITE_SIZE, (C_HEIGHT/2)*SPRITE_SIZE);
+	mlx_image_to_window(game.mlx, game.img.player, (C_WIDTH / 2) * SPRITE_SIZE,
+			(C_HEIGHT / 2) * SPRITE_SIZE);
 }
 
-void draw(void)
+void	draw(void)
 {
-	 	draw_grid(game.cameraGrid.x, game.cameraGrid.y);
+	draw_grid(game.cameraGrid.x, game.cameraGrid.y);
 }
 
 void	step(void *param)
 {
-	mlx_t	*mlx;
-	int hspd = 0;
-	int vspd = 0;
-	int spd = 10;
-	static double frame = 0;
+	mlx_t			*mlx;
+	int				hspd;
+	int				vspd;
+	int				spd;
+	static double	frame = 0;
 
+	hspd = 0;
+	vspd = 0;
+	spd = 10;
 	mlx = param;
 	game.delta_time = game.mlx->delta_time * 30;
-
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A)) * spd;
-	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W)) * spd;
-
-
+	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
+		* spd;
+	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
+		* spd;
 	if (frame >= 1)
 	{
 		if (hspd != 0)
 		{
-			if (game.player.x+hspd >= 0 && game.player.x+hspd <= R_WIDTH*SPRITE_SIZE)
+			if (game.player.x + hspd >= 0 && game.player.x + hspd <= R_WIDTH
+				* SPRITE_SIZE)
 			{
-				if (tile_collision(game.player.x+hspd, game.player.y, SPRITE_SIZE, SPRITE_SIZE, '1'))
-				{	
-
-					while (!tile_collision(game.player.x+sign(hspd), game.player.y, SPRITE_SIZE, SPRITE_SIZE, '1'))
-					{
+				if (tile_collision((game.player.x + 12) + hspd, game.player.y
+						+ 24, SPRITE_SIZE - 24, SPRITE_SIZE - 24, '1'))
+				{
+					while (!tile_collision((game.player.x + 12) + sign(hspd),
+							game.player.y + 24, SPRITE_SIZE - 24, SPRITE_SIZE
+							- 24, '1'))
 						game.player.x += sign(hspd);
-					}
-					
 					hspd = 0;
 				}
 				game.player.x += hspd;
 			}
 			else
 			{
-				while (game.player.x+sign(hspd) >= 0 && game.player.x+sign(hspd) <= R_WIDTH*SPRITE_SIZE)
+				while (game.player.x + sign(hspd) >= 0 && game.player.x
+					+ sign(hspd) <= R_WIDTH * SPRITE_SIZE)
 					game.player.x += sign(hspd);
 			}
 		}
 		if (vspd != 0)
 		{
-			if (game.player.y+vspd >= 0 && game.player.y+vspd <= R_HEIGHT*SPRITE_SIZE)
+			if (game.player.y + vspd >= 0 && game.player.y + vspd <= R_HEIGHT
+				* SPRITE_SIZE)
 			{
-				if (tile_collision(game.player.x, game.player.y+vspd, SPRITE_SIZE, SPRITE_SIZE, '1'))
-				{	
-					while (!tile_collision(game.player.x, game.player.y+sign(vspd), SPRITE_SIZE, SPRITE_SIZE, '1'))
-					{
+				if (tile_collision(game.player.x + 12, (game.player.y + 24)
+						+ vspd, SPRITE_SIZE - 24, SPRITE_SIZE - 24, '1'))
+				{
+					while (!tile_collision(game.player.x + 12, (game.player.y
+								+ 24) + sign(vspd), SPRITE_SIZE - 24,
+							SPRITE_SIZE - 24, '1'))
 						game.player.y += sign(vspd);
-					}
-					
 					vspd = 0;
 				}
-
 				game.player.y += vspd;
 			}
 			else
 			{
-				while (game.player.y+sign(vspd) >= 0 && game.player.y+sign(vspd) <= R_HEIGHT*SPRITE_SIZE)
+				while (game.player.y + sign(vspd) >= 0 && game.player.y
+					+ sign(vspd) <= R_HEIGHT * SPRITE_SIZE)
 					game.player.y += sign(vspd);
 			}
 		}
 		frame = 0;
 	}
 	frame += game.delta_time;
-	ft_printf("----------------------------\n");
-	ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
-	ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
-	ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
-	ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
-	ft_printf("----------------------------\n");
-
-
+	// ft_printf("----------------------------\n");
+	// ft_printf("playerG X:%d Y:%d\n", game.playerGrid.x, game.playerGrid.y);
+	// ft_printf("player X:%d Y:%d\n", game.player.x, game.player.y);
+	// ft_printf("offSet X:%d Y:%d\n", game.offSet.x, game.offSet.y);
+	// ft_printf("camera X:%d Y:%d\n", game.cameraGrid.x, game.cameraGrid.y);
+	// ft_printf("----------------------------\n");
 	// update player grid pos
 	game.playerGrid.x = game.player.x / SPRITE_SIZE;
 	game.playerGrid.y = game.player.y / SPRITE_SIZE;
-
 	// update offset
 	game.offSet.x = game.player.x % SPRITE_SIZE;
 	game.offSet.y = game.player.y % SPRITE_SIZE;
-	
 	// update cameraGrid pos
-	game.cameraGrid.x = game.playerGrid.x - C_WIDTH/2;
-	game.cameraGrid.y = game.playerGrid.y - C_HEIGHT/2;
+	game.cameraGrid.x = game.playerGrid.x - C_WIDTH / 2;
+	game.cameraGrid.y = game.playerGrid.y - C_HEIGHT / 2;
 	draw();
-	// printf("Camera X:%d Y:%d\n", game.playerGridX,  game.playerGridY);
 }
 
 int32_t	main(void)
 {
-	game.playerGrid.x = C_WIDTH/2;
-	game.playerGrid.y = C_HEIGHT/2;
+	game.playerGrid.x = C_WIDTH / 2;
+	game.playerGrid.y = C_HEIGHT / 2;
 	game.player.x = game.playerGrid.x * SPRITE_SIZE;
 	game.player.y = game.playerGrid.y * SPRITE_SIZE;
 	game.cameraGrid.x = 0;
@@ -184,19 +188,17 @@ int32_t	main(void)
 	game.offSet.y = 0;
 
 	//GRID
-	game.grid = allocate_2d_char_array(R_WIDTH, R_HEIGHT);
-	fill_2d_char_array(game.grid, R_WIDTH, R_HEIGHT, '0');
-	// game.grid[0][0] = '1';
-	game.grid[1][0] = '1';
-	game.grid[2][0] = '1';
-	game.grid[3][0] = '1';
-	game.grid[6][6] = '1';
-	game.grid[8][6] = '1';
-	game.grid[8][5] = '1';
-	game.grid[10][5] = '1';
-	game.grid[12][5] = '1';
-	print_2d_char_array(game.grid);
-
+	game.grid = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
+	fill_2d_map_array(game.grid, R_WIDTH, R_HEIGHT, '0');
+	game.grid[1][0]->id = '1';
+	game.grid[2][0]->id = '1';
+	game.grid[3][0]->id = '1';
+	game.grid[6][6]->id = '1';
+	game.grid[8][6]->id = '1';
+	game.grid[8][5]->id = '1';
+	game.grid[10][5]->id = '1';
+	game.grid[12][5]->id = '1';
+	print_2d_map_array(game.grid);
 
 	//MLX
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
