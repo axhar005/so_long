@@ -81,19 +81,54 @@ void place_tile_corner(int32_t x, int32_t y, int32_t i, int32_t j, char id)
 {
 	if (game.grid[x][y]->id == id)
 	{
+		if (game.grid[x][y]->tile_index == 4)
+		{
+			if (game.grid[x-1][y-1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[16], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x+1][y-1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[17], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x-1][y+1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[18], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x+1][y+1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[19], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+		}
 		if (game.grid[x][y]->tile_index == 0)
 			if (game.grid[x+1][y+1]->id != id)
 				mlx_image_to_window(game.mlx, game.img.wall[19], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
-		// if (game.grid[x][y]->tile_index == 1)
+		if (game.grid[x][y]->tile_index == 1)
+		{
+			if (game.grid[x-1][y+1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[18], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x+1][y+1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[19], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+		}
 		if (game.grid[x][y]->tile_index == 2)
 			if (game.grid[x-1][y+1]->id != id)
 				mlx_image_to_window(game.mlx, game.img.wall[18], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
-		// if (game.grid[x][y]->tile_index == 3)
-		// if (game.grid[x][y]->tile_index == 5)
+		if (game.grid[x][y]->tile_index == 3)
+		{
+			if (game.grid[x+1][y-1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[17], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x+1][y+1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[19], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+		}
+		if (game.grid[x][y]->tile_index == 5)
+		{
+			if (game.grid[x-1][y-1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[16], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x-1][y+1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[18], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+		}
 		if (game.grid[x][y]->tile_index == 6)
 			if (game.grid[x+1][y-1]->id != id)
 				mlx_image_to_window(game.mlx, game.img.wall[17], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
-		// if (game.grid[x][y]->tile_index == 7)
+		if (game.grid[x][y]->tile_index == 7)
+		{
+			if (game.grid[x-1][y-1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[16], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+			if (game.grid[x+1][y-1]->id != id)
+				mlx_image_to_window(game.mlx, game.img.wall[17], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+		}
 		if (game.grid[x][y]->tile_index == 8)
 			if (game.grid[x-1][y-1]->id != id)
 				mlx_image_to_window(game.mlx, game.img.wall[16], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
@@ -268,6 +303,8 @@ void	step(void *param)
 		game.mouse_id = '1';
 	if (mlx_is_key_down(mlx, MLX_KEY_KP_0))
 		game.mouse_id = '0';
+	if (mlx_is_key_down(mlx, MLX_KEY_KP_2))
+		game.mouse_id = '2';
 	
 
 	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
