@@ -67,6 +67,10 @@ void	auto_tiling(void)
 		while (y < R_HEIGHT)
 		{
 			game.grid[x][y]->tile_index = index_auto_tiling(calculate_auto_tiling(x, y, game.grid[x][y]->id));
+			if (game.grid[x][y]->id == '1' || game.grid[x][y]->id == '3')
+				game.grid[x][y]->solid = true;
+			if (game.grid[x][y]->id == '0' || game.grid[x][y]->id == '2')
+				game.grid[x][y]->solid = false;
 			y++;
 		}
 		x++;
@@ -136,6 +140,15 @@ bool	tile_collision(int x, int y, int w, int h, char c)
 		i++;
 	}
 	return (false);
+}
+
+void mouse_click(int32_t mx, int32_t my, char id)
+{
+	mx = game.cameraGrid.x + ((mx+game.offSet.x)/SPRITE_SIZE);
+		my = game.cameraGrid.y + ((my+game.offSet.y)/SPRITE_SIZE);
+		if ((mx >= 0 && mx < R_WIDTH) && (my >= 0 && my < R_HEIGHT))
+			game.grid[mx][my]->id = id;
+		auto_tiling();
 }
 
 void	init_img(t_img *img)
@@ -246,17 +259,17 @@ void	step(void *param)
 
 	int mx = 0;
 	int my = 0;
+	mlx_get_mouse_pos(mlx, &mx, &my);
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	mlx_get_mouse_pos(mlx, &mx, &my);
 	if (mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
-	{
-		mx = game.cameraGrid.x + ((mx+game.offSet.x)/SPRITE_SIZE);
-		my = game.cameraGrid.y + ((my+game.offSet.y)/SPRITE_SIZE);
-		if ((mx >= 0 && mx < R_WIDTH) && (my >= 0 && my < R_HEIGHT))
-			game.grid[mx][my]->id = '1';
-		auto_tiling();
-	}
+		mouse_click(mx, my, game.mouse_id);
+	if (mlx_is_key_down(mlx, MLX_KEY_KP_1))
+		game.mouse_id = '1';
+	if (mlx_is_key_down(mlx, MLX_KEY_KP_0))
+		game.mouse_id = '0';
+	
+
 	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
 		* spd;
 	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
@@ -342,6 +355,7 @@ int32_t	main(void)
 	game.cameraGrid.y = 0;
 	game.offSet.x = 0;
 	game.offSet.y = 0;
+	game.mouse_id = '1';
 
 	//GRID
 	game.grid = allocate_2d_map_array(R_WIDTH, R_HEIGHT);

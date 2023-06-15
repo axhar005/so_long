@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/15 12:37:58 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:39:01 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_map
 // all game struct
 typedef struct s_game
 {
+	char			mouse_id;
 	t_img			img;
 	t_img			old_img;
 	t_texture		tex;
