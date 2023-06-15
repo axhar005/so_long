@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 22:56:59 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/15 11:03:58 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,26 @@ void    init_sand_texture(mlx_texture_t **sand)
 	sand[13] = mlx_load_png("./asset/sand/sand_13.png");
 	sand[14] = mlx_load_png("./asset/sand/sand_14.png");
 	sand[15] = mlx_load_png("./asset/sand/sand_15.png");
+}
+
+void    init_water_texture(mlx_texture_t **water)
+{   
+    water[0] = mlx_load_png("./asset/water/water_0.png");
+	water[1] = mlx_load_png("./asset/water/water_1.png");
+	water[2] = mlx_load_png("./asset/water/water_2.png");
+	water[3] = mlx_load_png("./asset/water/water_3.png");
+	water[4] = mlx_load_png("./asset/water/water_4.png");
+	water[5] = mlx_load_png("./asset/water/water_5.png");
+	water[6] = mlx_load_png("./asset/water/water_6.png");
+	water[7] = mlx_load_png("./asset/water/water_7.png");
+	water[8] = mlx_load_png("./asset/water/water_8.png");
+    water[9] = mlx_load_png("./asset/water/water_9.png");
+	water[10] = mlx_load_png("./asset/water/water_10.png");
+	water[11] = mlx_load_png("./asset/water/water_11.png");
+	water[12] = mlx_load_png("./asset/water/water_12.png");
+	water[13] = mlx_load_png("./asset/water/water_13.png");
+	water[14] = mlx_load_png("./asset/water/water_14.png");
+	water[15] = mlx_load_png("./asset/water/water_15.png");
 }
 
 void    init_wall_texture(mlx_texture_t **wall)

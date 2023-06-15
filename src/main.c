@@ -44,8 +44,7 @@ int32_t	index_auto_tiling(int32_t val)
 		{1, 12},
 		{10, 13},
 		{100, 14},
-		{1000, 15}
-	};
+		{1000, 15}};
 	numMappings = sizeof(mapping) / sizeof(mapping[0]);
 	while (i < numMappings)
 	{
@@ -97,9 +96,18 @@ bool	tile_collision(int x, int y, int w, int h, char c)
 		j = 0;
 		while (j < w)
 		{
-			if (game.grid[(x + i) / SPRITE_SIZE][(y + j)
-				/ SPRITE_SIZE]->id == c)
-				return (true);
+			if (c == 's')
+			{
+				if (game.grid[(x + i) / SPRITE_SIZE][(y + j)
+					/ SPRITE_SIZE]->solid == true)
+					return (true);
+			}
+			else
+			{
+				if (game.grid[(x + i) / SPRITE_SIZE][(y + j)
+					/ SPRITE_SIZE]->id == c)
+					return (true);
+			}
 			j++;
 		}
 		i++;
@@ -109,29 +117,30 @@ bool	tile_collision(int x, int y, int w, int h, char c)
 
 void	init_img(t_img *img)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < 16)
 	{
 		img->grass[i] = mlx_texture_to_image(game.mlx, game.tex.grass[i]);
 		img->sand[i] = mlx_texture_to_image(game.mlx, game.tex.sand[i]);
+		img->water[i] = mlx_texture_to_image(game.mlx, game.tex.water[i]);
 		img->wall[i] = mlx_texture_to_image(game.mlx, game.tex.wall[i]);
 		i++;
 	}
-	
 	img->player = mlx_texture_to_image(game.mlx, game.tex.player[0]);
 }
 
 void	del_img(t_img *img)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 16)
 	{
 		mlx_delete_image(game.mlx, img->grass[i]);
 		mlx_delete_image(game.mlx, img->sand[i]);
+		mlx_delete_image(game.mlx, img->water[i]);
 		mlx_delete_image(game.mlx, img->wall[i]);
 		i++;
 	}
@@ -148,7 +157,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 	init_img(&game.img);
 	mlx_image_to_window(game.mlx, game.img.grass[0], -1000, 0);
 	i = -1;
-	while (i < C_WIDTH+ 1)
+	while (i < C_WIDTH + 1)
 	{
 		j = -1;
 		while (j < C_HEIGHT + 1)
@@ -157,23 +166,30 @@ void	draw_grid(int32_t posX, int32_t posY)
 					+ posY < R_HEIGHT))
 			{
 				if (game.grid[i + posX][j + posY]->id == '0')
-					mlx_image_to_window(game.mlx, game.img.grass[game.grid[i + posX][j + posY]->tile_index], (i
-								* SPRITE_SIZE) - game.offSet.x, (j
-								* SPRITE_SIZE) - game.offSet.y);
+					mlx_image_to_window(game.mlx, game.img.grass[game.grid[i
+							+ posX][j + posY]->tile_index], (i * SPRITE_SIZE)
+							- game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
 				else if (game.grid[i + posX][j + posY]->id == '1')
-					mlx_image_to_window(game.mlx, game.img.wall[game.grid[i + posX][j + posY]->tile_index], (i
-								* SPRITE_SIZE) - game.offSet.x, (j
-								* SPRITE_SIZE) - game.offSet.y);
+				{
+					mlx_image_to_window(game.mlx, game.img.wall[game.grid[i + posX][j + posY]->tile_index], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+					game.grid[i + posX][j + posY]->solid = true;
+				}
 				else if (game.grid[i + posX][j + posY]->id == '2')
-					mlx_image_to_window(game.mlx, game.img.sand[game.grid[i + posX][j + posY]->tile_index], (i
-								* SPRITE_SIZE) - game.offSet.x, (j
-								* SPRITE_SIZE) - game.offSet.y);
+					mlx_image_to_window(game.mlx, game.img.sand[game.grid[i
+							+ posX][j + posY]->tile_index], (i * SPRITE_SIZE)
+							- game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+				else if (game.grid[i + posX][j + posY]->id == '3')
+				{
+					mlx_image_to_window(game.mlx, game.img.water[game.grid[i + posX][j + posY]->tile_index], (i * SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE) - game.offSet.y);
+					game.grid[i + posX][j + posY]->solid = true;
+				}
 			}
 			j++;
 		}
 		i++;
 	}
-	mlx_image_to_window(game.mlx, game.img.player, (C_WIDTH / 2) * SPRITE_SIZE, (C_HEIGHT / 2) * SPRITE_SIZE);
+	mlx_image_to_window(game.mlx, game.img.player, (C_WIDTH / 2) * SPRITE_SIZE,
+			(C_HEIGHT / 2) * SPRITE_SIZE);
 }
 
 void	draw(void)
@@ -183,7 +199,6 @@ void	draw(void)
 
 void	step(void *param)
 {
-	// (void)param;
 	mlx_t			*mlx;
 	int				hspd;
 	int				vspd;
@@ -205,17 +220,17 @@ void	step(void *param)
 	{
 		if (hspd != 0)
 		{
-			if (game.player.x + hspd >= 0 && (game.player.x + SPRITE_SIZE) + hspd <= R_WIDTH
-				* SPRITE_SIZE)
+			if (game.player.x + hspd >= 0 && (game.player.x + SPRITE_SIZE)
+				+ hspd <= R_WIDTH * SPRITE_SIZE)
 			{
 				if (tile_collision((game.player.x + 12) + hspd, game.player.y
-						+ 24, SPRITE_SIZE - 24, SPRITE_SIZE - 24, '1'))
+						+ 24, SPRITE_SIZE - 24, SPRITE_SIZE - 24, 's'))
 				{
 					while (!tile_collision((game.player.x + 12) + sign(hspd),
 											game.player.y + 24,
 											SPRITE_SIZE - 24,
 											SPRITE_SIZE - 24,
-											'1'))
+											's'))
 						game.player.x += sign(hspd);
 					hspd = 0;
 				}
@@ -223,22 +238,22 @@ void	step(void *param)
 			}
 			else
 			{
-				while (game.player.x + sign(hspd) >= 0 && (game.player.x + SPRITE_SIZE)
-					+ sign(hspd) <= R_WIDTH * SPRITE_SIZE)
+				while (game.player.x + sign(hspd) >= 0 && (game.player.x
+						+ SPRITE_SIZE) + sign(hspd) <= R_WIDTH * SPRITE_SIZE)
 					game.player.x += sign(hspd);
 			}
 		}
 		if (vspd != 0)
 		{
-			if (game.player.y + vspd >= 0 && (game.player.y + SPRITE_SIZE) + vspd <= R_HEIGHT
-				* SPRITE_SIZE)
+			if (game.player.y + vspd >= 0 && (game.player.y + SPRITE_SIZE)
+				+ vspd <= R_HEIGHT * SPRITE_SIZE)
 			{
 				if (tile_collision(game.player.x + 12, (game.player.y + 24)
-						+ vspd, SPRITE_SIZE - 24, SPRITE_SIZE - 24, '1'))
+						+ vspd, SPRITE_SIZE - 24, SPRITE_SIZE - 24, 's'))
 				{
 					while (!tile_collision(game.player.x + 12, (game.player.y
 								+ 24) + sign(vspd), SPRITE_SIZE - 24,
-							SPRITE_SIZE - 24, '1'))
+							SPRITE_SIZE - 24, 's'))
 						game.player.y += sign(vspd);
 					vspd = 0;
 				}
@@ -246,8 +261,8 @@ void	step(void *param)
 			}
 			else
 			{
-				while (game.player.y + sign(vspd) >= 0 && (game.player.y + SPRITE_SIZE)
-					+ sign(vspd) <= R_HEIGHT * SPRITE_SIZE)
+				while (game.player.y + sign(vspd) >= 0 && (game.player.y
+						+ SPRITE_SIZE) + sign(vspd) <= R_HEIGHT * SPRITE_SIZE)
 					game.player.y += sign(vspd);
 			}
 		}
@@ -302,11 +317,20 @@ int32_t	main(void)
 	game.grid[9][4]->id = '1';
 	game.grid[10][4]->id = '1';
 
-	// game.grid[2][3]->id = '2';
-	// game.grid[3][3]->id = '2';
-	// game.grid[2][4]->id = '2';
-	// game.grid[2][5]->id = '2';
+	game.grid[2][3]->id = '2';
+	game.grid[3][3]->id = '2';
+	game.grid[2][4]->id = '2';
+	game.grid[2][5]->id = '2';
+	game.grid[3][5]->id = '2';
+	game.grid[4][5]->id = '2';
+	game.grid[4][6]->id = '2';
+	game.grid[5][6]->id = '2';
+	game.grid[6][7]->id = '2';
 
+	game.grid[3][6]->id = '3';
+	game.grid[2][6]->id = '3';
+	game.grid[1][6]->id = '3';
+	game.grid[1][5]->id = '3';
 
 	auto_tiling();
 	// print_2d_map_array(game.grid);
@@ -318,6 +342,7 @@ int32_t	main(void)
 	init_grass_texture(game.tex.grass);
 	init_sand_texture(game.tex.sand);
 	init_wall_texture(game.tex.wall);
+	init_water_texture(game.tex.water);
 
 	game.tex.player[0] = mlx_load_png("./asset/player/player_down.png");
 
