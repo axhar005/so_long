@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 13:53:25 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:56:59 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,26 @@ void    init_grass_texture(mlx_texture_t **grass)
 	grass[13] = mlx_load_png("./asset/grass/grass_13.png");
 	grass[14] = mlx_load_png("./asset/grass/grass_14.png");
 	grass[15] = mlx_load_png("./asset/grass/grass_15.png");
+}
+
+void    init_sand_texture(mlx_texture_t **sand)
+{   
+    sand[0] = mlx_load_png("./asset/sand/sand_0.png");
+	sand[1] = mlx_load_png("./asset/sand/sand_1.png");
+	sand[2] = mlx_load_png("./asset/sand/sand_2.png");
+	sand[3] = mlx_load_png("./asset/sand/sand_3.png");
+	sand[4] = mlx_load_png("./asset/sand/sand_4.png");
+	sand[5] = mlx_load_png("./asset/sand/sand_5.png");
+	sand[6] = mlx_load_png("./asset/sand/sand_6.png");
+	sand[7] = mlx_load_png("./asset/sand/sand_7.png");
+	sand[8] = mlx_load_png("./asset/sand/sand_8.png");
+    sand[9] = mlx_load_png("./asset/sand/sand_9.png");
+	sand[10] = mlx_load_png("./asset/sand/sand_10.png");
+	sand[11] = mlx_load_png("./asset/sand/sand_11.png");
+	sand[12] = mlx_load_png("./asset/sand/sand_12.png");
+	sand[13] = mlx_load_png("./asset/sand/sand_13.png");
+	sand[14] = mlx_load_png("./asset/sand/sand_14.png");
+	sand[15] = mlx_load_png("./asset/sand/sand_15.png");
 }
 
 void    init_wall_texture(mlx_texture_t **wall)

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 19:09:13 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:57:14 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define HEIGHT 576
 # define C_WIDTH 13
 # define C_HEIGHT 9
-# define R_WIDTH 30
+# define R_WIDTH 40
 # define R_HEIGHT 30
 
 // storage of pos x and y
@@ -44,6 +44,7 @@ typedef struct s_vec2
 typedef struct s_texture
 {
 	mlx_texture_t	*grass[16];
+	mlx_texture_t	*sand[16];
 	mlx_texture_t	*wall[16];
 	mlx_texture_t	*player[10];
 	mlx_texture_t	*camera;
@@ -53,6 +54,7 @@ typedef struct s_texture
 typedef struct s_img
 {
 	mlx_image_t		*grass[16];
+	mlx_image_t		*sand[16];
 	mlx_image_t		*wall[16];
 	mlx_image_t		*player;
 	mlx_image_t		*camera;
@@ -90,5 +92,6 @@ void				fill_2d_map_array(t_map ***array, int32_t rows,
 void				print_2d_map_array(t_map ***array);
 void				init_grass_texture(mlx_texture_t **grass);
 void				init_wall_texture(mlx_texture_t **wall);
+void				init_sand_texture(mlx_texture_t **sand);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 18:34:45 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:13:11 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 /// @param rows number of the array
 /// @param cols number of the array
 /// @return the array
-t_map	***allocate_2d_map_array(int32_t rows, int32_t cols)
+t_map	***allocate_2d_map_array(int32_t cols, int32_t rows)
 {
 	t_map ***map;
-	int x;
-	int y;
+	int i;
+	int j;
 
 	map = calloc(cols + 1, sizeof(t_map **));
-	x = 0;
-	while (x < cols)
+	i = 0;
+	while (i < cols)
 	{
-		map[x] = calloc(rows + 1, sizeof(t_map *));
-		y = 0;
-		while (y < rows)
-			map[x][y++] = calloc(1, sizeof(t_map));
-		x++;
+		map[i] = calloc(rows + 1, sizeof(t_map *));
+		j = 0;
+		while (j < rows)
+			map[i][j++] = calloc(1, sizeof(t_map));
+		i++;
 	}
 	return map;
 }
@@ -40,18 +40,18 @@ t_map	***allocate_2d_map_array(int32_t rows, int32_t cols)
 /// @param rows number of the array
 /// @param cols number of the array
 /// @param c the letter use for fill
-void	fill_2d_map_array(t_map ***array, int32_t rows, int32_t cols, char c)
+void	fill_2d_map_array(t_map ***array, int32_t cols, int32_t rows, char c)
 {
-	int32_t	y;
-	int32_t	x;
+	int32_t	i;
+	int32_t	j;
 
-	x = 0;
-	while (x < cols)
+	i = 0;
+	while (i < cols)
 	{
-		y = 0;
-		while (y < rows)
-			array[x][y++]->id = c;
-		x++;
+		j = 0;
+		while (j < rows)
+			array[i][j++]->id = c;
+		i++;
 	}
 }
 
@@ -63,9 +63,9 @@ void	print_2d_map_array(t_map ***array)
 	int32_t	y;
 
 	x = 0;
+	y = 0;
 	while (array[x])
 	{
-		y = 0;
 		while (array[x][y])
 		{
 			ft_printf("%c", array[x][y]->id);
