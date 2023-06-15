@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/15 11:48:21 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:37:58 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_texture
 	mlx_texture_t	*grass[16];
 	mlx_texture_t	*sand[16];
 	mlx_texture_t	*water[16];
-	mlx_texture_t	*wall[16];
+	mlx_texture_t	*wall[20];
 	mlx_texture_t	*player[10];
 	mlx_texture_t	*camera;
 }					t_texture;
@@ -57,7 +57,7 @@ typedef struct s_img
 	mlx_image_t		*grass[16];
 	mlx_image_t		*sand[16];
 	mlx_image_t		*water[16];
-	mlx_image_t		*wall[16];
+	mlx_image_t		*wall[20];
 	mlx_image_t		*player;
 	mlx_image_t		*camera;
 

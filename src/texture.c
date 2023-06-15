@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/15 11:03:58 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:43:30 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,8 @@ void    init_wall_texture(mlx_texture_t **wall)
 	wall[13] = mlx_load_png("./asset/wall/wall_13.png");
 	wall[14] = mlx_load_png("./asset/wall/wall_14.png");
 	wall[15] = mlx_load_png("./asset/wall/wall_15.png");
+	wall[16] = mlx_load_png("./asset/wall/wall_16.png");
+	wall[17] = mlx_load_png("./asset/wall/wall_17.png");
+	wall[18] = mlx_load_png("./asset/wall/wall_18.png");
+	wall[19] = mlx_load_png("./asset/wall/wall_19.png");
 }
