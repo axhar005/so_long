@@ -95,3 +95,17 @@ void    init_wall_texture(mlx_texture_t **wall)
 	wall[18] = mlx_load_png("./asset/wall/wall_18.png");
 	wall[19] = mlx_load_png("./asset/wall/wall_19.png");
 }
+
+void    init_player_texture(mlx_texture_t **player)
+{   
+    player[0] = mlx_load_png("./asset/player/player_down_0.png");
+	player[1] = mlx_load_png("./asset/player/player_down_1.png");
+	player[2] = mlx_load_png("./asset/player/player_up_0.png");
+	player[3] = mlx_load_png("./asset/player/player_up_1.png");
+	player[4] = mlx_load_png("./asset/player/player_left_0.png");
+	player[5] = mlx_load_png("./asset/player/player_left_1.png");
+	player[6] = mlx_load_png("./asset/player/player_left_2.png");
+	player[7] = mlx_load_png("./asset/player/player_right_0.png");
+	player[8] = mlx_load_png("./asset/player/player_right_1.png");
+    player[9] = mlx_load_png("./asset/player/player_right_2.png");
+}

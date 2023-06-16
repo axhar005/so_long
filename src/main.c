@@ -55,25 +55,32 @@ int32_t	index_auto_tiling(int32_t val)
 	return (-1);
 }
 
-void	auto_tiling(void)
+void	auto_tiling(int32_t x, int32_t y, int32_t width, int32_t height)
 {
-	int32_t	x;
-	int32_t	y;
+	int32_t i;
+	int32_t j;
+	int32_t xx;
+	int32_t yy;
 
-	x = 0;
-	while (x < R_WIDTH)
+	i = 0;
+	while (i <= width)
 	{
-		y = 0;
-		while (y < R_HEIGHT)
+		j = 0;
+		while (j <= height)
 		{
-			game.grid[x][y]->tile_index = index_auto_tiling(calculate_auto_tiling(x, y, game.grid[x][y]->id));
-			if (game.grid[x][y]->id == '1' || game.grid[x][y]->id == '3')
-				game.grid[x][y]->solid = true;
-			if (game.grid[x][y]->id == '0' || game.grid[x][y]->id == '2')
-				game.grid[x][y]->solid = false;
-			y++;
+			xx = x + i;
+			yy = y + j;
+			if ((xx >= 0 && xx < R_WIDTH) && (yy >= 0 && yy < R_HEIGHT))
+			{
+				game.grid[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx, yy, game.grid[xx][yy]->id));
+				if (game.grid[xx][yy]->id == '1' || game.grid[xx][yy]->id == '3')
+					game.grid[xx][yy]->solid = true;
+				if (game.grid[xx][yy]->id == '0' || game.grid[xx][yy]->id == '2')
+					game.grid[xx][yy]->solid = false;
+			}
+			j++;
 		}
-		x++;
+		i++;
 	}
 }
 
@@ -182,8 +189,10 @@ void mouse_click(int32_t mx, int32_t my, char id)
 	mx = game.cameraGrid.x + ((mx+game.offSet.x)/SPRITE_SIZE);
 		my = game.cameraGrid.y + ((my+game.offSet.y)/SPRITE_SIZE);
 		if ((mx >= 0 && mx < R_WIDTH) && (my >= 0 && my < R_HEIGHT))
+		{
 			game.grid[mx][my]->id = id;
-		auto_tiling();
+			auto_tiling(mx - 1, my - 1, 3, 3);
+		}
 }
 
 void	init_img(t_img *img)
@@ -191,20 +200,20 @@ void	init_img(t_img *img)
 	int	i;
 
 	i = 0;
-	while (i < 16)
+	while (i < 20)
 	{
-		img->grass[i] = mlx_texture_to_image(game.mlx, game.tex.grass[i]);
-		img->sand[i] = mlx_texture_to_image(game.mlx, game.tex.sand[i]);
-		img->water[i] = mlx_texture_to_image(game.mlx, game.tex.water[i]);
-		img->wall[i] = mlx_texture_to_image(game.mlx, game.tex.wall[i]);
+		if (i < 10)
+			img->player[i] = mlx_texture_to_image(game.mlx, game.tex.player[i]);
+		if (i < 16)
+		{
+			img->grass[i] = mlx_texture_to_image(game.mlx, game.tex.grass[i]);
+			img->sand[i] = mlx_texture_to_image(game.mlx, game.tex.sand[i]);
+			img->water[i] = mlx_texture_to_image(game.mlx, game.tex.water[i]);
+		}
+		if (i < 20)
+			img->wall[i] = mlx_texture_to_image(game.mlx, game.tex.wall[i]);
 		i++;
 	}
-	img->player = mlx_texture_to_image(game.mlx, game.tex.player[0]);
-	img->wall[16] = mlx_texture_to_image(game.mlx, game.tex.wall[16]);
-	img->wall[17] = mlx_texture_to_image(game.mlx, game.tex.wall[17]);
-	img->wall[18] = mlx_texture_to_image(game.mlx, game.tex.wall[18]);
-	img->wall[19] = mlx_texture_to_image(game.mlx, game.tex.wall[19]);
-
 }
 
 void	del_img(t_img *img)
@@ -212,19 +221,20 @@ void	del_img(t_img *img)
 	int	i;
 
 	i = 0;
-	while (i < 16)
+	while (i < 20)
 	{
-		mlx_delete_image(game.mlx, img->grass[i]);
-		mlx_delete_image(game.mlx, img->sand[i]);
-		mlx_delete_image(game.mlx, img->water[i]);
-		mlx_delete_image(game.mlx, img->wall[i]);
+		if (i < 10)
+			mlx_delete_image(game.mlx, img->player[i]);
+		if (i < 16)
+		{
+			mlx_delete_image(game.mlx, img->grass[i]);
+			mlx_delete_image(game.mlx, img->sand[i]);
+			mlx_delete_image(game.mlx, img->water[i]);
+		}
+		if (i < 20)
+			mlx_delete_image(game.mlx, img->wall[i]);
 		i++;
 	}
-	mlx_delete_image(game.mlx, img->player);
-	mlx_delete_image(game.mlx, img->wall[16]);
-	mlx_delete_image(game.mlx, img->wall[17]);
-	mlx_delete_image(game.mlx, img->wall[18]);
-	mlx_delete_image(game.mlx, img->wall[19]);
 }
 
 void	draw_grid(int32_t posX, int32_t posY)
@@ -269,7 +279,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 		}
 		i++;
 	}
-	mlx_image_to_window(game.mlx, game.img.player, (C_WIDTH / 2) * SPRITE_SIZE,
+	mlx_image_to_window(game.mlx, game.img.player[4], (C_WIDTH / 2) * SPRITE_SIZE,
 			(C_HEIGHT / 2) * SPRITE_SIZE);
 }
 
@@ -299,13 +309,14 @@ void	step(void *param)
 		mlx_close_window(mlx);
 	if (mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
 		mouse_click(mx, my, game.mouse_id);
-	if (mlx_is_key_down(mlx, MLX_KEY_KP_1))
+	if (mlx_is_key_down(mlx, MLX_KEY_1))
 		game.mouse_id = '1';
-	if (mlx_is_key_down(mlx, MLX_KEY_KP_0))
+	if (mlx_is_key_down(mlx, MLX_KEY_0))
 		game.mouse_id = '0';
-	if (mlx_is_key_down(mlx, MLX_KEY_KP_2))
+	if (mlx_is_key_down(mlx, MLX_KEY_2))
 		game.mouse_id = '2';
-	
+	if (mlx_is_key_down(mlx, MLX_KEY_3))
+		game.mouse_id = '3';
 
 	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
 		* spd;
@@ -393,6 +404,7 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = '1';
+	// init_player_animation(&game);
 
 	//GRID
 	game.grid = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
@@ -433,7 +445,7 @@ int32_t	main(void)
 	game.grid[1][6]->id = '3';
 	game.grid[1][5]->id = '3';
 
-	auto_tiling();
+	auto_tiling(0, 0, R_WIDTH, R_HEIGHT);
 	// print_2d_map_array(game.grid);
 	// printf("njsad:%d\n",calculate_auto_tiling(4, 4, '0'));
 
@@ -444,8 +456,8 @@ int32_t	main(void)
 	init_sand_texture(game.tex.sand);
 	init_wall_texture(game.tex.wall);
 	init_water_texture(game.tex.water);
+	init_player_texture(game.tex.player);
 
-	game.tex.player[0] = mlx_load_png("./asset/player/player_down.png");
 
 	init_img(&game.img);
 

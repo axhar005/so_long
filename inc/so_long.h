@@ -30,8 +30,8 @@
 # define HEIGHT 576
 # define C_WIDTH 13
 # define C_HEIGHT 9
-# define R_WIDTH 20
-# define R_HEIGHT 20
+# define R_WIDTH 2000
+# define R_HEIGHT 1000
 
 // storage of pos x and y
 typedef struct s_vec2
@@ -58,7 +58,7 @@ typedef struct s_img
 	mlx_image_t		*sand[16];
 	mlx_image_t		*water[16];
 	mlx_image_t		*wall[20];
-	mlx_image_t		*player;
+	mlx_image_t		*player[10];
 	mlx_image_t		*camera;
 
 }					t_img;
@@ -70,6 +70,17 @@ typedef struct s_map
 	bool			solid;
 
 }					t_map;
+
+typedef struct s_animation
+{
+	int32_t			index;
+	char *			up;
+	char *			down;
+	char *			left;
+	char *			right;
+
+}					t_animation;
+
 
 // all game struct
 typedef struct s_game
@@ -86,6 +97,7 @@ typedef struct s_game
 	t_vec2			cameraGrid;
 	t_vec2			camera;
 	t_vec2			offSet;
+	t_animation 	player_animation;
 }					t_game;
 
 // prototype
@@ -98,5 +110,7 @@ void				init_grass_texture(mlx_texture_t **grass);
 void				init_wall_texture(mlx_texture_t **wall);
 void				init_sand_texture(mlx_texture_t **sand);
 void				init_water_texture(mlx_texture_t **water);
+void    			init_player_texture(mlx_texture_t **player);
+
 
 #endif
