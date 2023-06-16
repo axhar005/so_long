@@ -279,7 +279,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 		}
 		i++;
 	}
-	mlx_image_to_window(game.mlx, game.img.player[4], (C_WIDTH / 2) * SPRITE_SIZE,
+	mlx_image_to_window(game.mlx, game.img.player[game.player_animation.index], (C_WIDTH / 2) * SPRITE_SIZE,
 			(C_HEIGHT / 2) * SPRITE_SIZE);
 }
 
@@ -350,7 +350,7 @@ void	step(void *param)
 			}
 		}
 		if (vspd != 0)
-		{
+		{	
 			if (game.player.y + vspd >= 0 && (game.player.y + SPRITE_SIZE)
 				+ vspd <= R_HEIGHT * SPRITE_SIZE)
 			{
@@ -372,6 +372,15 @@ void	step(void *param)
 					game.player.y += sign(vspd);
 			}
 		}
+		if (vspd >= 1)
+			play_animation(&game, &game.player_animation, game.player_animation.down);
+		else if (vspd <= -1)
+				play_animation(&game, &game.player_animation, game.player_animation.up);
+		else if (hspd >= 1)
+			play_animation(&game, &game.player_animation, game.player_animation.right);
+		else if (hspd <= -1)
+			play_animation(&game, &game.player_animation, game.player_animation.left);
+		draw();
 		frame = 0;
 	}
 	frame += game.delta_time;
@@ -390,7 +399,6 @@ void	step(void *param)
 	// update cameraGrid pos
 	game.cameraGrid.x = game.playerGrid.x - C_WIDTH / 2;
 	game.cameraGrid.y = game.playerGrid.y - C_HEIGHT / 2;
-	draw();
 }
 
 int32_t	main(void)
@@ -404,7 +412,8 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = '1';
-	// init_player_animation(&game);
+
+	init_player_animation(&game);
 
 	//GRID
 	game.grid = allocate_2d_map_array(R_WIDTH, R_HEIGHT);

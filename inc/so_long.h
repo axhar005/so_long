@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/15 14:39:01 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:17:09 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,13 @@ typedef struct s_map
 typedef struct s_animation
 {
 	int32_t			index;
-	char *			up;
-	char *			down;
-	char *			left;
-	char *			right;
+	int32_t			loop;
+	double			speed;
+	double			clock;
+	char **			up;
+	char **			down;
+	char **			left;
+	char **			right;
 
 }					t_animation;
 
@@ -111,6 +114,8 @@ void				init_wall_texture(mlx_texture_t **wall);
 void				init_sand_texture(mlx_texture_t **sand);
 void				init_water_texture(mlx_texture_t **water);
 void    			init_player_texture(mlx_texture_t **player);
-
+int 				ft_strnum(char **str);
+void 				play_animation(t_game *game, t_animation *animation, char **direction);
+void 				init_player_animation(t_game *game);
 
 #endif
