@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/06/16 17:38:03 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/17 19:35:45 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void init_player_animation(t_game *game)
 {
     game->player_animation.up = ft_split("2,3", ',');
 	game->player_animation.down = ft_split("0,1", ',');
-	game->player_animation.left = ft_split("4,5,4,6", ',');
-	game->player_animation.right = ft_split("7,8,7,9", ',');
+	game->player_animation.left = ft_split("5,4,6,4", ',');
+	game->player_animation.right = ft_split("8,7,9,7", ',');
     game->player_animation.clock = 0;
     game->player_animation.speed = 1.8;
     game->player_animation.index = 0;

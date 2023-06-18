@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:46 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/06/16 14:26:06 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/18 00:19:55 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,11 @@ int ft_strnum(char **str)
     while (str[i])
         i++;
     return (i);
+}
+
+char ft_itoc(int i)
+{
+    if (i >= 0 && i < 10)
+        return (i + 48);
+    return ('*');
 }

@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/16 17:17:09 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/18 00:20:09 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ typedef struct s_vec2
 typedef struct s_texture
 {
 	mlx_texture_t	*grass[16];
+	mlx_texture_t	*dirt[16];
 	mlx_texture_t	*sand[16];
 	mlx_texture_t	*water[16];
 	mlx_texture_t	*wall[20];
 	mlx_texture_t	*player[10];
+	mlx_texture_t	*plank_floor;
+	mlx_texture_t	*stone_floor;
 	mlx_texture_t	*camera;
 }					t_texture;
 
@@ -55,10 +58,13 @@ typedef struct s_texture
 typedef struct s_img
 {
 	mlx_image_t		*grass[16];
+	mlx_image_t		*dirt[16];
 	mlx_image_t		*sand[16];
 	mlx_image_t		*water[16];
 	mlx_image_t		*wall[20];
 	mlx_image_t		*player[10];
+	mlx_image_t		*plank_floor;
+	mlx_image_t		*stone_floor;
 	mlx_image_t		*camera;
 
 }					t_img;
@@ -105,16 +111,34 @@ typedef struct s_game
 
 // prototype
 
+//map
+
 t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_map ***array, int32_t rows,
 						int32_t cols, char c);
 void				print_2d_map_array(t_map ***array);
+
+//texture
+
 void				init_grass_texture(mlx_texture_t **grass);
 void				init_wall_texture(mlx_texture_t **wall);
 void				init_sand_texture(mlx_texture_t **sand);
 void				init_water_texture(mlx_texture_t **water);
 void    			init_player_texture(mlx_texture_t **player);
+void    			init_dirt_texture(mlx_texture_t **dirt);
+
+//image
+
+void				init_img(t_game *game, t_img *img);
+void				del_img(t_game *game, t_img *img);
+
+//string
+
 int 				ft_strnum(char **str);
+char 				ft_itoc(int i);
+
+//animation
+
 void 				play_animation(t_game *game, t_animation *animation, char **direction);
 void 				init_player_animation(t_game *game);
 

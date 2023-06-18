@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/15 12:43:30 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:24:25 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,24 @@ void    init_player_texture(mlx_texture_t **player)
 	player[7] = mlx_load_png("./asset/player/player_right_0.png");
 	player[8] = mlx_load_png("./asset/player/player_right_1.png");
     player[9] = mlx_load_png("./asset/player/player_right_2.png");
+}
+
+void    init_dirt_texture(mlx_texture_t **dirt)
+{   
+	dirt[0] = mlx_load_png("./asset/dirt/dirt_0.png");
+	dirt[1] = mlx_load_png("./asset/dirt/dirt_1.png");
+	dirt[2] = mlx_load_png("./asset/dirt/dirt_2.png");
+	dirt[3] = mlx_load_png("./asset/dirt/dirt_3.png");
+	dirt[4] = mlx_load_png("./asset/dirt/dirt_4.png");
+	dirt[5] = mlx_load_png("./asset/dirt/dirt_5.png");
+	dirt[6] = mlx_load_png("./asset/dirt/dirt_6.png");
+	dirt[7] = mlx_load_png("./asset/dirt/dirt_7.png");
+	dirt[8] = mlx_load_png("./asset/dirt/dirt_8.png");
+    dirt[9] = mlx_load_png("./asset/dirt/dirt_9.png");
+	dirt[10] = mlx_load_png("./asset/dirt/dirt_10.png");
+	dirt[11] = mlx_load_png("./asset/dirt/dirt_11.png");
+	dirt[12] = mlx_load_png("./asset/dirt/dirt_12.png");
+	dirt[13] = mlx_load_png("./asset/dirt/dirt_13.png");
+	dirt[14] = mlx_load_png("./asset/dirt/dirt_14.png");
+	dirt[15] = mlx_load_png("./asset/dirt/dirt_15.png");
 }
