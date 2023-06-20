@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/18 22:23:56 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/20 13:35:44 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define HEIGHT 576
 # define C_WIDTH 13
 # define C_HEIGHT 9
-# define R_WIDTH 20
-# define R_HEIGHT 30
+# define R_WIDTH 6
+# define R_HEIGHT 6
 
 // storage of pos x and y
 typedef struct s_vec2
@@ -83,7 +83,7 @@ typedef struct s_map
 	char			id;
 	int32_t			tile_index;
 	bool			solid;
-	
+
 }					t_map;
 
 typedef struct s_animation
@@ -92,23 +92,25 @@ typedef struct s_animation
 	int32_t			loop;
 	double			speed;
 	double			clock;
-	char **			up;
-	char **			down;
-	char **			left;
-	char **			right;
+	char			**sheet;
+	char			**old_sheet;
+	char			**up;
+	char			**down;
+	char			**left;
+	char			**right;
 
 }					t_animation;
-
 
 // all game struct
 typedef struct s_game
 {
 	char			mouse_id;
+	double			delta_time;
+	int32_t			player_dir;
 	t_img			img;
 	t_img			old_img;
 	t_texture		tex;
 	mlx_t			*mlx;
-	double			delta_time;
 	t_map			***grid;
 	t_vec2			playerGrid;
 	t_vec2			player;
@@ -116,7 +118,7 @@ typedef struct s_game
 	t_vec2			camera;
 	t_vec2			offSet;
 	t_hitbox		player_hitbox;
-	t_animation 	player_animation;
+	t_animation		player_animation;
 }					t_game;
 
 // prototype
@@ -126,7 +128,8 @@ typedef struct s_game
 t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_map ***array, int32_t rows,
 						int32_t cols, char c);
-void				print_2d_map_array(t_map ***array, int32_t cols, int32_t rows);
+void				print_2d_map_array(t_map ***array, int32_t cols,
+						int32_t rows);
 
 //texture
 
@@ -134,8 +137,8 @@ void				init_grass_texture(mlx_texture_t **grass);
 void				init_wall_texture(mlx_texture_t **wall);
 void				init_sand_texture(mlx_texture_t **sand);
 void				init_water_texture(mlx_texture_t **water);
-void    			init_player_texture(mlx_texture_t **player);
-void    			init_dirt_texture(mlx_texture_t **dirt);
+void				init_player_texture(mlx_texture_t **player);
+void				init_dirt_texture(mlx_texture_t **dirt);
 
 //image
 
@@ -144,14 +147,17 @@ void				del_img(t_game *game, t_img *img);
 
 //string
 
-int 				ft_strnum(char **str);
-char 				ft_itoc(int i);
+int					ft_strnum(char **str);
+char				ft_itoc(int i);
 
 //animation
 
-void 				play_animation(t_game *game, t_animation *animation, char **direction);
-void 				init_player_animation(t_game *game);
+void				play_animation(t_game *game, t_animation *animation,
+						char **direction);
+void				init_player_animation(t_game *game);
 
 //movement
+
+void				player_animation_dir(t_game *game);
 
 #endif

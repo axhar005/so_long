@@ -186,13 +186,16 @@ void mouse_click(int32_t mx, int32_t my, char id)
 		my = game.cameraGrid.y + ((my+game.offSet.y)/SPRITE_SIZE);
 		if ((mx >= 0 && mx < R_WIDTH) && (my >= 0 && my < R_HEIGHT))
 		{
-			game.grid[mx][my]->id = ft_itoc(id);
-			if (game.grid[mx][my]->id == '1' || game.grid[mx][my]->id == '3')
-				game.grid[mx][my]->solid = true;
-			if (game.grid[mx][my]->id == '0' || game.grid[mx][my]->id == '2'|| game.grid[mx][my]->id == '4' 
-				|| game.grid[mx][my]->id == '5' || game.grid[mx][my]->id == '6')
-				game.grid[mx][my]->solid = false;
-			auto_tiling(mx - 1, my - 1, 3, 3);
+			if (game.grid[mx][my]->id != ft_itoc(id))
+			{
+				game.grid[mx][my]->id = ft_itoc(id);
+				if (game.grid[mx][my]->id == '1' || game.grid[mx][my]->id == '3')
+					game.grid[mx][my]->solid = true;
+				if (game.grid[mx][my]->id == '0' || game.grid[mx][my]->id == '2'|| game.grid[mx][my]->id == '4' 
+					|| game.grid[mx][my]->id == '5' || game.grid[mx][my]->id == '6')
+					game.grid[mx][my]->solid = false;
+				auto_tiling(mx - 1, my - 1, 3, 3);
+			}
 		}
 }
 
@@ -254,9 +257,9 @@ void	draw(void)
 	draw_grid(game.cameraGrid.x, game.cameraGrid.y);
 }
 
-bool is_key_pressed(t_game *game,  int32_t key)
+bool is_key_pressed(t_game *game,  keys_t key)
 {
-	static int32_t *array;
+	static keys_t *array;
 	int32_t i;
 
 	i = 0;
@@ -389,14 +392,7 @@ void	step(void *param)
 					game.player.y += sign(vspd);
 			}
 		}
-		if (mlx_is_key_down(game.mlx, MLX_KEY_S))
-			play_animation(&game, &game.player_animation, game.player_animation.down);
-		else if (mlx_is_key_down(game.mlx, MLX_KEY_W))
-				play_animation(&game, &game.player_animation, game.player_animation.up);
-		else if (mlx_is_key_down(game.mlx, MLX_KEY_D))
-			play_animation(&game, &game.player_animation, game.player_animation.right);
-		else if (mlx_is_key_down(game.mlx, MLX_KEY_A))
-			play_animation(&game, &game.player_animation, game.player_animation.left);
+		player_animation_dir(&game);
 		draw();
 		frame = 0;
 	}

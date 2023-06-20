@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
+#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/06/17 15:30:47 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/06/20 13:36:07 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ INCDIR = inc
 
 #--- SOURCE ---#
 SRCDIR	=	src
-SRC		= 	main.c utils.c texture.c string.c animation.c image.c
+SRC		= 	main.c utils.c texture.c string.c animation.c image.c player_utils.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#
