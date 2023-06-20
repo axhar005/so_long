@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/14 22:13:11 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/18 21:10:36 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,22 @@ void	fill_2d_map_array(t_map ***array, int32_t cols, int32_t rows, char c)
 
 /// @brief print in terminal a 2d t_map array
 /// @param array the array
-void	print_2d_map_array(t_map ***array)
+void	print_2d_map_array(t_map ***array, int32_t cols, int32_t rows)
 {
 	int32_t	x;
 	int32_t	y;
 
-	x = 0;
 	y = 0;
-	while (array[x])
+	while (y < rows)
 	{
-		while (array[x][y])
+		x = 0;
+		while (x < cols)
 		{
 			ft_printf("%c", array[x][y]->id);
-			ft_printf("%d ", array[x][y++]->tile_index);
+			ft_printf("%d ", array[x++][y]->tile_index);
 		}
 		ft_printf("\n");
-		x++;
+		y++;
 	}
+	ft_printf("\n");
 }

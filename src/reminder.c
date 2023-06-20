@@ -51,3 +51,52 @@
 // 		i++;
 // 	}
 // }
+
+
+// #include "../inc/so_long.h"    
+
+// bool (key_one_pressed(mlx, MLX_KEY))
+// {
+//     static buffer = true;
+
+//     if (mlx_is_key_down(mlx, MLX_KEY))
+//         if buffer == true {
+//             buffer = false;
+//             return true;
+//         else
+//             return false;
+//     else
+//         buffer = true;
+//         return false;    
+// }
+
+// bool (key_one_pressed(mlx, MLX_KEY))
+// {  
+//     bool buffer = true;
+//     while (mlx_is_key_down(mlx, key))
+//         if buffer == true {
+//             buffer = false
+//             return true;
+//         }
+//         return false
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

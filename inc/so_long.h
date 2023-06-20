@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/18 00:20:09 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/18 22:23:56 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define HEIGHT 576
 # define C_WIDTH 13
 # define C_HEIGHT 9
-# define R_WIDTH 2000
-# define R_HEIGHT 1000
+# define R_WIDTH 20
+# define R_HEIGHT 30
 
 // storage of pos x and y
 typedef struct s_vec2
@@ -39,6 +39,15 @@ typedef struct s_vec2
 	int32_t			x;
 	int32_t			y;
 }					t_vec2;
+
+//hitbox
+typedef struct s_hitbox
+{
+	int32_t			top;
+	int32_t			bot;
+	int32_t			left;
+	int32_t			right;
+}					t_hitbox;
 
 // storage of all texture (png)
 typedef struct s_texture
@@ -74,7 +83,7 @@ typedef struct s_map
 	char			id;
 	int32_t			tile_index;
 	bool			solid;
-
+	
 }					t_map;
 
 typedef struct s_animation
@@ -106,6 +115,7 @@ typedef struct s_game
 	t_vec2			cameraGrid;
 	t_vec2			camera;
 	t_vec2			offSet;
+	t_hitbox		player_hitbox;
 	t_animation 	player_animation;
 }					t_game;
 
@@ -116,7 +126,7 @@ typedef struct s_game
 t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_map ***array, int32_t rows,
 						int32_t cols, char c);
-void				print_2d_map_array(t_map ***array);
+void				print_2d_map_array(t_map ***array, int32_t cols, int32_t rows);
 
 //texture
 
@@ -141,5 +151,7 @@ char 				ft_itoc(int i);
 
 void 				play_animation(t_game *game, t_animation *animation, char **direction);
 void 				init_player_animation(t_game *game);
+
+//movement
 
 #endif
