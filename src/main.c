@@ -180,21 +180,41 @@ bool	tile_collision(int x, int y, int w, int h, char c)
 	return (false);
 }
 
-void mouse_click(int32_t mx, int32_t my, char id)
+bool point_distance(t_vec2 bow, t_vec2 target, int32_t distance)
 {
-	mx = game.cameraGrid.x + ((mx+game.offSet.x)/SPRITE_SIZE);
-		my = game.cameraGrid.y + ((my+game.offSet.y)/SPRITE_SIZE);
-		if ((mx >= 0 && mx < R_WIDTH) && (my >= 0 && my < R_HEIGHT))
+	int32_t cal;
+
+	cal = (bow.x - target.x) - (bow.y - target.y);
+	if (cal < 0)
+		cal *= -1;
+	if (cal <= distance)
+		return (true);
+	return (false);
+}
+
+void selector(t_game *game)
+{
+	if (point_distance(game->playerGrid, game->mouseGrid, game->arm_range))
+	{
+		ft_printf("zigotou\n");
+	}
+}
+
+void place_tile(t_vec2 pos, char id)
+{
+	pos.x = game.cameraGrid.x + ((pos.x+game.offSet.x)/SPRITE_SIZE);
+	pos.y = game.cameraGrid.y + ((pos.y+game.offSet.y)/SPRITE_SIZE);
+		if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
 		{
-			if (game.grid[mx][my]->id != ft_itoc(id))
+			if (game.grid[pos.x][pos.y]->id != ft_itoc(id))
 			{
-				game.grid[mx][my]->id = ft_itoc(id);
-				if (game.grid[mx][my]->id == '1' || game.grid[mx][my]->id == '3')
-					game.grid[mx][my]->solid = true;
-				if (game.grid[mx][my]->id == '0' || game.grid[mx][my]->id == '2'|| game.grid[mx][my]->id == '4' 
-					|| game.grid[mx][my]->id == '5' || game.grid[mx][my]->id == '6')
-					game.grid[mx][my]->solid = false;
-				auto_tiling(mx - 1, my - 1, 3, 3);
+				game.grid[pos.x][pos.y]->id = ft_itoc(id);
+				if (game.grid[pos.x][pos.y]->id == '1' || game.grid[pos.x][pos.y]->id == '3')
+					game.grid[pos.x][pos.y]->solid = true;
+				if (game.grid[pos.x][pos.y]->id == '0' || game.grid[pos.x][pos.y]->id == '2'|| game.grid[pos.x][pos.y]->id == '4' 
+					|| game.grid[pos.x][pos.y]->id == '5' || game.grid[pos.x][pos.y]->id == '6')
+					game.grid[pos.x][pos.y]->solid = false;
+				auto_tiling(pos.x - 1, pos.y - 1, 3, 3);
 			}
 		}
 }
@@ -248,6 +268,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 		}
 		i++;
 	}
+	selector(&game);
 	mlx_image_to_window(game.mlx, game.img.player[game.player_animation.index], (C_WIDTH / 2) * SPRITE_SIZE,
 			(C_HEIGHT / 2) * SPRITE_SIZE);
 }
@@ -312,10 +333,7 @@ void	step(void *param)
 	spd = 10;
 	mlx = param;
 	game.delta_time = game.mlx->delta_time * 30;
-
-	int mx = 0;
-	int my = 0;
-	mlx_get_mouse_pos(mlx, &mx, &my);
+	mlx_get_mouse_pos(mlx, &game.mouse.x, &game.mouse.y);
 	if (is_key_pressed(&game, MLX_KEY_P))
 	{
 		game.mouse_id += 1;
@@ -334,9 +352,8 @@ void	step(void *param)
 		print_2d_map_array(game.grid, R_WIDTH, R_HEIGHT);
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
-		mouse_click(mx, my, game.mouse_id);
-
+	if (mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_RIGHT))
+		place_tile(game.mouse, game.mouse_id);
 	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
 		* spd;
 	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
@@ -406,6 +423,11 @@ void	step(void *param)
 	// update cameraGrid pos
 	game.cameraGrid.x = game.playerGrid.x - C_WIDTH / 2;
 	game.cameraGrid.y = game.playerGrid.y - C_HEIGHT / 2;
+	// update mouseGrid pos
+	game.mouseGrid.x = game.cameraGrid.x + ((game.mouse.x+game.offSet.x)/SPRITE_SIZE);
+	game.mouseGrid.y = game.cameraGrid.y + ((game.mouse.y+game.offSet.y)/SPRITE_SIZE);
+	// printf("X: %d\n", game.mouseGrid.x);
+	// printf("Y: %d\n", game.mouseGrid.y);
 }
 
 int32_t	main(void)
@@ -423,6 +445,7 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = 0;
+	game.arm_range = 3;
 
 	init_player_animation(&game);
 
@@ -444,6 +467,7 @@ int32_t	main(void)
 	init_dirt_texture(game.tex.dirt);
 	game.tex.plank_floor = mlx_load_png("./asset/wood/plank_floor.png");
 	game.tex.stone_floor = mlx_load_png("./asset/stone/stone_floor.png");
+	game.tex.selector = mlx_load_png("./asset/selector.png");
 
 	// init_img(&game);
 	mlx_loop_hook(game.mlx, step, game.mlx);

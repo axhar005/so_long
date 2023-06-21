@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:32:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/17 21:40:02 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/20 21:32:59 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_img(t_game *game, t_img *img)
 	}
 	img->plank_floor = mlx_texture_to_image(game->mlx, game->tex.plank_floor);
 	img->stone_floor = mlx_texture_to_image(game->mlx, game->tex.stone_floor);
+	img->selector = mlx_texture_to_image(game->mlx, game->tex.selector);
 }
 
 void	del_img(t_game *game, t_img *img)
@@ -58,4 +59,5 @@ void	del_img(t_game *game, t_img *img)
 	}
 	mlx_delete_image(game->mlx, img->plank_floor);
 	mlx_delete_image(game->mlx, img->stone_floor);
+	mlx_delete_image(game->mlx, img->selector);
 }
