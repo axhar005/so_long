@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/20 21:59:04 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:54:13 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,10 @@ void				del_img(t_game *game, t_img *img);
 int					ft_strnum(char **str);
 char				ft_itoc(int i);
 
+//collision
+
+bool				tile_collision(int x, int y, int w, int h, char c);
+
 //animation
 
 void				play_animation(t_game *game, t_animation *animation,
@@ -163,6 +167,15 @@ void				init_player_animation(t_game *game);
 
 //movement
 
+void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
+						bool is_vertical);
+void				move_colide(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
+						int32_t *md);
 void				player_animation_dir(t_game *game);
+
+//math
+
+int					sign(int nb);
+bool				is_even(int nb);
 
 #endif

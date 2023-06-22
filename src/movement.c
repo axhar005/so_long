@@ -3,54 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/06/18 22:24:56 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/21 20:14:16 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void movement(t_vec2 pos, int32_t dir, t_hitbox hitbox, int32_t md)
+void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 {
-    if (dir != 0)
-    {
-        if (md + dir >= 0 && (md + SPRITE_SIZE)
-            + dir <= R_WIDTH * SPRITE_SIZE)
-        {
-            if (tile_collision((pos.x + hitbox.left) + dir, pos.y
-                    + hitbox.top, SPRITE_SIZE - (hitbox.right + hitbox.left),
-                     SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
-            {
-                while (!tile_collision((pos.x + hitbox.left) + sign(dir),
-                                        pos.y + hitbox.top,
-                                        SPRITE_SIZE - (hitbox.right + hitbox.left),
-                                        SPRITE_SIZE - (hitbox.bot + hitbox.top),
-                                        's'))
-                    md += sign(dir);
-                dir = 0;
-            }
-            md += dir;
-        }
-        else
-        {
-            while (md + sign(dir) >= 0 && (md
-                    + SPRITE_SIZE) + sign(dir) <= R_WIDTH * SPRITE_SIZE)
-                md += sign(dir);
-        }
-    }
+	int32_t *md;
+
+	if (is_vertical == true)
+		md = &pos->y;
+	else
+		md = &pos->x;	
+	if (*dir != 0)
+	{
+		if (*md + *dir >= 0 && (*md + SPRITE_SIZE) + *dir <= R_WIDTH * SPRITE_SIZE)
+		{
+			move_colide(pos, dir, hitbox, md);
+			*md += *dir;
+		}
+		else
+		{
+			while (*md + sign(*dir) >= 0 && (*md + SPRITE_SIZE)
+				+ sign(*dir) <= R_WIDTH * SPRITE_SIZE)
+				*md += sign(*dir);
+		}
+	}
 }
 
-void move_colide(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, int32_t *md);
+void	move_colide(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, int32_t *md)
 {
-    if (tile_collision((pos.x + hitbox.left) + dir, pos.y
-        + hitbox.top, SPRITE_SIZE - (hitbox.right + hitbox.left),
-        SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
-    {
-        while (!tile_collision((pos.x + hitbox.left) + sign(dir),pos.y + hitbox.top,SPRITE_SIZE 
-            - (hitbox.right + hitbox.left),SPRITE_SIZE - (hitbox.bot + hitbox.top),'s'))
-            md += sign(dir);
-        dir = 0;
-    }
+	if (tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top)
+			+ *dir, SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
+	{
+		while (!tile_collision(pos->x + hitbox.left, (pos->y
+					+ hitbox.top) + sign(*dir), SPRITE_SIZE - (hitbox.right + hitbox.left),
+				SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
+			md += sign(*dir);
+		*dir = 0;
+	}
 }

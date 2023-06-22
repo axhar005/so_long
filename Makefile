@@ -6,7 +6,7 @@
 #    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/06/20 13:36:07 by oboucher         ###   ########.fr        #
+#    Updated: 2023/06/21 19:55:56 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ INCDIR = inc
 
 #--- SOURCE ---#
 SRCDIR	=	src
-SRC		= 	main.c utils.c texture.c string.c animation.c image.c player_utils.c
+SRC		= 	main.c utils_0.c utils_1.c texture.c string.c animation.c image.c player_utils.c movement.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#

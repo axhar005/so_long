@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/17 15:24:25 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/21 19:01:41 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
