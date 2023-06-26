@@ -188,29 +188,29 @@ int32_t point_distance(t_vec2 bow, t_vec2 target)
 
 void place_tile(t_vec2 pos, char id)
 {
-	pos.x = game.cameraGrid.x + ((pos.x+game.offSet.x)/SPRITE_SIZE);
-	pos.y = game.cameraGrid.y + ((pos.y+game.offSet.y)/SPRITE_SIZE);
-		if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
+	if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
+	{
+		if (game.grid[pos.x][pos.y]->id != ft_itoc(id))
 		{
-			if (game.grid[pos.x][pos.y]->id != ft_itoc(id))
-			{
-				game.grid[pos.x][pos.y]->id = ft_itoc(id);
-				if (game.grid[pos.x][pos.y]->id == '1' || game.grid[pos.x][pos.y]->id == '3')
-					game.grid[pos.x][pos.y]->solid = true;
-				if (game.grid[pos.x][pos.y]->id == '0' || game.grid[pos.x][pos.y]->id == '2'|| game.grid[pos.x][pos.y]->id == '4' 
-					|| game.grid[pos.x][pos.y]->id == '5' || game.grid[pos.x][pos.y]->id == '6')
-					game.grid[pos.x][pos.y]->solid = false;
-				auto_tiling(pos.x - 1, pos.y - 1, 3, 3);
-			}
+			game.grid[pos.x][pos.y]->id = ft_itoc(id);
+			if (game.grid[pos.x][pos.y]->id == '1' || game.grid[pos.x][pos.y]->id == '3')
+				game.grid[pos.x][pos.y]->solid = true;
+			if (game.grid[pos.x][pos.y]->id == '0' || game.grid[pos.x][pos.y]->id == '2'|| game.grid[pos.x][pos.y]->id == '4' 
+				|| game.grid[pos.x][pos.y]->id == '5' || game.grid[pos.x][pos.y]->id == '6')
+				game.grid[pos.x][pos.y]->solid = false;
+			auto_tiling(pos.x - 1, pos.y - 1, 3, 3);
 		}
+	}
 }
 
 void selector(t_game *game)
 {
-	// if (point_distance(game->playerGrid, game->mouseGrid) <= game->arm_range)
-	// {
+	if (point_distance(game->playerGrid, game->mouseGrid) <= game->arm_range)
+	{
+		if (mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_RIGHT))
+			place_tile(game->mouseGrid, game->mouse_id);
 		mlx_image_to_window(game->mlx, game->img.selector, (game->mouseGrid.x - game->cameraGrid.x) * 64 - game->offSet.x, (game->mouseGrid.y - game->cameraGrid.y) * 64 - game->offSet.y);
-	// }
+	}
 }
 
 void	draw_grid(int32_t posX, int32_t posY)
@@ -263,8 +263,8 @@ void	draw_grid(int32_t posX, int32_t posY)
 		i++;
 	}
 	selector(&game);
-	mlx_image_to_window(game.mlx, game.img.player[game.player_animation.index], (C_WIDTH / 2) * SPRITE_SIZE,
-			(C_HEIGHT / 2) * SPRITE_SIZE);
+	mlx_image_to_window(game.mlx, game.img.player[game.player_animation.index], (C_WIDTH / 2) * SPRITE_SIZE - 32,
+			(C_HEIGHT / 2) * SPRITE_SIZE - 32);
 }
 
 void	draw(void)
@@ -327,6 +327,9 @@ void	step(void *param)
 	spd = 10;
 	mlx = param;
 	game.delta_time = game.mlx->delta_time * 30;
+	t_vec2 origin;
+	origin.x = game.player.x - 32;
+	origin.y = game.player.y - 32;
 	mlx_get_mouse_pos(mlx, &game.mouse.x, &game.mouse.y);
 	if (is_key_pressed(&game, MLX_KEY_P))
 	{
@@ -346,72 +349,23 @@ void	step(void *param)
 		print_2d_map_array(game.grid, R_WIDTH, R_HEIGHT);
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_mouse_down(game.mlx, MLX_MOUSE_BUTTON_RIGHT))
-		place_tile(game.mouse, game.mouse_id);
 	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
 		* spd;
 	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
 		* spd;
 	if (frame >= 1)
 	{
-		// if (hspd != 0)
-		// 	movement(&game.player, &hspd, game.player_hitbox, false);
-		// if (vspd != 0)
-		// 	movement(&game.player, &vspd, game.player_hitbox, true);
-		if (hspd != 0)
-		{
-			if (game.player.x + hspd >= 0 && (game.player.x + SPRITE_SIZE)
-				+ hspd <= R_WIDTH * SPRITE_SIZE)
-			{
-				if (tile_collision((game.player.x + game.player_hitbox.left) + hspd, game.player.y
-						+ game.player_hitbox.top, SPRITE_SIZE - (game.player_hitbox.right + game.player_hitbox.left),
-						SPRITE_SIZE - (game.player_hitbox.bot + game.player_hitbox.top), 's'))
-				{
-					while (!tile_collision((game.player.x + game.player_hitbox.left) + sign(hspd),
-											game.player.y + game.player_hitbox.top,
-											SPRITE_SIZE - (game.player_hitbox.right + game.player_hitbox.left),
-											SPRITE_SIZE - (game.player_hitbox.bot + game.player_hitbox.top),
-											's'))
-						game.player.x += sign(hspd);
-					hspd = 0;
-				}
-				game.player.x += hspd;
-			}
-			else
-			{
-				while (game.player.x + sign(hspd) >= 0 && (game.player.x
-						+ SPRITE_SIZE) + sign(hspd) <= R_WIDTH * SPRITE_SIZE)
-					game.player.x += sign(hspd);
-			}
-		}
-		if (vspd != 0)
-		{	
-			if (game.player.y + vspd >= 0 && (game.player.y + SPRITE_SIZE)
-				+ vspd <= R_HEIGHT * SPRITE_SIZE)
-			{
-				if (tile_collision(game.player.x + game.player_hitbox.left, (game.player.y + game.player_hitbox.top)
-						+ vspd, SPRITE_SIZE - (game.player_hitbox.right + game.player_hitbox.left), SPRITE_SIZE - (game.player_hitbox.bot + game.player_hitbox.top), 's'))
-				{
-					while (!tile_collision(game.player.x + game.player_hitbox.left, (game.player.y
-								+ game.player_hitbox.top) + sign(vspd), SPRITE_SIZE - (game.player_hitbox.right + game.player_hitbox.left),
-							SPRITE_SIZE - (game.player_hitbox.bot + game.player_hitbox.top), 's'))
-						game.player.y += sign(vspd);
-					vspd = 0;
-				}
-				game.player.y += vspd;
-			}
-			else
-			{
-				while (game.player.y + sign(vspd) >= 0 && (game.player.y
-						+ SPRITE_SIZE) + sign(vspd) <= R_HEIGHT * SPRITE_SIZE)
-					game.player.y += sign(vspd);
-			}
-		}
+			movement(&origin, &hspd, game.player_hitbox, false);
+			movement(&origin, &vspd, game.player_hitbox, true);
+		
 		player_animation_dir(&game);
 		draw();
 		frame = 0;
 	}
 	frame += game.delta_time;
+
+	game.player.x = origin.x + 32;
+	game.player.y = origin.y + 32;
 	// update player grid pos
 	game.playerGrid.x = game.player.x / SPRITE_SIZE;
 	game.playerGrid.y = game.player.y / SPRITE_SIZE;
@@ -424,10 +378,6 @@ void	step(void *param)
 
 	game.mouseGrid.x = game.cameraGrid.x + ((game.mouse.x + game.offSet.x)/SPRITE_SIZE);
 	game.mouseGrid.y = game.cameraGrid.y + ((game.mouse.y + game.offSet.y)/SPRITE_SIZE);
-	printf("MX: %d, MY: %d\n", game.mouseGrid.x, game.mouseGrid.y);
-	printf("PX: %d, PY: %d\n", game.playerGrid.x, game.playerGrid.y);
-	printf("CX: %d, CY: %d\n", game.cameraGrid.x, game.cameraGrid.y);
-	printf("-------------------------------\n");
 }
 
 int32_t	main(void)
@@ -445,7 +395,7 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = 0;
-	game.arm_range = 5;
+	game.arm_range = 2;
 
 	init_player_animation(&game);
 

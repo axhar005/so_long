@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/21 19:54:13 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/23 21:41:55 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ void				init_player_animation(t_game *game);
 
 void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 						bool is_vertical);
-void				move_colide(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
-						int32_t *md);
+void				move_colide_vertical(t_vec2 *pos, int32_t *dir, t_hitbox hitbox);
+void				move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox);
 void				player_animation_dir(t_game *game);
 
 //math

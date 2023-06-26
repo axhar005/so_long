@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/06/21 20:14:16 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/23 21:39:16 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 	{
 		if (*md + *dir >= 0 && (*md + SPRITE_SIZE) + *dir <= R_WIDTH * SPRITE_SIZE)
 		{
-			move_colide(pos, dir, hitbox, md);
+			if (is_vertical)
+				move_colide_vertical(pos, dir, hitbox);
+			else
+				move_colide_horizontal(pos, dir, hitbox);
+				
 			*md += *dir;
 		}
 		else
@@ -36,15 +40,28 @@ void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 	}
 }
 
-void	move_colide(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, int32_t *md)
+void	move_colide_vertical(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
 {
-	if (tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top)
+		if (tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top)
 			+ *dir, SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
+		{
+			while (!tile_collision(pos->x + hitbox.left, (pos->y
+						+ hitbox.top) + sign(*dir), SPRITE_SIZE - (hitbox.right + hitbox.left),
+					SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
+				pos->y += sign(*dir);
+			*dir = 0;
+		}
+}
+
+void	move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
+{
+	if (tile_collision(pos->x + hitbox.left + *dir, (pos->y + hitbox.top), 
+		SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
 	{
-		while (!tile_collision(pos->x + hitbox.left, (pos->y
-					+ hitbox.top) + sign(*dir), SPRITE_SIZE - (hitbox.right + hitbox.left),
+		while (!tile_collision(pos->x + hitbox.left + sign(*dir), (pos->y
+					+ hitbox.top), SPRITE_SIZE - (hitbox.right + hitbox.left),
 				SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
-			md += sign(*dir);
+			pos->x += sign(*dir);
 		*dir = 0;
 	}
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
+#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/06/21 19:55:56 by oboucher         ###   ########.fr        #
+#    Updated: 2023/06/25 22:52:51 by olivierbouc      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 $(OBJDIR)/%.o:	%.c
 	@$(CC) $(CFLAGS) -I$(INCDIR) -I. -c $< -o $@
 	
-all:	init update mlx42 libft $(NAME)
+all:	update init mlx42 libft $(NAME)
 	
 ${NAME}:	$(OBJDIR) $(OBJ)
 	@$(CC) $(CFLAGS) $(MLXFLAGS) -I$(INCDIR) -o $(NAME) $(MLX) $(OBJ) $(LDIR)$(LIBFT)
