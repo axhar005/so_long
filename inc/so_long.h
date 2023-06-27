@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 13:29:31 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:56:31 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_texture
 	mlx_texture_t	*selector[1];
 	mlx_texture_t	*plank_floor[1];
 	mlx_texture_t	*stone_floor[1];
+	mlx_texture_t	*crack[4];
 	mlx_texture_t	*camera[1];
 }					t_texture;
 
@@ -83,6 +84,7 @@ typedef struct s_img
 	mlx_image_t		*selector[1];
 	mlx_image_t		*plank_floor[1];
 	mlx_image_t		*stone_floor[1];
+	mlx_image_t		*crack[4];
 	mlx_image_t		*camera[1];
 
 }					t_img;
@@ -124,6 +126,7 @@ typedef struct s_game
 	t_texture		tex;
 	mlx_t			*mlx;
 	t_map			***map;
+	t_map			tile_type[10];
 	t_vec2			playerGrid;
 	t_vec2			player;
 	t_vec2			cameraGrid;
@@ -136,6 +139,13 @@ typedef struct s_game
 }					t_game;
 
 // prototype
+
+//draw
+
+void				map_image_to_window(t_game *g, mlx_image_t **img,
+						t_pos2 co);
+void				map_image_index_to_window(t_game *g, mlx_image_t *img,
+						t_pos2 co);
 
 //map
 
@@ -153,6 +163,7 @@ void				init_sand_texture(mlx_texture_t **sand);
 void				init_water_texture(mlx_texture_t **water);
 void				init_player_texture(mlx_texture_t **player);
 void				init_deep_dirt_texture(mlx_texture_t **deep_dirt);
+void			    init_crack_texture(mlx_texture_t **crack);
 
 //image
 
@@ -164,6 +175,17 @@ void				del_img(t_game *game, t_img *img);
 void				auto_tiling(t_game *game, int32_t x, int32_t y,
 						int32_t width, int32_t height);
 int32_t				point_distance(t_vec2 bow, t_vec2 target);
+
+//tile type
+
+void				set_grass(t_map *tile);
+void				set_wall(t_map *tile);
+void				set_dirt(t_map *tile);
+void				set_water(t_map *tile);
+void				set_sand(t_map *tile);
+void				set_deep_dirt(t_map *tile);
+void				set_plank_floor(t_map *tile);
+void				set_stone_floor(t_map *tile);
 
 //string
 

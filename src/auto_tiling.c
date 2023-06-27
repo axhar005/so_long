@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:02:56 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 13:26:03 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:12:02 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ void	auto_tiling(t_game *game, int32_t x, int32_t y, int32_t width,
 																							xx,
 																							yy,
 																							game->map[xx][yy]->id));
-				else
-					game->map[xx][yy]->tile_index = 0;
 			}
 			j++;
 		}

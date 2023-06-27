@@ -2,93 +2,61 @@
 
 static t_game	game;
 
-void	place_tile_corner(int32_t x, int32_t y, int32_t i, int32_t j, int32_t id)
+void	place_tile_corner(mlx_image_t **img, t_pos2 co, int32_t id)
 {
-	if (game.map[x][y]->id == id)
+	if (game.map[co.pos1.x][co.pos1.y]->id == id)
 	{
-		if (game.map[x][y]->tile_index == 4)
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 4)
 		{
-			if (game.map[x - 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[16], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x + 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[17], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x - 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[18], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x + 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[19], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
+			if (game.map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[16], co);
+			if (game.map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[17], co);
+			if (game.map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[18], co);
+			if (game.map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[19], co);
 		}
-		if (game.map[x][y]->tile_index == 0)
-			if (game.map[x + 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[19], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-		if (game.map[x][y]->tile_index == 1)
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 0)
+			if (game.map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[19], co);
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 1)
 		{
-			if (game.map[x - 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[18], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x + 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[19], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
+			if (game.map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[18], co);
+			if (game.map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[19], co);
 		}
-		if (game.map[x][y]->tile_index == 2)
-			if (game.map[x - 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[18], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-		if (game.map[x][y]->tile_index == 3)
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 2)
+			if (game.map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[18], co);
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 3)
 		{
-			if (game.map[x + 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[17], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x + 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[19], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
+			if (game.map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[17], co);
+			if (game.map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[19], co);
 		}
-		if (game.map[x][y]->tile_index == 5)
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 5)
 		{
-			if (game.map[x - 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[16], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x - 1][y + 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[18], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
+			if (game.map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[16], co);
+			if (game.map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
+				map_image_index_to_window(&game, img[18], co);
 		}
-		if (game.map[x][y]->tile_index == 6)
-			if (game.map[x + 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[17], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-		if (game.map[x][y]->tile_index == 7)
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 6)
+			if (game.map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[17], co);
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 7)
 		{
-			if (game.map[x - 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[16], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
-			if (game.map[x + 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[17], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
+			if (game.map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[16], co);
+			if (game.map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[17], co);
 		}
-		if (game.map[x][y]->tile_index == 8)
-			if (game.map[x - 1][y - 1]->id != id)
-				mlx_image_to_window(game.mlx, game.img.wall[16], (i
-							* SPRITE_SIZE) - game.offSet.x, (j * SPRITE_SIZE)
-						- game.offSet.y);
+		if (game.map[co.pos1.x][co.pos1.y]->tile_index == 8)
+			if (game.map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
+				map_image_index_to_window(&game, img[16], co);
 	}
 }
 
@@ -128,16 +96,7 @@ void	place_tile(t_game *game, t_vec2 pos, int32_t id)
 	{
 		if (game->map[pos.x][pos.y]->id != id)
 		{
-			game->map[pos.x][pos.y]->id = id;
-			if (game->map[pos.x][pos.y]->id == 1
-				|| game->map[pos.x][pos.y]->id == 3)
-				game->map[pos.x][pos.y]->solid = true;
-			if (game->map[pos.x][pos.y]->id == 0
-				|| game->map[pos.x][pos.y]->id == 2
-				|| game->map[pos.x][pos.y]->id == 4
-				|| game->map[pos.x][pos.y]->id == 5
-				|| game->map[pos.x][pos.y]->id == 6)
-				game->map[pos.x][pos.y]->solid = false;
+			*game->map[pos.x][pos.y] = game->tile_type[id];
 			auto_tiling(game, pos.x - 1, pos.y - 1, 3, 3);
 		}
 	}
@@ -155,11 +114,19 @@ void	selector(t_game *game)
 	}
 }
 
-void	map_image_to_window(t_game *g, mlx_image_t **img, t_pos2 co)
+void draw_crack(t_game *game, t_pos2 co)
 {
-	mlx_image_to_window(g->mlx, img[g->map[co.pos1.x][co.pos1.y]->tile_index],
-			(co.pos2.x * SPRITE_SIZE) - g->offSet.x, (co.pos2.y * SPRITE_SIZE)
-			- g->offSet.y);
+	int32_t life;
+
+	life = game->map[co.pos1.x][co.pos1.y]->life;
+	if (life >= 75 && life < 100)
+		map_image_index_to_window(game, game->img.crack[0], co);
+	if (life >= 50 && life < 75)
+		map_image_index_to_window(game, game->img.crack[1], co);
+	if (life >= 25 && life < 50)
+		map_image_index_to_window(game, game->img.crack[2], co);
+	if (life >= 0 && life < 25)
+		map_image_index_to_window(game, game->img.crack[3], co);
 }
 
 void	draw_grid(int32_t posX, int32_t posY)
@@ -204,8 +171,8 @@ void	draw_grid(int32_t posX, int32_t posY)
 				else if (game.map[co.pos2.x + posX][co.pos2.y
 						+ posY]->id == 7)
 					map_image_to_window(&game, game.img.stone_floor, co);
-				place_tile_corner(co.pos2.x + posX, co.pos2.y + posY, co.pos2.x,
-						co.pos2.y, 1);
+				place_tile_corner(game.img.wall, co, 1);
+				draw_crack(&game, co);
 			}
 			co.pos2.y++;
 		}
@@ -344,7 +311,7 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = 0;
-	game.arm_range = 2;
+	game.arm_range = 10;
 
 	init_player_animation(&game);
 
@@ -357,6 +324,16 @@ int32_t	main(void)
 	//MLX
 	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
+	//set tile type
+	set_grass(&game.tile_type[0]);
+	set_wall(&game.tile_type[1]);
+	set_dirt(&game.tile_type[2]);
+	set_water(&game.tile_type[3]);
+	set_sand(&game.tile_type[4]);
+	set_deep_dirt(&game.tile_type[5]);
+	set_plank_floor(&game.tile_type[6]);
+	set_stone_floor(&game.tile_type[7]);
+
 	//load texture
 	init_grass_texture(game.tex.grass);
 	init_sand_texture(game.tex.sand);
@@ -364,6 +341,7 @@ int32_t	main(void)
 	init_water_texture(game.tex.water);
 	init_player_texture(game.tex.player);
 	init_deep_dirt_texture(game.tex.deep_dirt);
+	init_crack_texture(game.tex.crack);
 	game.tex.plank_floor[0] = mlx_load_png("./asset/wood/plank_floor.png");
 	game.tex.stone_floor[0] = mlx_load_png("./asset/stone/stone_floor.png");
 	game.tex.selector[0] = mlx_load_png("./asset/selector.png");

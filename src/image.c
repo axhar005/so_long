@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:32:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/26 21:43:26 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/27 15:54:57 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	init_img(t_game *game, t_img *img)
 	i = 0;
 	while (i < 20)
 	{
+		if (i < 4)
+			img->crack[i] = mlx_texture_to_image(game->mlx, game->tex.crack[i]);
 		if (i < 10)
 			img->player[i] = mlx_texture_to_image(game->mlx, game->tex.player[i]);
 		if (i < 16)
@@ -45,6 +47,8 @@ void	del_img(t_game *game, t_img *img)
 	i = 0;
 	while (i < 20)
 	{
+		if (i < 4)
+			mlx_delete_image(game->mlx, img->crack[i]);
 		if (i < 10)
 			mlx_delete_image(game->mlx, img->player[i]);
 		if (i < 16)

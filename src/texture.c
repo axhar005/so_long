@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/26 15:48:43 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/27 15:53:13 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,6 @@ void    init_wall_texture(mlx_texture_t **wall)
 	wall[19] = mlx_load_png("./asset/wall/wall_19.png");
 }
 
-void    init_player_texture(mlx_texture_t **player)
-{   
-    player[0] = mlx_load_png("./asset/player/player_down_0.png");
-	player[1] = mlx_load_png("./asset/player/player_down_1.png");
-	player[2] = mlx_load_png("./asset/player/player_up_0.png");
-	player[3] = mlx_load_png("./asset/player/player_up_1.png");
-	player[4] = mlx_load_png("./asset/player/player_left_0.png");
-	player[5] = mlx_load_png("./asset/player/player_left_1.png");
-	player[6] = mlx_load_png("./asset/player/player_left_2.png");
-	player[7] = mlx_load_png("./asset/player/player_right_0.png");
-	player[8] = mlx_load_png("./asset/player/player_right_1.png");
-    player[9] = mlx_load_png("./asset/player/player_right_2.png");
-}
-
 void    init_deep_dirt_texture(mlx_texture_t **deep_dirt)
 {   
 	deep_dirt[0] = mlx_load_png("./asset/deep_dirt/deep_dirt_0.png");
@@ -128,4 +114,26 @@ void    init_deep_dirt_texture(mlx_texture_t **deep_dirt)
 	deep_dirt[13] = mlx_load_png("./asset/deep_dirt/deep_dirt_13.png");
 	deep_dirt[14] = mlx_load_png("./asset/deep_dirt/deep_dirt_14.png");
 	deep_dirt[15] = mlx_load_png("./asset/deep_dirt/deep_dirt_15.png");
+}
+
+void    init_player_texture(mlx_texture_t **player)
+{   
+    player[0] = mlx_load_png("./asset/player/player_down_0.png");
+	player[1] = mlx_load_png("./asset/player/player_down_1.png");
+	player[2] = mlx_load_png("./asset/player/player_up_0.png");
+	player[3] = mlx_load_png("./asset/player/player_up_1.png");
+	player[4] = mlx_load_png("./asset/player/player_left_0.png");
+	player[5] = mlx_load_png("./asset/player/player_left_1.png");
+	player[6] = mlx_load_png("./asset/player/player_left_2.png");
+	player[7] = mlx_load_png("./asset/player/player_right_0.png");
+	player[8] = mlx_load_png("./asset/player/player_right_1.png");
+    player[9] = mlx_load_png("./asset/player/player_right_2.png");
+}
+
+void    init_crack_texture(mlx_texture_t **crack)
+{   
+    crack[0] = mlx_load_png("./asset/crack/crack_0.png");
+	crack[1] = mlx_load_png("./asset/crack/crack_1.png");
+	crack[2] = mlx_load_png("./asset/crack/crack_2.png");
+	crack[3] = mlx_load_png("./asset/crack/crack_3.png");
 }

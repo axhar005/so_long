@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 13:29:15 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:01:58 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ void	print_2d_map_array(t_map ***array, int32_t cols, int32_t rows)
 		x = 0;
 		while (x < cols)
 		{
-			ft_printf("%c", array[x][y]->id);
-			ft_printf("%d ", array[x++][y]->tile_index);
+			ft_printf("(%d,", array[x][y]->id);
+			ft_printf("%d,", array[x][y]->tile_index);
+			ft_printf("%d) ", array[x++][y]->life);
 		}
 		ft_printf("\n");
 		y++;
