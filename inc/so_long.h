@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/23 21:41:55 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/26 22:28:13 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ typedef struct s_vec2
 	int32_t			y;
 }					t_vec2;
 
+typedef struct s_pos2
+{
+	t_vec2			pos1;
+	t_vec2			pos2;
+}					t_pos2;
 //hitbox
 typedef struct s_hitbox
 {
@@ -52,31 +57,33 @@ typedef struct s_hitbox
 // storage of all texture (png)
 typedef struct s_texture
 {
+	mlx_texture_t	*dirt[1];
 	mlx_texture_t	*grass[16];
-	mlx_texture_t	*dirt[16];
+	mlx_texture_t	*deep_dirt[16];
 	mlx_texture_t	*sand[16];
 	mlx_texture_t	*water[16];
 	mlx_texture_t	*wall[20];
 	mlx_texture_t	*player[10];
-	mlx_texture_t	*selector;
-	mlx_texture_t	*plank_floor;
-	mlx_texture_t	*stone_floor;
-	mlx_texture_t	*camera;
+	mlx_texture_t	*selector[1];
+	mlx_texture_t	*plank_floor[1];
+	mlx_texture_t	*stone_floor[1];
+	mlx_texture_t	*camera[1];
 }					t_texture;
 
 // storage of all image (instance)
 typedef struct s_img
 {
+	mlx_image_t		*dirt[1];
 	mlx_image_t		*grass[16];
-	mlx_image_t		*dirt[16];
+	mlx_image_t		*deep_dirt[16];
 	mlx_image_t		*sand[16];
 	mlx_image_t		*water[16];
 	mlx_image_t		*wall[20];
 	mlx_image_t		*player[10];
-	mlx_image_t		*selector;
-	mlx_image_t		*plank_floor;
-	mlx_image_t		*stone_floor;
-	mlx_image_t		*camera;
+	mlx_image_t		*selector[1];
+	mlx_image_t		*plank_floor[1];
+	mlx_image_t		*stone_floor[1];
+	mlx_image_t		*camera[1];
 
 }					t_img;
 
@@ -84,6 +91,7 @@ typedef struct s_map
 {
 	char			id;
 	int32_t			tile_index;
+	int32_t			life;
 	bool			solid;
 
 }					t_map;
@@ -114,7 +122,7 @@ typedef struct s_game
 	t_img			old_img;
 	t_texture		tex;
 	mlx_t			*mlx;
-	t_map			***grid;
+	t_map			***map;
 	t_vec2			playerGrid;
 	t_vec2			player;
 	t_vec2			cameraGrid;
@@ -143,7 +151,7 @@ void				init_wall_texture(mlx_texture_t **wall);
 void				init_sand_texture(mlx_texture_t **sand);
 void				init_water_texture(mlx_texture_t **water);
 void				init_player_texture(mlx_texture_t **player);
-void				init_dirt_texture(mlx_texture_t **dirt);
+void				init_deep_dirt_texture(mlx_texture_t **deep_dirt);
 
 //image
 
