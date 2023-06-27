@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/26 22:28:13 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/06/27 13:29:31 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ typedef struct s_img
 
 typedef struct s_map
 {
-	char			id;
+	char			*name;
+	int32_t			id;
 	int32_t			tile_index;
 	int32_t			life;
 	bool			solid;
@@ -140,7 +141,7 @@ typedef struct s_game
 
 t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_map ***array, int32_t rows,
-						int32_t cols, char c);
+						int32_t cols, int32_t c);
 void				print_2d_map_array(t_map ***array, int32_t cols,
 						int32_t rows);
 
@@ -158,6 +159,12 @@ void				init_deep_dirt_texture(mlx_texture_t **deep_dirt);
 void				init_img(t_game *game, t_img *img);
 void				del_img(t_game *game, t_img *img);
 
+//tiling
+
+void				auto_tiling(t_game *game, int32_t x, int32_t y,
+						int32_t width, int32_t height);
+int32_t				point_distance(t_vec2 bow, t_vec2 target);
+
 //string
 
 int					ft_strnum(char **str);
@@ -165,20 +172,19 @@ char				ft_itoc(int i);
 
 //collision
 
-bool				tile_collision(int x, int y, int w, int h, char c);
+bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
 //animation
 
 void				play_animation(t_game *game, t_animation *animation,
 						char **direction);
 void				init_player_animation(t_game *game);
+bool				is_tilable(int32_t id);
 
 //movement
 
 void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 						bool is_vertical);
-void				move_colide_vertical(t_vec2 *pos, int32_t *dir, t_hitbox hitbox);
-void				move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox);
 void				player_animation_dir(t_game *game);
 
 //math
