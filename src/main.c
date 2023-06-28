@@ -114,9 +114,9 @@ void	selector(t_game *game)
 	}
 }
 
-void draw_crack(t_game *game, t_pos2 co)
+void	draw_crack(t_game *game, t_pos2 co)
 {
-	int32_t life;
+	int32_t	life;
 
 	life = game->map[co.pos1.x][co.pos1.y]->life;
 	if (life >= 75 && life < 100)
@@ -148,31 +148,24 @@ void	draw_grid(int32_t posX, int32_t posY)
 			if ((co.pos2.x + posX >= 0 && co.pos2.x + posX < R_WIDTH)
 				&& (co.pos2.y + posY >= 0 && co.pos2.y + posY < R_HEIGHT))
 			{
-				if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == 0)
+				if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == GRASS)
 					map_image_to_window(&game, game.img.grass, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 1)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == WALL)
 					map_image_to_window(&game, game.img.wall, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 2)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == DIRT)
 					map_image_to_window(&game, game.img.dirt, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 3)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == WATER)
 					map_image_to_window(&game, game.img.water, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 4)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == SAND)
 					map_image_to_window(&game, game.img.sand, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 5)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == DEEP_DIRT)
 					map_image_to_window(&game, game.img.deep_dirt, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 6)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == PLANK_FLOOR)
 					map_image_to_window(&game, game.img.plank_floor, co);
-				else if (game.map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == 7)
+				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == STONE_FLOOR)
 					map_image_to_window(&game, game.img.stone_floor, co);
-				place_tile_corner(game.img.wall, co, 1);
-				draw_crack(&game, co);
+				place_tile_corner(game.img.wall, co, WALL);
+				//draw_crack(&game, co);
 			}
 			co.pos2.y++;
 		}
@@ -180,8 +173,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 	}
 	selector(&game);
 	mlx_image_to_window(game.mlx, game.img.player[game.player_animation.index],
-			(C_WIDTH / 2) * SPRITE_SIZE - 32, (C_HEIGHT / 2) * SPRITE_SIZE
-			- 32);
+			(C_WIDTH / 2) * SPRITE_SIZE, (C_HEIGHT / 2) * SPRITE_SIZE);
 }
 
 void	draw(void)
@@ -237,7 +229,6 @@ void	step(void *param)
 	int32_t			hspd;
 	int32_t			vspd;
 	int32_t			spd;
-	t_vec2			origin;
 	static double	frame = 0;
 
 	hspd = 0;
@@ -245,8 +236,7 @@ void	step(void *param)
 	spd = 10;
 	mlx = param;
 	game.delta_time = game.mlx->delta_time * 30;
-	origin.x = game.player.x - 32;
-	origin.y = game.player.y - 32;
+	t_vec2 origin;
 	mlx_get_mouse_pos(mlx, &game.mouse.x, &game.mouse.y);
 	if (is_key_pressed(&game, MLX_KEY_P))
 	{
@@ -270,6 +260,8 @@ void	step(void *param)
 		* spd;
 	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
 		* spd;
+	origin.x = game.player.x - 32;
+	origin.y = game.player.y - 32;
 	if (frame >= 1)
 	{
 		movement(&origin, &hspd, game.player_hitbox, false);
@@ -285,8 +277,8 @@ void	step(void *param)
 	game.playerGrid.x = game.player.x / SPRITE_SIZE;
 	game.playerGrid.y = game.player.y / SPRITE_SIZE;
 	// update offset
-	game.offSet.x = game.player.x % SPRITE_SIZE;
-	game.offSet.y = game.player.y % SPRITE_SIZE;
+	game.offSet.x = (game.player.x % SPRITE_SIZE)-32;
+	game.offSet.y = (game.player.y % SPRITE_SIZE)-32;
 	// update cameraGrid pos
 	game.cameraGrid.x = game.playerGrid.x - C_WIDTH / 2;
 	game.cameraGrid.y = game.playerGrid.y - C_HEIGHT / 2;
@@ -311,7 +303,7 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = 0;
-	game.arm_range = 10;
+	game.arm_range = 2;
 
 	init_player_animation(&game);
 

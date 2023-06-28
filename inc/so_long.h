@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 15:56:31 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/27 23:28:38 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,28 @@
 
 // struct
 
-# define SPRITE_SIZE 64
-# define WIDTH 832
-# define HEIGHT 576
-# define C_WIDTH 13
-# define C_HEIGHT 9
-# define R_WIDTH 15
-# define R_HEIGHT 15
+enum e_game
+{
+	SPRITE_SIZE = 64,
+	WIDTH = 832,
+	HEIGHT = 576,
+	C_WIDTH = 13,
+	C_HEIGHT = 9,
+	R_WIDTH = 15,
+	R_HEIGHT = 15
+};
+
+enum e_tile
+{
+	GRASS,
+	WALL,
+	DIRT,
+	WATER,
+	SAND,
+	DEEP_DIRT,
+	PLANK_FLOOR,
+	STONE_FLOOR
+};
 
 // storage of pos x and y
 typedef struct s_vec2
