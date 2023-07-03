@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 23:28:38 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/03 08:57:48 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct s_game
 {
 	char			mouse_id;
 	double			delta_time;
+	double			current_time;
 	int32_t			player_dir;
 	int32_t			arm_range;
 	t_img			img;

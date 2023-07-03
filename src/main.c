@@ -90,16 +90,17 @@ bool	tile_collision(int x, int y, int w, int h, int32_t c)
 	return (false);
 }
 
-void	place_tile(t_game *game, t_vec2 pos, int32_t id)
+bool	place_tile(t_game *game, t_vec2 pos, int32_t id)
 {
 	if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
 	{
 		if (game->map[pos.x][pos.y]->id != id)
 		{
 			*game->map[pos.x][pos.y] = game->tile_type[id];
-			auto_tiling(game, pos.x - 1, pos.y - 1, 3, 3);
+			return (true);
 		}
 	}
+	return (false);
 }
 
 void	selector(t_game *game)
@@ -107,7 +108,12 @@ void	selector(t_game *game)
 	if (point_distance(game->playerGrid, game->mouseGrid) <= game->arm_range)
 	{
 		if (mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_RIGHT))
-			place_tile(game, game->mouseGrid, game->mouse_id);
+			if (place_tile(game, game->mouseGrid, game->mouse_id))
+				auto_tiling(game, game->mouseGrid.x - 1, game->mouseGrid.y - 1, 3, 3);
+
+		if (mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_LEFT))
+			game->map[game->mouseGrid.x][game->mouseGrid.y]->life -= 1;
+
 		mlx_image_to_window(game->mlx, game->img.selector[0], (game->mouseGrid.x
 					- game->cameraGrid.x) * 64 - game->offSet.x,
 				(game->mouseGrid.y - game->cameraGrid.y) * 64 - game->offSet.y);
@@ -121,11 +127,11 @@ void	draw_crack(t_game *game, t_pos2 co)
 	life = game->map[co.pos1.x][co.pos1.y]->life;
 	if (life >= 75 && life < 100)
 		map_image_index_to_window(game, game->img.crack[0], co);
-	if (life >= 50 && life < 75)
+	else if (life >= 50 && life < 75)
 		map_image_index_to_window(game, game->img.crack[1], co);
-	if (life >= 25 && life < 50)
+	else if (life >= 25 && life < 50)
 		map_image_index_to_window(game, game->img.crack[2], co);
-	if (life >= 0 && life < 25)
+	else if (life < 25)
 		map_image_index_to_window(game, game->img.crack[3], co);
 }
 
@@ -165,7 +171,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 				else if (game.map[co.pos2.x + posX][co.pos2.y + posY]->id == STONE_FLOOR)
 					map_image_to_window(&game, game.img.stone_floor, co);
 				place_tile_corner(game.img.wall, co, WALL);
-				//draw_crack(&game, co);
+				draw_crack(&game, co);
 			}
 			co.pos2.y++;
 		}
@@ -271,6 +277,9 @@ void	step(void *param)
 		frame = 0;
 	}
 	frame += game.delta_time;
+	//uptade time
+	game.current_time += game.mlx->delta_time;
+	//update player origin
 	game.player.x = origin.x + 32;
 	game.player.y = origin.y + 32;
 	// update player grid pos
@@ -303,7 +312,8 @@ int32_t	main(void)
 	game.offSet.x = 0;
 	game.offSet.y = 0;
 	game.mouse_id = 0;
-	game.arm_range = 2;
+	game.arm_range = 20;
+	game.current_time = 0;
 
 	init_player_animation(&game);
 

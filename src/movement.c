@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/06/27 13:28:39 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/06/28 18:44:12 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
 		*dir = 0;
 	}
 }
+
 void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 {
 	int32_t	*md;
