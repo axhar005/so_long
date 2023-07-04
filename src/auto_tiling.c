@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:02:56 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 15:12:02 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:54:09 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ void	auto_tiling(t_game *game, int32_t x, int32_t y, int32_t width,
 			if ((xx >= 0 && xx < R_WIDTH) && (yy >= 0 && yy < R_HEIGHT))
 			{
 				if (is_tilable(game->map[xx][yy]->id))
-					game->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(game,
-																							xx,
-																							yy,
-																							game->map[xx][yy]->id));
+					game->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(game, xx, yy, game->map[xx][yy]->id));
 			}
 			j++;
 		}

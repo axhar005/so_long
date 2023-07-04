@@ -94,11 +94,8 @@ bool	place_tile(t_game *game, t_vec2 pos, int32_t id)
 {
 	if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
 	{
-		if (game->map[pos.x][pos.y]->id != id)
-		{
-			*game->map[pos.x][pos.y] = game->tile_type[id];
-			return (true);
-		}
+		*game->map[pos.x][pos.y] = game->tile_type[id];
+		return (true);
 	}
 	return (false);
 }
@@ -112,7 +109,14 @@ void	selector(t_game *game)
 				auto_tiling(game, game->mouseGrid.x - 1, game->mouseGrid.y - 1, 3, 3);
 
 		if (mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_LEFT))
-			game->map[game->mouseGrid.x][game->mouseGrid.y]->life -= 1;
+		{
+			game->map[game->mouseGrid.x][game->mouseGrid.y]->life -= 5;
+			if (game->map[game->mouseGrid.x][game->mouseGrid.y]->life <= 0)
+			{
+				place_tile(game, game->mouseGrid, DIRT);
+				auto_tiling(game, game->mouseGrid.x-1, game->mouseGrid.y-1, 3, 3);
+			}
+		}
 
 		mlx_image_to_window(game->mlx, game->img.selector[0], (game->mouseGrid.x
 					- game->cameraGrid.x) * 64 - game->offSet.x,
@@ -297,6 +301,28 @@ void	step(void *param)
 			/ SPRITE_SIZE);
 }
 
+void	set_map(t_game *game, int32_t x, int32_t y, int32_t width, int32_t height)
+{
+	int32_t i;
+	int32_t j;
+	t_vec2 map;
+
+	i = 0;
+	while (i < width)
+	{
+		j = 0;
+		while (j < height)
+		{
+			map.x = x + i;
+			map.y = y + j;
+			if ((map.x >= 0 && map.x < R_WIDTH) && (map.y >= 0 && map.y < R_HEIGHT))
+				place_tile(game, map, game->map[map.x][map.y]->id);
+			j++;
+		}
+		i++;
+	}
+}
+
 int32_t	main(void)
 {
 	game.playerGrid.x = 5;
@@ -317,15 +343,6 @@ int32_t	main(void)
 
 	init_player_animation(&game);
 
-	//GRID
-	game.map = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
-	// fill_2d_map_array(game.map, R_WIDTH, R_HEIGHT, '0');
-	auto_tiling(&game, 0, 0, R_WIDTH, R_HEIGHT);
-	// print_2d_map_array(game.grid, R_WIDTH, R_HEIGHT);
-
-	//MLX
-	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
-
 	//set tile type
 	set_grass(&game.tile_type[0]);
 	set_wall(&game.tile_type[1]);
@@ -335,6 +352,14 @@ int32_t	main(void)
 	set_deep_dirt(&game.tile_type[5]);
 	set_plank_floor(&game.tile_type[6]);
 	set_stone_floor(&game.tile_type[7]);
+
+	//GRID
+	game.map = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
+	set_map(&game, 0, 0, R_WIDTH, R_HEIGHT);
+	auto_tiling(&game, 0, 0, R_WIDTH, R_HEIGHT);
+
+	//MLX
+	game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
 	//load texture
 	init_grass_texture(game.tex.grass);
