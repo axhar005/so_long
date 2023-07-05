@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 20:55:16 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/05 17:14:43 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 // struct
 
-enum e_game
+enum				e_game
 {
 	SPRITE_SIZE = 64,
 	WIDTH = 832,
@@ -36,22 +36,24 @@ enum e_game
 	R_HEIGHT = 20
 };
 
-enum e_depth
+enum				e_depth
 {
 	FLOORS,
 	WALLS
 };
 
-enum e_tile
+enum				e_tile
 {
 	GRASS,
-	WALL,
+	HILL,
 	DIRT,
 	WATER,
 	SAND,
 	DEEP_DIRT,
-	PLANK_FLOOR,
-	STONE_FLOOR
+	WOOD_FLOOR,
+	STONE_FLOOR,
+	WOOD_WALL,
+	STONE_WALL
 };
 
 // storage of pos x and y
@@ -83,11 +85,13 @@ typedef struct s_texture
 	mlx_texture_t	*deep_dirt[16];
 	mlx_texture_t	*sand[16];
 	mlx_texture_t	*water[16];
-	mlx_texture_t	*wall[20];
+	mlx_texture_t	*hill[20];
 	mlx_texture_t	*player[10];
 	mlx_texture_t	*selector[1];
-	mlx_texture_t	*plank_floor[1];
+	mlx_texture_t	*wood_floor[1];
+	mlx_texture_t	*wood_wall[20];
 	mlx_texture_t	*stone_floor[1];
+	mlx_texture_t	*stone_wall[20];
 	mlx_texture_t	*crack[4];
 	mlx_texture_t	*camera[1];
 }					t_texture;
@@ -100,11 +104,13 @@ typedef struct s_img
 	mlx_image_t		*deep_dirt[16];
 	mlx_image_t		*sand[16];
 	mlx_image_t		*water[16];
-	mlx_image_t		*wall[20];
+	mlx_image_t		*hill[20];
 	mlx_image_t		*player[10];
 	mlx_image_t		*selector[1];
-	mlx_image_t		*plank_floor[1];
+	mlx_image_t		*wood_floor[1];
+	mlx_image_t		*wood_wall[20];
 	mlx_image_t		*stone_floor[1];
+	mlx_image_t		*stone_wall[20];
 	mlx_image_t		*crack[4];
 	mlx_image_t		*camera[1];
 
@@ -165,14 +171,14 @@ typedef struct s_game
 
 //game
 
-t_game *g(void);
+t_game				*g(void);
 
 //draw
 
-void				map_image_to_window(mlx_image_t **img,
-						t_pos2 co);
-void				map_image_index_to_window(mlx_image_t *img,
-						t_pos2 co);
+void	map_image_to_window(mlx_image_t **img,
+							t_pos2 co);
+void	map_image_index_to_window(mlx_image_t *img,
+								t_pos2 co);
 
 //map
 
@@ -184,13 +190,15 @@ void				print_2d_map_array(t_map ***array, int32_t cols,
 
 //texture
 
-void				init_grass_texture(mlx_texture_t **grass);
-void				init_wall_texture(mlx_texture_t **wall);
-void				init_sand_texture(mlx_texture_t **sand);
-void				init_water_texture(mlx_texture_t **water);
-void				init_player_texture(mlx_texture_t **player);
-void				init_deep_dirt_texture(mlx_texture_t **deep_dirt);
-void			    init_crack_texture(mlx_texture_t **crack);
+void				init_grass_texture(void);
+void				init_hill_texture(void);
+void				init_sand_texture(void);
+void				init_water_texture(void);
+void				init_player_texture(void);
+void				init_deep_dirt_texture(void);
+void				init_crack_texture(void);
+void				init_wood_wall_texture(void);
+void				init_stone_wall_texture(void);
 
 //image
 
@@ -199,20 +207,24 @@ void				del_img(t_img *img);
 
 //tiling
 
-void				auto_tiling(int32_t x, int32_t y,
-						int32_t width, int32_t height);
+void				auto_tiling(int32_t x, int32_t y, int32_t width,
+						int32_t height);
 int32_t				point_distance(t_vec2 bow, t_vec2 target);
+void				auto_tilling_corner(mlx_image_t **img, t_pos2 co,
+						int32_t id);
 
 //tile type
 
 void				set_grass(t_map *tile);
-void				set_wall(t_map *tile);
+void				set_hill(t_map *tile);
 void				set_dirt(t_map *tile);
 void				set_water(t_map *tile);
 void				set_sand(t_map *tile);
 void				set_deep_dirt(t_map *tile);
-void				set_plank_floor(t_map *tile);
+void				set_wood_floor(t_map *tile);
 void				set_stone_floor(t_map *tile);
+void				set_wood_wall(t_map *tile);
+void				set_stone_wall(t_map *tile);
 
 //string
 
@@ -225,8 +237,8 @@ bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
 //animation
 
-void				play_animation(t_animation *animation,
-						char **direction);
+void	play_animation(t_animation *animation,
+					char **direction);
 void				init_player_animation(void);
 bool				is_tilable(int32_t id);
 

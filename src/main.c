@@ -1,63 +1,5 @@
 #include "../inc/so_long.h"
 
-void	place_tile_corner(mlx_image_t **img, t_pos2 co, int32_t id)
-{
-	if (g()->map[co.pos1.x][co.pos1.y]->id == id)
-	{
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 4)
-		{
-			if (g()->map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[16], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[17], co);
-			if (g()->map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[18], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[19], co);
-		}
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 0)
-			if (g()->map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[19], co);
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 1)
-		{
-			if (g()->map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[18], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[19], co);
-		}
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 2)
-			if (g()->map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[18], co);
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 3)
-		{
-			if (g()->map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[17], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[19], co);
-		}
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 5)
-		{
-			if (g()->map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[16], co);
-			if (g()->map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[18], co);
-		}
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 6)
-			if (g()->map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[17], co);
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 7)
-		{
-			if (g()->map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[16], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[17], co);
-		}
-		if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 8)
-			if (g()->map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[16], co);
-	}
-}
-
 bool	tile_collision(int x, int y, int w, int h, int32_t c)
 {
 	int	i;
@@ -105,20 +47,19 @@ void	selector(void)
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_RIGHT))
 			if (place_tile(g()->mouseGrid, g()->mouse_id))
 				auto_tiling(g()->mouseGrid.x - 1, g()->mouseGrid.y - 1, 3, 3);
-
-		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT) && g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALLS)
+		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT)
+			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALLS)
 		{
 			g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life -= 5;
 			if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
 			{
 				place_tile(g()->mouseGrid, DIRT);
-				auto_tiling(g()->mouseGrid.x-1, g()->mouseGrid.y-1, 3, 3);
+				auto_tiling(g()->mouseGrid.x - 1, g()->mouseGrid.y - 1, 3, 3);
 			}
 		}
-
 		mlx_image_to_window(g()->mlx, g()->img.selector[0], (g()->mouseGrid.x
-					- g()->cameraGrid.x) * 64 - g()->offSet.x,
-				(g()->mouseGrid.y - g()->cameraGrid.y) * 64 - g()->offSet.y);
+					- g()->cameraGrid.x) * 64 - g()->offSet.x, (g()->mouseGrid.y
+					- g()->cameraGrid.y) * 64 - g()->offSet.y);
 	}
 }
 
@@ -158,21 +99,36 @@ void	draw_grid(int32_t posX, int32_t posY)
 			{
 				if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == GRASS)
 					map_image_to_window(g()->img.grass, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == WALL)
-					map_image_to_window(g()->img.wall, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == DIRT)
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == HILL)
+					map_image_to_window(g()->img.hill, co);
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == DIRT)
 					map_image_to_window(g()->img.dirt, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == WATER)
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == WATER)
 					map_image_to_window(g()->img.water, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == SAND)
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == SAND)
 					map_image_to_window(g()->img.sand, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == DEEP_DIRT)
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == DEEP_DIRT)
 					map_image_to_window(g()->img.deep_dirt, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == PLANK_FLOOR)
-					map_image_to_window(g()->img.plank_floor, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == STONE_FLOOR)
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == WOOD_FLOOR)
+					map_image_to_window(g()->img.wood_floor, co);
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == STONE_FLOOR)
 					map_image_to_window(g()->img.stone_floor, co);
-				place_tile_corner(g()->img.wall, co, WALL);
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == WOOD_WALL)
+					map_image_to_window(g()->img.wood_wall, co);
+				else if (g()->map[co.pos2.x + posX][co.pos2.y
+						+ posY]->id == STONE_WALL)
+					map_image_to_window(g()->img.stone_wall, co);
+				auto_tilling_corner(g()->img.hill, co, HILL);
+				auto_tilling_corner(g()->img.wood_wall, co, WOOD_WALL);
+				auto_tilling_corner(g()->img.stone_wall, co, STONE_WALL);
 				draw_crack(co);
 			}
 			co.pos2.y++;
@@ -238,18 +194,18 @@ void	step(void *param)
 	int32_t			vspd;
 	int32_t			spd;
 	static double	frame = 0;
+	t_vec2			origin;
 
 	hspd = 0;
 	vspd = 0;
 	spd = 10;
 	mlx = param;
 	g()->delta_time = g()->mlx->delta_time * 30;
-	t_vec2 origin;
 	mlx_get_mouse_pos(mlx, &g()->mouse.x, &g()->mouse.y);
 	if (is_key_pressed(MLX_KEY_P))
 	{
 		g()->mouse_id += 1;
-		if (g()->mouse_id > 7)
+		if (g()->mouse_id > 9)
 			g()->mouse_id = 0;
 		printf("%s\n", ft_itoa(g()->mouse_id));
 	}
@@ -257,7 +213,7 @@ void	step(void *param)
 	{
 		g()->mouse_id -= 1;
 		if (g()->mouse_id < 0)
-			g()->mouse_id = 7;
+			g()->mouse_id = 9;
 		printf("%s\n", ft_itoa(g()->mouse_id));
 	}
 	if (is_key_pressed(MLX_KEY_M))
@@ -288,8 +244,8 @@ void	step(void *param)
 	g()->playerGrid.x = g()->player.x / SPRITE_SIZE;
 	g()->playerGrid.y = g()->player.y / SPRITE_SIZE;
 	// update offset
-	g()->offSet.x = (g()->player.x % SPRITE_SIZE)-32;
-	g()->offSet.y = (g()->player.y % SPRITE_SIZE)-32;
+	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - 32;
+	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - 32;
 	// update cameraGrid pos
 	g()->cameraGrid.x = g()->playerGrid.x - C_WIDTH / 2;
 	g()->cameraGrid.y = g()->playerGrid.y - C_HEIGHT / 2;
@@ -299,16 +255,16 @@ void	step(void *param)
 			/ SPRITE_SIZE);
 }
 
-// bool	broke_tile()
+// bool	broke_tile(void)
 // {
 
 // }
 
 void	set_map(int32_t x, int32_t y, int32_t width, int32_t height)
 {
-	int32_t i;
-	int32_t j;
-	t_vec2 map;
+	int32_t	i;
+	int32_t	j;
+	t_vec2	map;
 
 	i = 0;
 	while (i < width)
@@ -318,7 +274,8 @@ void	set_map(int32_t x, int32_t y, int32_t width, int32_t height)
 		{
 			map.x = x + i;
 			map.y = y + j;
-			if ((map.x >= 0 && map.x < R_WIDTH) && (map.y >= 0 && map.y < R_HEIGHT))
+			if ((map.x >= 0 && map.x < R_WIDTH) && (map.y >= 0
+					&& map.y < R_HEIGHT))
 				place_tile(map, g()->map[map.x][map.y]->id);
 			j++;
 		}
@@ -348,13 +305,15 @@ int32_t	main(void)
 
 	//set tile type
 	set_grass(&g()->tile_type[0]);
-	set_wall(&g()->tile_type[1]);
+	set_hill(&g()->tile_type[1]);
 	set_dirt(&g()->tile_type[2]);
 	set_water(&g()->tile_type[3]);
 	set_sand(&g()->tile_type[4]);
 	set_deep_dirt(&g()->tile_type[5]);
-	set_plank_floor(&g()->tile_type[6]);
+	set_wood_floor(&g()->tile_type[6]);
 	set_stone_floor(&g()->tile_type[7]);
+	set_wood_wall(&g()->tile_type[8]);
+	set_stone_wall(&g()->tile_type[9]);
 
 	//GRID
 	g()->map = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
@@ -365,15 +324,17 @@ int32_t	main(void)
 	g()->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 
 	//load texture
-	init_grass_texture(g()->tex.grass);
-	init_sand_texture(g()->tex.sand);
-	init_wall_texture(g()->tex.wall);
-	init_water_texture(g()->tex.water);
-	init_player_texture(g()->tex.player);
-	init_deep_dirt_texture(g()->tex.deep_dirt);
-	init_crack_texture(g()->tex.crack);
-	g()->tex.plank_floor[0] = mlx_load_png("./asset/wood/plank_floor.png");
-	g()->tex.stone_floor[0] = mlx_load_png("./asset/stone/stone_floor.png");
+	init_grass_texture();
+	init_sand_texture();
+	init_hill_texture();
+	init_water_texture();
+	init_player_texture();
+	init_deep_dirt_texture();
+	init_crack_texture();
+	init_wood_wall_texture();
+	init_stone_wall_texture();
+	g()->tex.wood_floor[0] = mlx_load_png("./asset/wood/wood_floor/wood_floor.png");
+	g()->tex.stone_floor[0] = mlx_load_png("./asset/stone/stone_floor/stone_floor.png");
 	g()->tex.selector[0] = mlx_load_png("./asset/selector.png");
 	g()->tex.dirt[0] = mlx_load_png("./asset/dirt/dirt_0.png");
 

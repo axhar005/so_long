@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_tile_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:17:15 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 20:23:38 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/05 17:16:12 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	set_deep_dirt(t_map *tile)
 {
 	tile->name = "deep dirt";
-	tile->id = 5;
+	tile->id = DEEP_DIRT;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = true;
 	tile->tile_index = 0;
 }
 
-void	set_plank_floor(t_map *tile)
+void	set_wood_floor(t_map *tile)
 {
-	tile->name = "plank floor";
-	tile->id = 6;
+	tile->name = "wood floor";
+	tile->id = WOOD_FLOOR;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = false;
@@ -35,9 +35,29 @@ void	set_plank_floor(t_map *tile)
 void	set_stone_floor(t_map *tile)
 {
 	tile->name = "stone floor";
-	tile->id = 7;
+	tile->id = STONE_FLOOR;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = false;
+	tile->tile_index = 0;
+}
+
+void	set_wood_wall(t_map *tile)
+{
+	tile->name = "wood wall";
+	tile->id = WOOD_WALL;
+	tile->depth = WALLS;
+	tile->life = 100;
+	tile->solid = true;
+	tile->tile_index = 0;
+}
+
+void	set_stone_wall(t_map *tile)
+{
+	tile->name = "stone wall";
+	tile->id = STONE_WALL;
+	tile->depth = WALLS;
+	tile->life = 100;
+	tile->solid = true;
 	tile->tile_index = 0;
 }

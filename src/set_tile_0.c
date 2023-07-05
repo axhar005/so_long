@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_tile_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:10:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 20:50:21 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/05 16:58:07 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	set_grass(t_map *tile)
 {
 	tile->name = "grass";
-	tile->id = 0;
+	tile->id = GRASS;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = false;
 	tile->tile_index = 0;
 }
 
-void	set_wall(t_map *tile)
+void	set_hill(t_map *tile)
 {
-	tile->name = "wall";
-	tile->id = 1;
+	tile->name = "hill";
+	tile->id = HILL;
 	tile->depth = WALLS;
 	tile->life = 100;
 	tile->solid = true;
@@ -35,7 +35,7 @@ void	set_wall(t_map *tile)
 void	set_dirt(t_map *tile)
 {
 	tile->name = "dirt";
-	tile->id = 2;
+	tile->id = DIRT;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = false;
@@ -45,7 +45,7 @@ void	set_dirt(t_map *tile)
 void	set_water(t_map *tile)
 {
 	tile->name = "water";
-	tile->id = 3;
+	tile->id = WATER;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = true;
@@ -55,7 +55,7 @@ void	set_water(t_map *tile)
 void	set_sand(t_map *tile)
 {
 	tile->name = "sand";
-	tile->id = 4;
+	tile->id = SAND;
 	tile->depth = FLOORS;
 	tile->life = 100;
 	tile->solid = false;

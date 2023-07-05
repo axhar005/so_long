@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
+#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/04 20:25:09 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/05 15:13:35 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT = libft.a
 
 #--- COMMAND VARIABLES ---#
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 RM = rm -f
 AR = ar rcs
 MK = mkdir -p
@@ -44,8 +44,8 @@ INCDIR = inc
 #--- SOURCE ---#
 SRCDIR	=	src
 SRC		= 	main.c utils_0.c utils_1.c texture.c string.c animation.c \
-			image.c player_utils.c movement.c auto_tiling.c set_tile_0.c \
-			set_tile_1.c draw_0.c game.c
+			image.c player_utils.c movement.c auto_tilling_0.c auto_tilling_1.c \
+			set_tile_0.c set_tile_1.c draw_0.c game.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#

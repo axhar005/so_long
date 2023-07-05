@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/04 22:09:38 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/05 12:29:14 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,30 @@ static void	move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
 	}
 }
 
-static void norm1(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
+static void	norm1(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 {
 	if (is_vertical)
-				move_colide_vertical(pos, dir, hitbox);
-			else
-				move_colide_horizontal(pos, dir, hitbox);
+		move_colide_vertical(pos, dir, hitbox);
+	else
+		move_colide_horizontal(pos, dir, hitbox);
 }
 
-static void norm2(int32_t *dir, int32_t *md, int32_t size)
+static void	norm2(int32_t *dir, int32_t *md, int32_t size)
 {
-	while (*md + sign(*dir) >= 0 && (*md + SPRITE_SIZE)
-				+ sign(*dir) <= size * SPRITE_SIZE)
-				*md += sign(*dir);
+	while (*md + sign(*dir) >= 0 && (*md + SPRITE_SIZE) + sign(*dir) <= size
+		* SPRITE_SIZE)
+		*md += sign(*dir);
 }
 
 void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 {
-	int32_t	*md;
+	int32_t *md;
 	int32_t size;
 
 	if (is_vertical == true)
 	{
 		md = &pos->y;
-		size = R_HEIGHT;	
+		size = R_HEIGHT;
 	}
 	else
 	{
@@ -72,8 +72,7 @@ void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 	}
 	if (*dir != 0)
 	{
-		if (*md + *dir >= 0 && (*md + SPRITE_SIZE) + *dir <= size
-			* SPRITE_SIZE)
+		if (*md + *dir >= 0 && (*md + SPRITE_SIZE) + *dir <= size * SPRITE_SIZE)
 		{
 			norm1(pos, dir, hitbox, is_vertical);
 			*md += *dir;

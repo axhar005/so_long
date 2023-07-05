@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/06/27 16:01:58 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:29:43 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 /// @return the array
 t_map	***allocate_2d_map_array(int32_t cols, int32_t rows)
 {
-	t_map ***map;
-	int i;
-	int j;
+	t_map	***map;
+	int		i;
+	int		j;
 
 	map = calloc(cols + 1, sizeof(t_map **));
 	i = 0;
@@ -32,7 +32,7 @@ t_map	***allocate_2d_map_array(int32_t cols, int32_t rows)
 			map[i][j++] = calloc(1, sizeof(t_map));
 		i++;
 	}
-	return map;
+	return (map);
 }
 
 /// @brief fill a 2d t_map array with the letter c
@@ -59,8 +59,8 @@ void	fill_2d_map_array(t_map ***array, int32_t cols, int32_t rows, int32_t c)
 /// @param array the array
 void	print_2d_map_array(t_map ***array, int32_t cols, int32_t rows)
 {
-	int32_t	x;
-	int32_t	y;
+	int32_t x;
+	int32_t y;
 
 	y = 0;
 	while (y < rows)
