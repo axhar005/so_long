@@ -106,7 +106,7 @@ void	selector(void)
 			if (place_tile(g()->mouseGrid, g()->mouse_id))
 				auto_tiling(g()->mouseGrid.x - 1, g()->mouseGrid.y - 1, 3, 3);
 
-		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT))
+		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT) && g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALLS)
 		{
 			g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life -= 5;
 			if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
@@ -328,7 +328,6 @@ void	set_map(int32_t x, int32_t y, int32_t width, int32_t height)
 
 int32_t	main(void)
 {
-	g();
 	g()->playerGrid.x = 5;
 	g()->playerGrid.y = 5;
 	g()->player.x = g()->playerGrid.x * SPRITE_SIZE;

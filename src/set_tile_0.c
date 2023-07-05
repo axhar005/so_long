@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:10:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 20:23:07 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/04 20:50:21 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	set_wall(t_map *tile)
 {
 	tile->name = "wall";
 	tile->id = 1;
-	tile->depth = WALL;
+	tile->depth = WALLS;
 	tile->life = 100;
 	tile->solid = true;
 	tile->tile_index = 0;
