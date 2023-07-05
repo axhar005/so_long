@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 13:49:57 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:22:44 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ enum e_game
 	C_HEIGHT = 9,
 	R_WIDTH = 1500,
 	R_HEIGHT = 1500
+};
+
+enum e_depth
+{
+	FLOORS,
+	WALLS
 };
 
 enum e_tile
@@ -108,6 +114,7 @@ typedef struct s_map
 {
 	char			*name;
 	int32_t			id;
+	int32_t			depth;
 	int32_t			tile_index;
 	int32_t			life;
 	bool			solid;
@@ -156,11 +163,15 @@ typedef struct s_game
 
 // prototype
 
+//game
+
+t_game *g(void);
+
 //draw
 
-void				map_image_to_window(t_game *g, mlx_image_t **img,
+void				map_image_to_window(mlx_image_t **img,
 						t_pos2 co);
-void				map_image_index_to_window(t_game *g, mlx_image_t *img,
+void				map_image_index_to_window(mlx_image_t *img,
 						t_pos2 co);
 
 //map
@@ -183,12 +194,12 @@ void			    init_crack_texture(mlx_texture_t **crack);
 
 //image
 
-void				init_img(t_game *game, t_img *img);
-void				del_img(t_game *game, t_img *img);
+void				init_img(t_img *img);
+void				del_img(t_img *img);
 
 //tiling
 
-void				auto_tiling(t_game *game, int32_t x, int32_t y,
+void				auto_tiling(int32_t x, int32_t y,
 						int32_t width, int32_t height);
 int32_t				point_distance(t_vec2 bow, t_vec2 target);
 
@@ -214,16 +225,16 @@ bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
 //animation
 
-void				play_animation(t_game *game, t_animation *animation,
+void				play_animation(t_animation *animation,
 						char **direction);
-void				init_player_animation(t_game *game);
+void				init_player_animation(void);
 bool				is_tilable(int32_t id);
 
 //movement
 
 void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 						bool is_vertical);
-void				player_animation_dir(t_game *game);
+void				player_animation_dir(void);
 
 //math
 

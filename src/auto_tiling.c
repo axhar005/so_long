@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   auto_tiling.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:02:56 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 10:54:09 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:02:23 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-static int32_t	calculate_auto_tiling(t_game *game, int32_t x, int32_t y,
+static int32_t	calculate_auto_tiling(int32_t x, int32_t y,
 		int32_t c)
 {
 	int32_t	val;
@@ -20,13 +20,13 @@ static int32_t	calculate_auto_tiling(t_game *game, int32_t x, int32_t y,
 	val = 0;
 	if ((x >= 0 && x < R_WIDTH) && (y >= 0 && y < R_HEIGHT))
 	{
-		if (y - 1 >= 0 && game->map[x][y - 1]->id == c)
+		if (y - 1 >= 0 && g()->map[x][y - 1]->id == c)
 			val += 1;
-		if (x + 1 < R_WIDTH && game->map[x + 1][y]->id == c)
+		if (x + 1 < R_WIDTH && g()->map[x + 1][y]->id == c)
 			val += 10;
-		if (y + 1 < R_HEIGHT && game->map[x][y + 1]->id == c)
+		if (y + 1 < R_HEIGHT && g()->map[x][y + 1]->id == c)
 			val += 100;
-		if (x - 1 >= 0 && game->map[x - 1][y]->id == c)
+		if (x - 1 >= 0 && g()->map[x - 1][y]->id == c)
 			val += 1000;
 		return (val);
 	}
@@ -66,7 +66,7 @@ static int32_t	index_auto_tiling(int32_t val)
 	return (-1);
 }
 
-void	auto_tiling(t_game *game, int32_t x, int32_t y, int32_t width,
+void	auto_tiling(int32_t x, int32_t y, int32_t width,
 		int32_t height)
 {
 	int32_t i;
@@ -84,8 +84,8 @@ void	auto_tiling(t_game *game, int32_t x, int32_t y, int32_t width,
 			yy = y + j;
 			if ((xx >= 0 && xx < R_WIDTH) && (yy >= 0 && yy < R_HEIGHT))
 			{
-				if (is_tilable(game->map[xx][yy]->id))
-					game->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(game, xx, yy, game->map[xx][yy]->id));
+				if (is_tilable(g()->map[xx][yy]->id))
+					g()->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx, yy, g()->map[xx][yy]->id));
 			}
 			j++;
 		}

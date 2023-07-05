@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/06/20 12:31:48 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:00:53 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void init_player_animation(t_game *game)
+void init_player_animation(void)
 {
-    game->player_animation.up = ft_split("2,3", ',');
-	game->player_animation.down = ft_split("0,1", ',');
-	game->player_animation.left = ft_split("5,4,6,4", ',');
-	game->player_animation.right = ft_split("8,7,9,7", ',');
-    game->player_animation.clock = 0;
-    game->player_animation.speed = 1.8;
-    game->player_animation.index = 0;
-    game->player_animation.loop = 0;
+    g()->player_animation.up = ft_split("2,3", ',');
+	g()->player_animation.down = ft_split("0,1", ',');
+	g()->player_animation.left = ft_split("5,4,6,4", ',');
+	g()->player_animation.right = ft_split("8,7,9,7", ',');
+    g()->player_animation.clock = 0;
+    g()->player_animation.speed = 1.8;
+    g()->player_animation.index = 0;
+    g()->player_animation.loop = 0;
 }
 
-void play_animation(t_game *game, t_animation *animation, char **sheet)
+void play_animation(t_animation *animation, char **sheet)
 {
     if (animation->old_sheet != sheet)
     {
@@ -43,7 +43,7 @@ void play_animation(t_game *game, t_animation *animation, char **sheet)
     	animation->clock = 0;
     }
     animation->sheet = sheet;
-	animation->clock += game->delta_time;
+	animation->clock += g()->delta_time;
 }
 
 /*

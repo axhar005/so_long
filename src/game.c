@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_0.c                                           :+:      :+:    :+:   */
+/*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 15:14:35 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/04 20:04:10 by olivierbouc      ###   ########.fr       */
+/*   Created: 2023/07/04 19:56:13 by olivierbouc       #+#    #+#             */
+/*   Updated: 2023/07/04 20:32:40 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
-void	map_image_to_window(mlx_image_t **img, t_pos2 co)
-{
-	mlx_image_to_window(g()->mlx, img[g()->map[co.pos1.x][co.pos1.y]->tile_index],
-			(co.pos2.x * SPRITE_SIZE) - g()->offSet.x, (co.pos2.y * SPRITE_SIZE)
-			- g()->offSet.y);
-}
 
-void	map_image_index_to_window(mlx_image_t *img, t_pos2 co)
+t_game *g(void)
 {
-	mlx_image_to_window(g()->mlx, img, 
-		(co.pos2.x * SPRITE_SIZE) - g()->offSet.x, (co.pos2.y * SPRITE_SIZE) - g()->offSet.y);
+    static t_game *game;
+    if (!game)
+        game = ft_calloc(1, sizeof(t_game));
+    return (game);
 }
