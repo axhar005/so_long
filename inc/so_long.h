@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/05 17:14:43 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:05:04 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ enum				e_game
 	HEIGHT = 576,
 	C_WIDTH = 13,
 	C_HEIGHT = 9,
-	R_WIDTH = 15,
-	R_HEIGHT = 20
+	R_WIDTH = 1500,
+	R_HEIGHT = 20000
 };
 
 enum				e_depth
