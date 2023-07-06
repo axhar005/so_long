@@ -207,14 +207,14 @@ void	step(void *param)
 		g()->mouse_id += 1;
 		if (g()->mouse_id > 9)
 			g()->mouse_id = 0;
-		printf("%s\n", ft_itoa(g()->mouse_id));
+		printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
 	}
 	if (is_key_pressed(MLX_KEY_O))
 	{
 		g()->mouse_id -= 1;
 		if (g()->mouse_id < 0)
 			g()->mouse_id = 9;
-		printf("%s\n", ft_itoa(g()->mouse_id));
+		printf("%d\n", g()->mouse_id);
 	}
 	if (is_key_pressed(MLX_KEY_M))
 		print_2d_map_array(g()->map, R_WIDTH, R_HEIGHT);

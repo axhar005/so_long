@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/05 18:05:04 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/06 09:54:19 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ enum				e_game
 	HEIGHT = 576,
 	C_WIDTH = 13,
 	C_HEIGHT = 9,
-	R_WIDTH = 1500,
-	R_HEIGHT = 20000
+	R_WIDTH = 30,
+	R_HEIGHT = 50
 };
 
 enum				e_depth
@@ -145,9 +145,9 @@ typedef struct s_animation
 // all game struct
 typedef struct s_game
 {
-	char			mouse_id;
 	double			delta_time;
 	double			current_time;
+	int32_t			mouse_id;
 	int32_t			player_dir;
 	int32_t			arm_range;
 	t_img			img;
