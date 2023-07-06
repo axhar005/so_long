@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/06 13:45:56 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/06 16:16:26 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ enum				e_game
 	HEIGHT = 576,
 	C_WIDTH = 13,
 	C_HEIGHT = 9,
-	R_WIDTH = 30,
-	R_HEIGHT = 50
+	R_WIDTH = 10,
+	R_HEIGHT = 10
 };
 
 enum				e_depth
@@ -99,8 +99,8 @@ typedef struct s_texture
 // storage of all image (instance)
 typedef struct s_img
 {
-	mlx_image_t		*hill[20];
 	mlx_image_t		*grass[16];
+	mlx_image_t		*hill[20];
 	mlx_image_t		*dirt[1];
 	mlx_image_t		*water[16];
 	mlx_image_t		*sand[16];
@@ -122,6 +122,7 @@ typedef struct s_map
 	int32_t			depth;
 	int32_t			tile_index;
 	int32_t			life;
+	mlx_image_t		**image;
 	bool			solid;
 
 }					t_map;

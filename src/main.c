@@ -81,7 +81,6 @@ void	draw_crack(t_pos2 co)
 void	draw_grid(int32_t posX, int32_t posY)
 {
 	t_pos2	co;
-
 	del_img(&g()->old_img);
 	g()->old_img = g()->img;
 	init_img(&g()->img);
@@ -97,35 +96,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 			if ((co.pos1.x >= 0 && co.pos1.x < R_WIDTH)
 				&& (co.pos1.y >= 0 && co.pos1.y < R_HEIGHT))
 			{
-				if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == GRASS)
-					map_image_to_window(g()->img.grass, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == HILL)
-					map_image_to_window(g()->img.hill, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == DIRT)
-					map_image_to_window(g()->img.dirt, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == WATER)
-					map_image_to_window(g()->img.water, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == SAND)
-					map_image_to_window(g()->img.sand, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == DEEP_DIRT)
-					map_image_to_window(g()->img.deep_dirt, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == WOOD_FLOOR)
-					map_image_to_window(g()->img.wood_floor, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == STONE_FLOOR)
-					map_image_to_window(g()->img.stone_floor, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == WOOD_WALL)
-					map_image_to_window(g()->img.wood_wall, co);
-				else if (g()->map[co.pos2.x + posX][co.pos2.y
-						+ posY]->id == STONE_WALL)
-					map_image_to_window(g()->img.stone_wall, co);
+				map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->image, co);
 				auto_tilling_corner(g()->img.hill, co, HILL);
 				auto_tilling_corner(g()->img.wood_wall, co, WOOD_WALL);
 				auto_tilling_corner(g()->img.stone_wall, co, STONE_WALL);
