@@ -48,7 +48,7 @@ void	selector(void)
 			if (place_tile(g()->mouseGrid, g()->mouse_id))
 				auto_tiling(g()->mouseGrid.x - 1, g()->mouseGrid.y - 1, 3, 3);
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT)
-			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALLS)
+			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALL)
 		{
 			g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life -= 5;
 			if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
@@ -94,8 +94,8 @@ void	draw_grid(int32_t posX, int32_t posY)
 		{
 			co.pos1.x = co.pos2.x + posX;
 			co.pos1.y = co.pos2.y + posY;
-			if ((co.pos2.x + posX >= 0 && co.pos2.x + posX < R_WIDTH)
-				&& (co.pos2.y + posY >= 0 && co.pos2.y + posY < R_HEIGHT))
+			if ((co.pos1.x >= 0 && co.pos1.x < R_WIDTH)
+				&& (co.pos1.y >= 0 && co.pos1.y < R_HEIGHT))
 			{
 				if (g()->map[co.pos2.x + posX][co.pos2.y + posY]->id == GRASS)
 					map_image_to_window(g()->img.grass, co);
@@ -214,7 +214,7 @@ void	step(void *param)
 		g()->mouse_id -= 1;
 		if (g()->mouse_id < 0)
 			g()->mouse_id = 9;
-		printf("%d\n", g()->mouse_id);
+		printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
 	}
 	if (is_key_pressed(MLX_KEY_M))
 		print_2d_map_array(g()->map, R_WIDTH, R_HEIGHT);
@@ -224,8 +224,8 @@ void	step(void *param)
 		* spd;
 	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
 		* spd;
-	origin.x = g()->player.x - 32;
-	origin.y = g()->player.y - 32;
+	origin.x = g()->player.x - SPRITE_SIZE/2;
+	origin.y = g()->player.y - SPRITE_SIZE/2;
 	if (frame >= 1)
 	{
 		movement(&origin, &hspd, g()->player_hitbox, false);
@@ -238,14 +238,14 @@ void	step(void *param)
 	//uptade time
 	g()->current_time += g()->mlx->delta_time;
 	//update player origin
-	g()->player.x = origin.x + 32;
-	g()->player.y = origin.y + 32;
+	g()->player.x = origin.x + SPRITE_SIZE/2;
+	g()->player.y = origin.y + SPRITE_SIZE/2;
 	// update player grid pos
 	g()->playerGrid.x = g()->player.x / SPRITE_SIZE;
 	g()->playerGrid.y = g()->player.y / SPRITE_SIZE;
 	// update offset
-	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - 32;
-	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - 32;
+	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE/2;
+	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE/2;
 	// update cameraGrid pos
 	g()->cameraGrid.x = g()->playerGrid.x - C_WIDTH / 2;
 	g()->cameraGrid.y = g()->playerGrid.y - C_HEIGHT / 2;
@@ -290,16 +290,9 @@ int32_t	main(void)
 	g()->player.x = g()->playerGrid.x * SPRITE_SIZE;
 	g()->player.y = g()->playerGrid.y * SPRITE_SIZE;
 	g()->player_hitbox.top = 16;
-	g()->player_hitbox.bot = 0;
 	g()->player_hitbox.left = 12;
 	g()->player_hitbox.right = 12;
-	g()->cameraGrid.x = 0;
-	g()->cameraGrid.y = 0;
-	g()->offSet.x = 0;
-	g()->offSet.y = 0;
-	g()->mouse_id = 0;
 	g()->arm_range = 20;
-	g()->current_time = 0;
 
 	init_player_animation();
 

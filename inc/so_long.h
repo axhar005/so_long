@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/06 09:54:19 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/06 13:45:56 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ enum				e_game
 
 enum				e_depth
 {
-	FLOORS,
-	WALLS
+	FLOOR,
+	WALL
 };
 
 enum				e_tile
@@ -51,8 +51,8 @@ enum				e_tile
 	SAND,
 	DEEP_DIRT,
 	WOOD_FLOOR,
-	STONE_FLOOR,
 	WOOD_WALL,
+	STONE_FLOOR,
 	STONE_WALL
 };
 
@@ -99,21 +99,20 @@ typedef struct s_texture
 // storage of all image (instance)
 typedef struct s_img
 {
-	mlx_image_t		*dirt[1];
-	mlx_image_t		*grass[16];
-	mlx_image_t		*deep_dirt[16];
-	mlx_image_t		*sand[16];
-	mlx_image_t		*water[16];
 	mlx_image_t		*hill[20];
-	mlx_image_t		*player[10];
-	mlx_image_t		*selector[1];
+	mlx_image_t		*grass[16];
+	mlx_image_t		*dirt[1];
+	mlx_image_t		*water[16];
+	mlx_image_t		*sand[16];
+	mlx_image_t		*deep_dirt[16];
 	mlx_image_t		*wood_floor[1];
 	mlx_image_t		*wood_wall[20];
 	mlx_image_t		*stone_floor[1];
 	mlx_image_t		*stone_wall[20];
+	mlx_image_t		*player[10];
+	mlx_image_t		*selector[1];
 	mlx_image_t		*crack[4];
 	mlx_image_t		*camera[1];
-
 }					t_img;
 
 typedef struct s_map
