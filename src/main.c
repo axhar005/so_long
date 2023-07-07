@@ -30,16 +30,6 @@ bool	tile_collision(int x, int y, int w, int h, int32_t c)
 	return (false);
 }
 
-bool	place_tile(t_vec2 pos, int32_t id)
-{
-	if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
-	{
-		*g()->map[pos.x][pos.y] = g()->tile_type[id];
-		return (true);
-	}
-	return (false);
-}
-
 void	selector(void)
 {
 	if (point_distance(g()->playerGrid, g()->mouseGrid) <= g()->arm_range)
@@ -107,7 +97,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 		co.pos2.x++;
 	}
 	selector();
-	mlx_image_to_window(g()->mlx, g()->img.player[g()->player_animation.index],
+	mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
 			(C_WIDTH / 2) * SPRITE_SIZE, (C_HEIGHT / 2) * SPRITE_SIZE);
 }
 
@@ -158,21 +148,19 @@ bool	is_key_pressed(keys_t key)
 	return (false);
 }
 
+void step_update(void)
+{
+	
+}
+
 void	step(void *param)
 {
-	mlx_t			*mlx;
-	int32_t			hspd;
-	int32_t			vspd;
-	int32_t			spd;
 	static double	frame = 0;
-	t_vec2			origin;
 
-	hspd = 0;
-	vspd = 0;
-	spd = 10;
-	mlx = param;
+	g()->p_move.spd = 10;
+	(void)param;
 	g()->delta_time = g()->mlx->delta_time * 30;
-	mlx_get_mouse_pos(mlx, &g()->mouse.x, &g()->mouse.y);
+	mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
 	if (is_key_pressed(MLX_KEY_P))
 	{
 		g()->mouse_id += 1;
@@ -189,18 +177,12 @@ void	step(void *param)
 	}
 	if (is_key_pressed(MLX_KEY_M))
 		print_2d_map_array(g()->map, R_WIDTH, R_HEIGHT);
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	hspd = (mlx_is_key_down(mlx, MLX_KEY_D) - mlx_is_key_down(mlx, MLX_KEY_A))
-		* spd;
-	vspd = (mlx_is_key_down(mlx, MLX_KEY_S) - mlx_is_key_down(mlx, MLX_KEY_W))
-		* spd;
-	origin.x = g()->player.x - SPRITE_SIZE/2;
-	origin.y = g()->player.y - SPRITE_SIZE/2;
+	if (mlx_is_key_down(g()->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(g()->mlx);
+	
 	if (frame >= 1)
 	{
-		movement(&origin, &hspd, g()->player_hitbox, false);
-		movement(&origin, &vspd, g()->player_hitbox, true);
+		move();
 		player_animation_dir();
 		draw();
 		frame = 0;
@@ -208,9 +190,6 @@ void	step(void *param)
 	frame += g()->delta_time;
 	//uptade time
 	g()->current_time += g()->mlx->delta_time;
-	//update player origin
-	g()->player.x = origin.x + SPRITE_SIZE/2;
-	g()->player.y = origin.y + SPRITE_SIZE/2;
 	// update player grid pos
 	g()->playerGrid.x = g()->player.x / SPRITE_SIZE;
 	g()->playerGrid.y = g()->player.y / SPRITE_SIZE;
@@ -226,58 +205,30 @@ void	step(void *param)
 			/ SPRITE_SIZE);
 }
 
-// bool	broke_tile(void)
-// {
-
-// }
-
-void	set_map(int32_t x, int32_t y, int32_t width, int32_t height)
-{
-	int32_t	i;
-	int32_t	j;
-	t_vec2	map;
-
-	i = 0;
-	while (i < width)
-	{
-		j = 0;
-		while (j < height)
-		{
-			map.x = x + i;
-			map.y = y + j;
-			if ((map.x >= 0 && map.x < R_WIDTH) && (map.y >= 0
-					&& map.y < R_HEIGHT))
-				place_tile(map, g()->map[map.x][map.y]->id);
-			j++;
-		}
-		i++;
-	}
-}
-
 int32_t	main(void)
 {
 	g()->playerGrid.x = 5;
 	g()->playerGrid.y = 5;
 	g()->player.x = g()->playerGrid.x * SPRITE_SIZE;
 	g()->player.y = g()->playerGrid.y * SPRITE_SIZE;
-	g()->player_hitbox.top = 16;
-	g()->player_hitbox.left = 12;
-	g()->player_hitbox.right = 12;
+	g()->p_hitbox.top = 16;
+	g()->p_hitbox.left = 12;
+	g()->p_hitbox.right = 12;
 	g()->arm_range = 20;
 
 	init_player_animation();
 
 	//set tile type
-	set_grass(&g()->tile_type[0]);
-	set_hill(&g()->tile_type[1]);
-	set_dirt(&g()->tile_type[2]);
-	set_water(&g()->tile_type[3]);
-	set_sand(&g()->tile_type[4]);
-	set_deep_dirt(&g()->tile_type[5]);
-	set_wood_floor(&g()->tile_type[6]);
-	set_stone_floor(&g()->tile_type[7]);
-	set_wood_wall(&g()->tile_type[8]);
-	set_stone_wall(&g()->tile_type[9]);
+	set_grass();
+	set_hill();
+	set_dirt();
+	set_water();
+	set_sand();
+	set_deep_dirt();
+	set_wood_floor();
+	set_wood_wall();
+	set_stone_floor();
+	set_stone_wall();
 
 	//GRID
 	g()->map = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
@@ -302,7 +253,7 @@ int32_t	main(void)
 	g()->tex.selector[0] = mlx_load_png("./asset/selector.png");
 	g()->tex.dirt[0] = mlx_load_png("./asset/dirt/dirt_0.png");
 
-	mlx_loop_hook(g()->mlx, step, g()->mlx);
+	mlx_loop_hook(g()->mlx, step, NULL);
 	mlx_loop(g()->mlx);
 	mlx_terminate(g()->mlx);
 	return (EXIT_SUCCESS);

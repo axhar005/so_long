@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/05 12:27:42 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:17:18 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	init_player_animation(void)
 {
-	g()->player_animation.up = ft_split("2,3", ',');
-	g()->player_animation.down = ft_split("0,1", ',');
-	g()->player_animation.left = ft_split("5,4,6,4", ',');
-	g()->player_animation.right = ft_split("8,7,9,7", ',');
-	g()->player_animation.clock = 0;
-	g()->player_animation.speed = 1.8;
-	g()->player_animation.index = 0;
-	g()->player_animation.loop = 0;
+	g()->p_animation.up = ft_split("2,3", ',');
+	g()->p_animation.down = ft_split("0,1", ',');
+	g()->p_animation.left = ft_split("5,4,6,4", ',');
+	g()->p_animation.right = ft_split("8,7,9,7", ',');
+	g()->p_animation.clock = 0;
+	g()->p_animation.speed = 1.8;
+	g()->p_animation.index = 0;
+	g()->p_animation.loop = 0;
 }
 
 void	play_animation(t_animation *animation, char **sheet)
@@ -48,7 +48,7 @@ void	play_animation(t_animation *animation, char **sheet)
 /*
 (direction, animation_spd)
 
-struct player_animation:
+struct p_animation:
     index = 0;
     up = [0, 1];
     down = [2, 3];

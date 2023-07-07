@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/06 16:16:26 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:45:07 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ enum				e_depth
 	WALL
 };
 
+enum				e_state
+{
+	START,
+	INVENTORY,
+	GAME
+};
 enum				e_tile
 {
 	GRASS,
@@ -77,6 +83,14 @@ typedef struct s_hitbox
 	int32_t			right;
 }					t_hitbox;
 
+//movement
+typedef struct s_movement
+{
+	int32_t			hspd;
+	int32_t			vspd;
+	int32_t			spd;
+}					t_movement;
+
 // storage of all texture (png)
 typedef struct s_texture
 {
@@ -93,7 +107,6 @@ typedef struct s_texture
 	mlx_texture_t	*stone_floor[1];
 	mlx_texture_t	*stone_wall[20];
 	mlx_texture_t	*crack[4];
-	mlx_texture_t	*camera[1];
 }					t_texture;
 
 // storage of all image (instance)
@@ -112,7 +125,6 @@ typedef struct s_img
 	mlx_image_t		*player[10];
 	mlx_image_t		*selector[1];
 	mlx_image_t		*crack[4];
-	mlx_image_t		*camera[1];
 }					t_img;
 
 typedef struct s_map
@@ -145,15 +157,15 @@ typedef struct s_animation
 // all game struct
 typedef struct s_game
 {
+	mlx_t			*mlx;
+	t_texture		tex;
 	double			delta_time;
 	double			current_time;
 	int32_t			mouse_id;
-	int32_t			player_dir;
+	int32_t			p_direction;
 	int32_t			arm_range;
 	t_img			img;
 	t_img			old_img;
-	t_texture		tex;
-	mlx_t			*mlx;
 	t_map			***map;
 	t_map			tile_type[10];
 	t_vec2			playerGrid;
@@ -163,8 +175,9 @@ typedef struct s_game
 	t_vec2			offSet;
 	t_vec2			mouse;
 	t_vec2			mouseGrid;
-	t_hitbox		player_hitbox;
-	t_animation		player_animation;
+	t_movement		p_move;
+	t_hitbox		p_hitbox;
+	t_animation		p_animation;
 }					t_game;
 
 // prototype
@@ -187,6 +200,8 @@ void				fill_2d_map_array(t_map ***array, int32_t rows,
 						int32_t cols, int32_t c);
 void				print_2d_map_array(t_map ***array, int32_t cols,
 						int32_t rows);
+void				set_map(int32_t x, int32_t y, int32_t width, 
+						int32_t height);
 
 //texture
 
@@ -212,19 +227,20 @@ void				auto_tiling(int32_t x, int32_t y, int32_t width,
 int32_t				point_distance(t_vec2 bow, t_vec2 target);
 void				auto_tilling_corner(mlx_image_t **img, t_pos2 co,
 						int32_t id);
+bool				place_tile(t_vec2 pos, int32_t id);
 
 //tile type
 
-void				set_grass(t_map *tile);
-void				set_hill(t_map *tile);
-void				set_dirt(t_map *tile);
-void				set_water(t_map *tile);
-void				set_sand(t_map *tile);
-void				set_deep_dirt(t_map *tile);
-void				set_wood_floor(t_map *tile);
-void				set_stone_floor(t_map *tile);
-void				set_wood_wall(t_map *tile);
-void				set_stone_wall(t_map *tile);
+void				set_grass(void);
+void				set_hill(void);
+void				set_dirt(void);
+void				set_water(void);
+void				set_sand(void);
+void				set_deep_dirt(void);
+void				set_wood_floor(void);
+void				set_stone_floor(void);
+void				set_wood_wall(void);
+void				set_stone_wall(void);
 
 //string
 
@@ -237,7 +253,7 @@ bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
 //animation
 
-void	play_animation(t_animation *animation,
+void				play_animation(t_animation *animation,
 					char **direction);
 void				init_player_animation(void);
 bool				is_tilable(int32_t id);
@@ -247,6 +263,7 @@ bool				is_tilable(int32_t id);
 void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 						bool is_vertical);
 void				player_animation_dir(void);
+void 				move(void);
 
 //math
 

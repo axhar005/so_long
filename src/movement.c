@@ -3,81 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/05 12:29:14 by oboucher         ###   ########.fr       */
+/*   Created: 2023/07/07 09:38:52 by olivierbouc       #+#    #+#             */
+/*   Updated: 2023/07/07 10:25:01 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-static void	move_colide_vertical(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
+void move(void)
 {
-	if (tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top) + *dir,
-			SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE
-			- (hitbox.bot + hitbox.top), 's'))
-	{
-		while (!tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top)
-				+ sign(*dir), SPRITE_SIZE - (hitbox.right + hitbox.left),
-				SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
-			pos->y += sign(*dir);
-		*dir = 0;
-	}
-}
+	t_vec2			origin;
 
-static void	move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
-{
-	if (tile_collision(pos->x + hitbox.left + *dir, (pos->y + hitbox.top),
-			SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE
-			- (hitbox.bot + hitbox.top), 's'))
-	{
-		while (!tile_collision(pos->x + hitbox.left + sign(*dir), (pos->y
-					+ hitbox.top), SPRITE_SIZE - (hitbox.right + hitbox.left),
-				SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
-			pos->x += sign(*dir);
-		*dir = 0;
-	}
-}
+    g()->p_move.hspd = (mlx_is_key_down(g()->mlx, MLX_KEY_D) - mlx_is_key_down(g()->mlx, MLX_KEY_A))
+		* g()->p_move.spd;
+	g()->p_move.vspd = (mlx_is_key_down(g()->mlx, MLX_KEY_S) - mlx_is_key_down(g()->mlx, MLX_KEY_W))
+		* g()->p_move.spd;
+	origin.x = g()->player.x - SPRITE_SIZE/2;
+	origin.y = g()->player.y - SPRITE_SIZE/2;
 
-static void	norm1(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
-{
-	if (is_vertical)
-		move_colide_vertical(pos, dir, hitbox);
-	else
-		move_colide_horizontal(pos, dir, hitbox);
-}
+    movement(&origin, &g()->p_move.hspd, g()->p_hitbox, false);
+	movement(&origin, &g()->p_move.vspd, g()->p_hitbox, true);
 
-static void	norm2(int32_t *dir, int32_t *md, int32_t size)
-{
-	while (*md + sign(*dir) >= 0 && (*md + SPRITE_SIZE) + sign(*dir) <= size
-		* SPRITE_SIZE)
-		*md += sign(*dir);
-}
-
-void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
-{
-	int32_t *md;
-	int32_t size;
-
-	if (is_vertical == true)
-	{
-		md = &pos->y;
-		size = R_HEIGHT;
-	}
-	else
-	{
-		md = &pos->x;
-		size = R_WIDTH;
-	}
-	if (*dir != 0)
-	{
-		if (*md + *dir >= 0 && (*md + SPRITE_SIZE) + *dir <= size * SPRITE_SIZE)
-		{
-			norm1(pos, dir, hitbox, is_vertical);
-			*md += *dir;
-		}
-		else
-			norm2(dir, md, size);
-	}
+    //update player origin
+	g()->player.x = origin.x + SPRITE_SIZE/2;
+	g()->player.y = origin.y + SPRITE_SIZE/2;
 }
