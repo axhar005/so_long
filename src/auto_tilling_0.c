@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_tiling.c                                      :+:      :+:    :+:   */
+/*   auto_tilling_0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:02:56 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/05 12:27:50 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:22:55 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static int32_t	calculate_auto_tiling(int32_t x, int32_t y, int32_t c)
 	int32_t	val;
 
 	val = 0;
-	if ((x >= 0 && x < R_WIDTH) && (y >= 0 && y < R_HEIGHT))
+	if ((x >= 0 && x < g()->window.r_width) && (y >= 0 && y < g()->window.r_height))
 	{
 		if (y - 1 >= 0 && g()->map[x][y - 1]->id == c)
 			val += 1;
-		if (x + 1 < R_WIDTH && g()->map[x + 1][y]->id == c)
+		if (x + 1 < g()->window.r_width && g()->map[x + 1][y]->id == c)
 			val += 10;
-		if (y + 1 < R_HEIGHT && g()->map[x][y + 1]->id == c)
+		if (y + 1 < g()->window.r_height && g()->map[x][y + 1]->id == c)
 			val += 100;
 		if (x - 1 >= 0 && g()->map[x - 1][y]->id == c)
 			val += 1000;
@@ -80,7 +80,7 @@ void	auto_tiling(int32_t x, int32_t y, int32_t width, int32_t height)
 		{
 			xx = x + i;
 			yy = y + j;
-			if ((xx >= 0 && xx < R_WIDTH) && (yy >= 0 && yy < R_HEIGHT))
+			if ((xx >= 0 && xx < g()->window.r_width) && (yy >= 0 && yy < g()->window.r_height))
 			{
 				if (is_tilable(g()->map[xx][yy]->id))
 					g()->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx,

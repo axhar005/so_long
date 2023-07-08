@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/07 11:45:07 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/07 19:27:15 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 enum				e_game
 {
 	SPRITE_SIZE = 64,
-	WIDTH = 832,
-	HEIGHT = 576,
-	C_WIDTH = 13,
-	C_HEIGHT = 9,
+	WIDTH = 1344,
+	HEIGHT = 704,
+	C_WIDTH = 21,
+	C_HEIGHT = 11,
 	R_WIDTH = 10,
 	R_HEIGHT = 10
 };
@@ -42,7 +42,7 @@ enum				e_depth
 	WALL
 };
 
-enum				e_state
+enum				e_states
 {
 	START,
 	INVENTORY,
@@ -74,6 +74,17 @@ typedef struct s_pos2
 	t_vec2			pos1;
 	t_vec2			pos2;
 }					t_pos2;
+
+typedef struct s_window
+{
+	int32_t			height;
+	int32_t			width;
+	int32_t			c_height;
+	int32_t			c_width;
+	int32_t			r_height;
+	int32_t			r_width;
+}					t_window;
+
 //hitbox
 typedef struct s_hitbox
 {
@@ -164,6 +175,7 @@ typedef struct s_game
 	int32_t			mouse_id;
 	int32_t			p_direction;
 	int32_t			arm_range;
+	int32_t			state;
 	t_img			img;
 	t_img			old_img;
 	t_map			***map;
@@ -178,6 +190,7 @@ typedef struct s_game
 	t_movement		p_move;
 	t_hitbox		p_hitbox;
 	t_animation		p_animation;
+	t_window		window;
 }					t_game;
 
 // prototype

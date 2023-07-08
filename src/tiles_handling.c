@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 09:34:56 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/07 09:45:09 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/07 20:24:33 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	place_tile(t_vec2 pos, int32_t id)
 {
-	if ((pos.x >= 0 && pos.x < R_WIDTH) && (pos.y >= 0 && pos.y < R_HEIGHT))
+	if ((pos.x >= 0 && pos.x < g()->window.r_width) && (pos.y >= 0 && pos.y < g()->window.r_height))
 	{
 		*g()->map[pos.x][pos.y] = g()->tile_type[id];
 		return (true);
@@ -36,8 +36,8 @@ void	set_map(int32_t x, int32_t y, int32_t width, int32_t height)
 		{
 			map.x = x + i;
 			map.y = y + j;
-			if ((map.x >= 0 && map.x < R_WIDTH) && (map.y >= 0
-					&& map.y < R_HEIGHT))
+			if ((map.x >= 0 && map.x < g()->window.r_width) && (map.y >= 0
+					&& map.y < g()->window.r_height))
 				place_tile(map, g()->map[map.x][map.y]->id);
 			j++;
 		}

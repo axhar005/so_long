@@ -30,6 +30,48 @@ bool	tile_collision(int x, int y, int w, int h, int32_t c)
 	return (false);
 }
 
+bool	is_key_pressed(keys_t key)
+{
+	static keys_t	*array;
+	int32_t			i;
+
+	i = 0;
+	if (!array)
+		array = ft_calloc(10, sizeof(int32_t));
+	if (mlx_is_key_down(g()->mlx, key))
+	{
+		while (i < 10)
+		{
+			if (array[i] == key)
+				return (false);
+			i++;
+		}
+		i = 0;
+		while (i < 10)
+		{
+			if (array[i] == 0)
+			{
+				array[i] = key;
+				return (true);
+			}
+			i++;
+		}
+	}
+	else
+	{
+		while (i < 10)
+		{
+			if (array[i] == key)
+			{
+				array[i] = 0;
+				return (false);
+			}
+			i++;
+		}
+	}
+	return (false);
+}
+
 void	selector(void)
 {
 	if (point_distance(g()->playerGrid, g()->mouseGrid) <= g()->arm_range)
@@ -76,15 +118,15 @@ void	draw_grid(int32_t posX, int32_t posY)
 	init_img(&g()->img);
 	mlx_image_to_window(g()->mlx, g()->img.grass[0], -1000, 0);
 	co.pos2.x = -1;
-	while (co.pos2.x < C_WIDTH + 1)
+	while (co.pos2.x < g()->window.c_width + 1)
 	{
 		co.pos2.y = -1;
-		while (co.pos2.y < C_HEIGHT + 1)
+		while (co.pos2.y < g()->window.c_height + 1)
 		{
 			co.pos1.x = co.pos2.x + posX;
 			co.pos1.y = co.pos2.y + posY;
-			if ((co.pos1.x >= 0 && co.pos1.x < R_WIDTH)
-				&& (co.pos1.y >= 0 && co.pos1.y < R_HEIGHT))
+			if ((co.pos1.x >= 0 && co.pos1.x < g()->window.r_width)
+				&& (co.pos1.y >= 0 && co.pos1.y < g()->window.r_height))
 			{
 				map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->image, co);
 				auto_tilling_corner(g()->img.hill, co, HILL);
@@ -103,54 +145,14 @@ void	draw_grid(int32_t posX, int32_t posY)
 
 void	draw(void)
 {
-	draw_grid(g()->cameraGrid.x, g()->cameraGrid.y);
-}
-
-bool	is_key_pressed(keys_t key)
-{
-	static keys_t	*array;
-	int32_t			i;
-
-	i = 0;
-	if (!array)
-		array = ft_calloc(10, sizeof(int32_t));
-	if (mlx_is_key_down(g()->mlx, key))
+	if (g()->state == START)
 	{
-		while (i < 10)
-		{
-			if (array[i] == key)
-				return (false);
-			i++;
-		}
-		i = 0;
-		while (i < 10)
-		{
-			if (array[i] == 0)
-			{
-				array[i] = key;
-				return (true);
-			}
-			i++;
-		}
+		
 	}
-	else
+	if (g()->state == GAME)
 	{
-		while (i < 10)
-		{
-			if (array[i] == key)
-			{
-				array[i] = 0;
-				return (false);
-			}
-			i++;
-		}
+		draw_grid(g()->cameraGrid.x, g()->cameraGrid.y);
 	}
-	return (false);
-}
-
-void step_update(void)
-{
-	
 }
 
 void	step(void *param)
@@ -160,31 +162,37 @@ void	step(void *param)
 	g()->p_move.spd = 10;
 	(void)param;
 	g()->delta_time = g()->mlx->delta_time * 30;
-	mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
-	if (is_key_pressed(MLX_KEY_P))
-	{
-		g()->mouse_id += 1;
-		if (g()->mouse_id > 9)
-			g()->mouse_id = 0;
-		printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
-	}
-	if (is_key_pressed(MLX_KEY_O))
-	{
-		g()->mouse_id -= 1;
-		if (g()->mouse_id < 0)
-			g()->mouse_id = 9;
-		printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
-	}
-	if (is_key_pressed(MLX_KEY_M))
-		print_2d_map_array(g()->map, R_WIDTH, R_HEIGHT);
-	if (mlx_is_key_down(g()->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(g()->mlx);
-	
 	if (frame >= 1)
 	{
-		move();
-		player_animation_dir();
 		draw();
+		if (g()->state == GAME)
+		{
+			move();
+			player_animation_dir();
+			mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
+			if (is_key_pressed(MLX_KEY_P))
+			{
+				g()->mouse_id += 1;
+				if (g()->mouse_id > 9)
+					g()->mouse_id = 0;
+				printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
+			}
+			if (is_key_pressed(MLX_KEY_O))
+			{
+				g()->mouse_id -= 1;
+				if (g()->mouse_id < 0)
+					g()->mouse_id = 9;
+				printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
+			}
+			if (is_key_pressed(MLX_KEY_M))
+				print_2d_map_array(g()->map, R_WIDTH, R_HEIGHT);
+			if (mlx_is_key_down(g()->mlx, MLX_KEY_ESCAPE))
+			{
+				del_img(&g()->old_img);
+				del_img(&g()->img);
+				g()->state = START;
+			}
+		}
 		frame = 0;
 	}
 	frame += g()->delta_time;
@@ -197,12 +205,22 @@ void	step(void *param)
 	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE/2;
 	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE/2;
 	// update cameraGrid pos
-	g()->cameraGrid.x = g()->playerGrid.x - C_WIDTH / 2;
-	g()->cameraGrid.y = g()->playerGrid.y - C_HEIGHT / 2;
+	g()->cameraGrid.x = g()->playerGrid.x - g()->window.c_width / 2;
+	g()->cameraGrid.y = g()->playerGrid.y - g()->window.c_height / 2;
 	g()->mouseGrid.x = g()->cameraGrid.x + ((g()->mouse.x + g()->offSet.x)
 			/ SPRITE_SIZE);
 	g()->mouseGrid.y = g()->cameraGrid.y + ((g()->mouse.y + g()->offSet.y)
 			/ SPRITE_SIZE);
+}
+
+void	init_window(void)
+{
+	g()->window.width = 1344;
+	g()->window.height = 704;
+	g()->window.c_width = 21;
+	g()->window.c_height = 11;
+	g()->window.r_width = 10;
+	g()->window.r_height = 10;
 }
 
 int32_t	main(void)
@@ -215,7 +233,9 @@ int32_t	main(void)
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
 	g()->arm_range = 20;
+	g()->state = GAME;
 
+	init_window();
 	init_player_animation();
 
 	//set tile type
@@ -231,12 +251,12 @@ int32_t	main(void)
 	set_stone_wall();
 
 	//GRID
-	g()->map = allocate_2d_map_array(R_WIDTH, R_HEIGHT);
-	set_map(0, 0, R_WIDTH, R_HEIGHT);
-	auto_tiling(0, 0, R_WIDTH, R_HEIGHT);
+	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
+	set_map(0, 0, g()->window.r_width, g()->window.r_height);
+	auto_tiling(0, 0, g()->window.r_width, g()->window.r_height);
 
 	//MLX
-	g()->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", true);
 
 	//load texture
 	init_grass_texture();

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement.c                                         :+:      :+:    :+:   */
+/*   move_and_colide.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/05 12:29:14 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:23:38 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 	if (is_vertical == true)
 	{
 		md = &pos->y;
-		size = R_HEIGHT;
+		size = g()->window.r_height;
 	}
 	else
 	{
 		md = &pos->x;
-		size = R_WIDTH;
+		size = g()->window.r_width;
 	}
 	if (*dir != 0)
 	{
