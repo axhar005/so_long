@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/07 19:27:15 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/07 21:44:47 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 enum				e_game
 {
 	SPRITE_SIZE = 64,
-	WIDTH = 1344,
-	HEIGHT = 704,
-	C_WIDTH = 21,
-	C_HEIGHT = 11,
-	R_WIDTH = 10,
-	R_HEIGHT = 10
+	// WIDTH = 1344,
+	// HEIGHT = 704,
+	// C_WIDTH = 21,
+	// C_HEIGHT = 11,
+	// R_WIDTH = 10,
+	// R_HEIGHT = 10
 };
 
 enum				e_depth

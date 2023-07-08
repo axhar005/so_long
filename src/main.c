@@ -1,5 +1,15 @@
 #include "../inc/so_long.h"
 
+void	init_window(void)
+{
+	g()->window.width = 1344;
+	g()->window.height = 704;
+	g()->window.c_width = g()->window.width/SPRITE_SIZE;
+	g()->window.c_height = g()->window.height/SPRITE_SIZE;
+	g()->window.r_width = 10;
+	g()->window.r_height = 10;
+}
+
 bool	tile_collision(int x, int y, int w, int h, int32_t c)
 {
 	int	i;
@@ -140,7 +150,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 	}
 	selector();
 	mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
-			(C_WIDTH / 2) * SPRITE_SIZE, (C_HEIGHT / 2) * SPRITE_SIZE);
+			((g()->window.c_width * SPRITE_SIZE)/2)-SPRITE_SIZE/2, ((g()->window.c_height * SPRITE_SIZE)/2)-SPRITE_SIZE/2);
 }
 
 void	draw(void)
@@ -169,6 +179,20 @@ void	step(void *param)
 		{
 			move();
 			player_animation_dir();
+			if (is_key_pressed(MLX_KEY_G))
+			{
+				mlx_get_monitor_size(0, &g()->window.width, &g()->window.height);
+				mlx_set_window_size(g()->mlx, g()->window.width, g()->window.height);
+				g()->window.c_width = g()->window.width/SPRITE_SIZE;
+				g()->window.c_height = g()->window.height/SPRITE_SIZE;
+				g()->offSet.x = g()->window.c_width % SPRITE_SIZE;
+				g()->offSet.y = g()->window.c_height % SPRITE_SIZE;
+			}
+			if (is_key_pressed(MLX_KEY_B))
+			{
+				init_window();
+				mlx_set_window_size(g()->mlx, g()->window.width, g()->window.height);
+			}
 			mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
 			if (is_key_pressed(MLX_KEY_P))
 			{
@@ -185,7 +209,7 @@ void	step(void *param)
 				printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
 			}
 			if (is_key_pressed(MLX_KEY_M))
-				print_2d_map_array(g()->map, R_WIDTH, R_HEIGHT);
+				print_2d_map_array(g()->map, g()->window.r_width, g()->window.r_height);
 			if (mlx_is_key_down(g()->mlx, MLX_KEY_ESCAPE))
 			{
 				del_img(&g()->old_img);
@@ -207,20 +231,11 @@ void	step(void *param)
 	// update cameraGrid pos
 	g()->cameraGrid.x = g()->playerGrid.x - g()->window.c_width / 2;
 	g()->cameraGrid.y = g()->playerGrid.y - g()->window.c_height / 2;
+	//update mouse possition
 	g()->mouseGrid.x = g()->cameraGrid.x + ((g()->mouse.x + g()->offSet.x)
 			/ SPRITE_SIZE);
 	g()->mouseGrid.y = g()->cameraGrid.y + ((g()->mouse.y + g()->offSet.y)
 			/ SPRITE_SIZE);
-}
-
-void	init_window(void)
-{
-	g()->window.width = 1344;
-	g()->window.height = 704;
-	g()->window.c_width = 21;
-	g()->window.c_height = 11;
-	g()->window.r_width = 10;
-	g()->window.r_height = 10;
 }
 
 int32_t	main(void)
