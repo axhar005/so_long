@@ -2,84 +2,12 @@
 
 void	init_window(void)
 {
-	g()->window.width = 1344;
+	g()->window.width = 1216;
 	g()->window.height = 704;
-	g()->window.c_width = g()->window.width/SPRITE_SIZE;
-	g()->window.c_height = g()->window.height/SPRITE_SIZE;
-	g()->window.r_width = 10;
-	g()->window.r_height = 10;
-}
-
-bool	tile_collision(int x, int y, int w, int h, int32_t c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < w)
-	{
-		j = 0;
-		while (j < h)
-		{
-			if (c == 's')
-			{
-				if (g()->map[(x + i) / SPRITE_SIZE][(y + j)
-					/ SPRITE_SIZE]->solid == true)
-					return (true);
-			}
-			else
-			{
-				if (g()->map[(x + i) / SPRITE_SIZE][(y + j)
-					/ SPRITE_SIZE]->id == c)
-					return (true);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (false);
-}
-
-bool	is_key_pressed(keys_t key)
-{
-	static keys_t	*array;
-	int32_t			i;
-
-	i = 0;
-	if (!array)
-		array = ft_calloc(10, sizeof(int32_t));
-	if (mlx_is_key_down(g()->mlx, key))
-	{
-		while (i < 10)
-		{
-			if (array[i] == key)
-				return (false);
-			i++;
-		}
-		i = 0;
-		while (i < 10)
-		{
-			if (array[i] == 0)
-			{
-				array[i] = key;
-				return (true);
-			}
-			i++;
-		}
-	}
-	else
-	{
-		while (i < 10)
-		{
-			if (array[i] == key)
-			{
-				array[i] = 0;
-				return (false);
-			}
-			i++;
-		}
-	}
-	return (false);
+	g()->window.c_width = g()->window.width / SPRITE_SIZE;
+	g()->window.c_height = g()->window.height / SPRITE_SIZE;
+	g()->window.r_width = 20;
+	g()->window.r_height = 15;
 }
 
 void	selector(void)
@@ -123,6 +51,7 @@ void	draw_crack(t_pos2 co)
 void	draw_grid(int32_t posX, int32_t posY)
 {
 	t_pos2	co;
+
 	del_img(&g()->old_img);
 	g()->old_img = g()->img;
 	init_img(&g()->img);
@@ -150,14 +79,29 @@ void	draw_grid(int32_t posX, int32_t posY)
 	}
 	selector();
 	mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
-			((g()->window.c_width * SPRITE_SIZE)/2)-SPRITE_SIZE/2, ((g()->window.c_height * SPRITE_SIZE)/2)-SPRITE_SIZE/2);
+			((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
+			((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
 }
 
 void	draw(void)
 {
 	if (g()->state == START)
 	{
-		
+		if (!g()->m_start.button[0])
+			g()->m_start.button[0] = mlx_texture_to_image(g()->mlx,
+					g()->tex.stone_floor[0]);
+
+		if (!g()->m_start.button[1])
+			g()->m_start.button[1] = mlx_texture_to_image(g()->mlx,
+					g()->tex.wood_floor[0]);
+		if (g()->m_start.button[0]->count <= 0)
+			mlx_image_to_window(g()->mlx, g()->m_start.button[0],
+					(g()->window.c_width * SPRITE_SIZE) / 2,
+					(g()->window.c_height * SPRITE_SIZE) / 2);
+		if (g()->m_start.button[1]->count <= 0)
+			mlx_image_to_window(g()->mlx, g()->m_start.button[1],
+					(g()->window.c_width * SPRITE_SIZE) / 2,
+					(g()->window.c_height * SPRITE_SIZE) / 2 + 128);
 	}
 	if (g()->state == GAME)
 	{
@@ -168,49 +112,54 @@ void	draw(void)
 void	step(void *param)
 {
 	static double	frame = 0;
-
 	g()->p_move.spd = 10;
 	(void)param;
 	g()->delta_time = g()->mlx->delta_time * 30;
 	if (frame >= 1)
 	{
-		draw();
-		if (g()->state == GAME)
+		if (g()->state == START)
+		{
+			if (is_key_pressed(MLX_KEY_ESCAPE))
+				mlx_close_window(g()->mlx);
+			else if (is_key_pressed(MLX_KEY_W))
+			{
+				g()->m_start.button_slected += 1;
+			}
+			else if (is_key_pressed(MLX_KEY_S))
+			{
+				g()->m_start.button_slected -= 1;
+			}
+			if (g()->m_start.button_slected > 1)
+				g()->m_start.button_slected = 0;
+			else if (g()->m_start.button_slected < 0)
+				g()->m_start.button_slected = 1;
+			
+		}
+		else if (g()->state == GAME)
 		{
 			move();
 			player_animation_dir();
-			if (is_key_pressed(MLX_KEY_G))
-			{
-				mlx_get_monitor_size(0, &g()->window.width, &g()->window.height);
-				mlx_set_window_size(g()->mlx, g()->window.width, g()->window.height);
-				g()->window.c_width = g()->window.width/SPRITE_SIZE;
-				g()->window.c_height = g()->window.height/SPRITE_SIZE;
-				g()->offSet.x = g()->window.c_width % SPRITE_SIZE;
-				g()->offSet.y = g()->window.c_height % SPRITE_SIZE;
-			}
-			if (is_key_pressed(MLX_KEY_B))
-			{
-				init_window();
-				mlx_set_window_size(g()->mlx, g()->window.width, g()->window.height);
-			}
 			mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
 			if (is_key_pressed(MLX_KEY_P))
 			{
 				g()->mouse_id += 1;
 				if (g()->mouse_id > 9)
 					g()->mouse_id = 0;
-				printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
+				printf("%d - %s\n", g()->mouse_id,
+						g()->tile_type[g()->mouse_id].name);
 			}
 			if (is_key_pressed(MLX_KEY_O))
 			{
 				g()->mouse_id -= 1;
 				if (g()->mouse_id < 0)
 					g()->mouse_id = 9;
-				printf("%d - %s\n", g()->mouse_id, g()->tile_type[g()->mouse_id].name);
+				printf("%d - %s\n", g()->mouse_id,
+						g()->tile_type[g()->mouse_id].name);
 			}
 			if (is_key_pressed(MLX_KEY_M))
-				print_2d_map_array(g()->map, g()->window.r_width, g()->window.r_height);
-			if (mlx_is_key_down(g()->mlx, MLX_KEY_ESCAPE))
+				print_2d_map_array(g()->map, g()->window.r_width,
+						g()->window.r_height);
+			if (is_key_pressed(MLX_KEY_ESCAPE))
 			{
 				del_img(&g()->old_img);
 				del_img(&g()->img);
@@ -218,16 +167,17 @@ void	step(void *param)
 			}
 		}
 		frame = 0;
+		draw();
 	}
 	frame += g()->delta_time;
 	//uptade time
-	g()->current_time += g()->mlx->delta_time;
+	g()->current_time += mlx_get_time();
 	// update player grid pos
 	g()->playerGrid.x = g()->player.x / SPRITE_SIZE;
 	g()->playerGrid.y = g()->player.y / SPRITE_SIZE;
 	// update offset
-	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE/2;
-	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE/2;
+	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE / 2;
+	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE / 2;
 	// update cameraGrid pos
 	g()->cameraGrid.x = g()->playerGrid.x - g()->window.c_width / 2;
 	g()->cameraGrid.y = g()->playerGrid.y - g()->window.c_height / 2;
@@ -247,7 +197,7 @@ int32_t	main(void)
 	g()->p_hitbox.top = 16;
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
-	g()->arm_range = 20;
+	g()->arm_range = 100;
 	g()->state = GAME;
 
 	init_window();

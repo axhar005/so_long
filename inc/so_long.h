@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/07 21:44:47 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/08 16:46:28 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,7 @@
 
 enum				e_game
 {
-	SPRITE_SIZE = 64,
-	// WIDTH = 1344,
-	// HEIGHT = 704,
-	// C_WIDTH = 21,
-	// C_HEIGHT = 11,
-	// R_WIDTH = 10,
-	// R_HEIGHT = 10
+	SPRITE_SIZE = 64
 };
 
 enum				e_depth
@@ -74,6 +68,13 @@ typedef struct s_pos2
 	t_vec2			pos1;
 	t_vec2			pos2;
 }					t_pos2;
+
+typedef struct s_menu
+{
+	int32_t			button_slected;
+	mlx_image_t		*background;
+	mlx_image_t		*button[2];
+}					t_menu;
 
 typedef struct s_window
 {
@@ -191,6 +192,7 @@ typedef struct s_game
 	t_hitbox		p_hitbox;
 	t_animation		p_animation;
 	t_window		window;
+	t_menu			m_start;
 }					t_game;
 
 // prototype
@@ -198,6 +200,10 @@ typedef struct s_game
 //game
 
 t_game				*g(void);
+
+//key function
+
+bool				is_key_pressed(keys_t key);
 
 //draw
 
@@ -213,7 +219,7 @@ void				fill_2d_map_array(t_map ***array, int32_t rows,
 						int32_t cols, int32_t c);
 void				print_2d_map_array(t_map ***array, int32_t cols,
 						int32_t rows);
-void				set_map(int32_t x, int32_t y, int32_t width, 
+void				set_map(int32_t x, int32_t y, int32_t width,
 						int32_t height);
 
 //texture
@@ -266,7 +272,7 @@ bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
 //animation
 
-void				play_animation(t_animation *animation,
+void	play_animation(t_animation *animation,
 					char **direction);
 void				init_player_animation(void);
 bool				is_tilable(int32_t id);
@@ -276,7 +282,7 @@ bool				is_tilable(int32_t id);
 void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 						bool is_vertical);
 void				player_animation_dir(void);
-void 				move(void);
+void				move(void);
 
 //math
 

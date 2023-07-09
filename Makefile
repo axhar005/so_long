@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
+#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/07 09:39:57 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/08 17:53:17 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ INCDIR = inc
 SRCDIR	=	src
 SRC		= 	main.c utils_0.c utils_1.c texture.c string.c animation.c \
 			image.c player_utils.c movement.c auto_tilling_0.c auto_tilling_1.c \
-			set_tile_0.c set_tile_1.c draw_0.c game.c move_and_colide.c tiles_handling.c
+			set_tile_0.c set_tile_1.c draw_0.c game.c move_and_colide.c tiles_handling.c \
+			key.c collision.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#
