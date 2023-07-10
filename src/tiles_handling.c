@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 09:34:56 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/07 20:24:33 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/10 14:16:52 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ bool	place_tile(t_vec2 pos, int32_t id)
 {
 	if ((pos.x >= 0 && pos.x < g()->window.r_width) && (pos.y >= 0 && pos.y < g()->window.r_height))
 	{
-		*g()->map[pos.x][pos.y] = g()->tile_type[id];
+		if (g()->tile_type[id].name)
+			*g()->map[pos.x][pos.y] = g()->tile_type[id];
 		return (true);
 	}
 	return (false);

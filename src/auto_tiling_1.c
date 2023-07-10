@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_tilling_1.c                                   :+:      :+:    :+:   */
+/*   auto_tiling_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -75,8 +75,8 @@ static void	norm3(mlx_image_t **img, t_pos2 co, int32_t id)
 			map_image_index_to_window(img[16], co);
 }
 
-/// @brief draw auto_tilling corner
-void	auto_tilling_corner(mlx_image_t **img, t_pos2 co, int32_t id)
+/// @brief draw auto_tiling corner
+void	auto_tiling_corner(mlx_image_t **img, t_pos2 co, int32_t id)
 {
 	if (g()->map[co.pos1.x][co.pos1.y]->id == id)
 	{

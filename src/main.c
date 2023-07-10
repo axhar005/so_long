@@ -16,7 +16,7 @@ void	selector(void)
 	{
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_RIGHT))
 			if (place_tile(g()->mouseGrid, g()->mouse_id))
-				auto_tiling(g()->mouseGrid.x - 1, g()->mouseGrid.y - 1, 3, 3);
+				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y - 1}, 3, 3);
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT)
 			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALL)
 		{
@@ -24,7 +24,7 @@ void	selector(void)
 			if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
 			{
 				place_tile(g()->mouseGrid, DIRT);
-				auto_tiling(g()->mouseGrid.x - 1, g()->mouseGrid.y - 1, 3, 3);
+				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y - 1}, 3, 3);
 			}
 		}
 		mlx_image_to_window(g()->mlx, g()->img.selector[0], (g()->mouseGrid.x
@@ -37,15 +37,18 @@ void	draw_crack(t_pos2 co)
 {
 	int32_t	life;
 
-	life = g()->map[co.pos1.x][co.pos1.y]->life;
-	if (life >= 75 && life < 100)
-		map_image_index_to_window(g()->img.crack[0], co);
-	else if (life >= 50 && life < 75)
-		map_image_index_to_window(g()->img.crack[1], co);
-	else if (life >= 25 && life < 50)
-		map_image_index_to_window(g()->img.crack[2], co);
-	else if (life < 25)
-		map_image_index_to_window(g()->img.crack[3], co);
+	if (g()->map[co.pos1.x][co.pos1.y]->name)
+	{
+		life = g()->map[co.pos1.x][co.pos1.y]->life;
+		if (life >= 75 && life < 100)
+			map_image_index_to_window(g()->img.crack[0], co);
+		else if (life >= 50 && life < 75)
+			map_image_index_to_window(g()->img.crack[1], co);
+		else if (life >= 25 && life < 50)
+			map_image_index_to_window(g()->img.crack[2], co);
+		else if (life < 25)
+			map_image_index_to_window(g()->img.crack[3], co);
+	}
 }
 
 void	draw_grid(int32_t posX, int32_t posY)
@@ -67,10 +70,13 @@ void	draw_grid(int32_t posX, int32_t posY)
 			if ((co.pos1.x >= 0 && co.pos1.x < g()->window.r_width)
 				&& (co.pos1.y >= 0 && co.pos1.y < g()->window.r_height))
 			{
-				map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->image, co);
-				auto_tilling_corner(g()->img.hill, co, HILL);
-				auto_tilling_corner(g()->img.wood_wall, co, WOOD_WALL);
-				auto_tilling_corner(g()->img.stone_wall, co, STONE_WALL);
+				if (g()->map[co.pos1.x][co.pos1.y]->under.image)
+					map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->under.image, co, true);
+				if (g()->map[co.pos1.x][co.pos1.y]->image)
+					map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->image, co, false);
+				auto_tiling_corner(g()->img.hill, co, HILL);
+				auto_tiling_corner(g()->img.wood_wall, co, WOOD_WALL);
+				auto_tiling_corner(g()->img.stone_wall, co, STONE_WALL);
 				draw_crack(co);
 			}
 			co.pos2.y++;
@@ -87,8 +93,6 @@ void	draw(void)
 {
 	if (g()->state == START)
 	{
-		if (g()->test->count <= 0)
-			mlx_image_to_window(g()->mlx, g()->test, 0, 0);
 		if (!g()->m_start.button[0])
 			g()->m_start.button[0] = mlx_texture_to_image(g()->mlx,
 					g()->tex.stone_floor[0]);
@@ -153,16 +157,16 @@ void	step(void *param)
 			if (is_key_pressed(MLX_KEY_P))
 			{
 				g()->mouse_id += 1;
-				if (g()->mouse_id > 9)
-					g()->mouse_id = 0;
+				if (g()->mouse_id > 11)
+					g()->mouse_id = 1;
 				printf("%d - %s\n", g()->mouse_id,
 						g()->tile_type[g()->mouse_id].name);
 			}
 			if (is_key_pressed(MLX_KEY_O))
 			{
 				g()->mouse_id -= 1;
-				if (g()->mouse_id < 0)
-					g()->mouse_id = 9;
+				if (g()->mouse_id < 1)
+					g()->mouse_id = 11;
 				printf("%d - %s\n", g()->mouse_id,
 						g()->tile_type[g()->mouse_id].name);
 			}
@@ -225,15 +229,15 @@ int32_t	main(void)
 	set_wood_wall();
 	set_stone_floor();
 	set_stone_wall();
+	set_tree();
 
 	//GRID
 	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
 	set_map(0, 0, g()->window.r_width, g()->window.r_height);
-	auto_tiling(0, 0, g()->window.r_width, g()->window.r_height);
+	auto_tiling((t_vec2){0,0}, g()->window.r_width, g()->window.r_height);
 
 	//MLX
 	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", true);
-	g()->test = string_to_image(g()->mlx, "Play");
 
 	//load texture
 	init_grass_texture();
@@ -249,6 +253,7 @@ int32_t	main(void)
 	g()->tex.stone_floor[0] = mlx_load_png("./asset/stone/stone_floor/stone_floor.png");
 	g()->tex.selector[0] = mlx_load_png("./asset/selector.png");
 	g()->tex.dirt[0] = mlx_load_png("./asset/dirt/dirt_0.png");
+	g()->tex.tree[0] = mlx_load_png("./asset/tree/tree_0.png");
 
 	mlx_loop_hook(g()->mlx, step, NULL);
 	mlx_loop(g()->mlx);

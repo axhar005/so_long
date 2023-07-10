@@ -6,7 +6,7 @@
 #    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/09 19:01:35 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/10 13:59:07 by olivierbouc      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT = libft.a
 
 #--- COMMAND VARIABLES ---#
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 RM = rm -f
 AR = ar rcs
 MK = mkdir -p
@@ -44,9 +44,9 @@ INCDIR = inc
 #--- SOURCE ---#
 SRCDIR	=	src
 SRC		= 	main.c utils_0.c utils_1.c texture.c string.c animation.c \
-			image.c player_utils.c movement.c auto_tilling_0.c auto_tilling_1.c \
-			set_tile_0.c set_tile_1.c draw_0.c game.c move_and_colide.c tiles_handling.c \
-			key.c collision.c
+			image.c player_utils.c movement.c auto_tiling_0.c auto_tiling_1.c \
+			set_tile_0.c set_tile_1.c set_tile_2.c draw_0.c game.c move_and_colide.c \
+			tiles_handling.c key.c collision.c tile_convertion.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#

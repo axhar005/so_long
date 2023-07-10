@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:32:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/05 16:57:23 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/10 13:52:28 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_img(t_img *img)
 			g()->tex.stone_floor[0]);
 	img->selector[0] = mlx_texture_to_image(g()->mlx, g()->tex.selector[0]);
 	img->dirt[0] = mlx_texture_to_image(g()->mlx, g()->tex.dirt[0]);
+	img->tree[0] = mlx_texture_to_image(g()->mlx, g()->tex.tree[0]);
 }
 
 void	del_img(t_img *img)
@@ -77,4 +78,5 @@ void	del_img(t_img *img)
 	mlx_delete_image(g()->mlx, img->stone_floor[0]);
 	mlx_delete_image(g()->mlx, img->selector[0]);
 	mlx_delete_image(g()->mlx, img->dirt[0]);
+	mlx_delete_image(g()->mlx, img->tree[0]);
 }

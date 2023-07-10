@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/09 19:01:24 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/10 14:17:05 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ enum				e_states
 };
 enum				e_tile
 {
+	NOTHING,
 	GRASS,
 	HILL,
 	DIRT,
@@ -53,7 +54,8 @@ enum				e_tile
 	WOOD_FLOOR,
 	WOOD_WALL,
 	STONE_FLOOR,
-	STONE_WALL
+	STONE_WALL,
+	TREE
 };
 
 // storage of pos x and y
@@ -119,6 +121,7 @@ typedef struct s_texture
 	mlx_texture_t	*stone_floor[1];
 	mlx_texture_t	*stone_wall[20];
 	mlx_texture_t	*crack[4];
+	mlx_texture_t	*tree[1];
 }					t_texture;
 
 // storage of all image (instance)
@@ -137,9 +140,10 @@ typedef struct s_img
 	mlx_image_t		*player[10];
 	mlx_image_t		*selector[1];
 	mlx_image_t		*crack[4];
+	mlx_image_t		*tree[1];
 }					t_img;
 
-typedef struct s_map
+typedef struct s_tile_under
 {
 	char			*name;
 	int32_t			id;
@@ -148,8 +152,19 @@ typedef struct s_map
 	int32_t			life;
 	mlx_image_t		**image;
 	bool			solid;
+}					t_tile_under;
 
-}					t_map;
+typedef struct s_tile
+{
+	char			*name;
+	int32_t			id;
+	int32_t			depth;
+	int32_t			tile_index;
+	int32_t			life;
+	mlx_image_t		**image;
+	bool			solid;
+	t_tile_under	under;
+}					t_tile;
 
 typedef struct s_animation
 {
@@ -170,7 +185,6 @@ typedef struct s_animation
 typedef struct s_game
 {
 	mlx_t			*mlx;
-	mlx_image_t		*test;
 	t_texture		tex;
 	double			delta_time;
 	double			current_time;
@@ -180,8 +194,8 @@ typedef struct s_game
 	int32_t			state;
 	t_img			img;
 	t_img			old_img;
-	t_map			***map;
-	t_map			tile_type[10];
+	t_tile			***map;
+	t_tile			tile_type[20];
 	t_vec2			playerGrid;
 	t_vec2			player;
 	t_vec2			cameraGrid;
@@ -208,15 +222,16 @@ bool				is_key_pressed(keys_t key);
 
 // draw
 
-void				map_image_to_window(mlx_image_t **img, t_pos2 co);
+void				map_image_to_window(mlx_image_t **img, t_pos2 co,
+						bool under);
 void				map_image_index_to_window(mlx_image_t *img, t_pos2 co);
 
 // map
 
-t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
-void				fill_2d_map_array(t_map ***array, int32_t rows,
+t_tile				***allocate_2d_map_array(int32_t rows, int32_t cols);
+void				fill_2d_map_array(t_tile ***array, int32_t rows,
 						int32_t cols, int32_t c);
-void				print_2d_map_array(t_map ***array, int32_t cols,
+void				print_2d_map_array(t_tile ***array, int32_t cols,
 						int32_t rows);
 void				set_map(int32_t x, int32_t y, int32_t width,
 						int32_t height);
@@ -240,15 +255,16 @@ void				del_img(t_img *img);
 
 // tiling
 
-void				auto_tiling(int32_t x, int32_t y, int32_t width,
-						int32_t height);
+void				auto_tiling(t_vec2 pos, int32_t width, int32_t height);
 int32_t				point_distance(t_vec2 bow, t_vec2 target);
-void				auto_tilling_corner(mlx_image_t **img, t_pos2 co,
+void				auto_tiling_corner(mlx_image_t **img, t_pos2 co,
 						int32_t id);
 bool				place_tile(t_vec2 pos, int32_t id);
 
 // tile type
 
+void				tile_to_under(t_tile *tile, t_tile_under *under);
+void				under_to_tile(t_tile_under *under, t_tile *tile);
 void				set_grass(void);
 void				set_hill(void);
 void				set_dirt(void);
@@ -259,6 +275,7 @@ void				set_wood_floor(void);
 void				set_stone_floor(void);
 void				set_wood_wall(void);
 void				set_stone_wall(void);
+void				set_tree(void);
 
 // string
 
