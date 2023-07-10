@@ -77,7 +77,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 		}
 		co.pos2.x++;
 	}
-	selector();
+	selector();	
 	mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
 			((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
 			((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
@@ -87,6 +87,8 @@ void	draw(void)
 {
 	if (g()->state == START)
 	{
+		if (g()->test->count <= 0)
+			mlx_image_to_window(g()->mlx, g()->test, 0, 0);
 		if (!g()->m_start.button[0])
 			g()->m_start.button[0] = mlx_texture_to_image(g()->mlx,
 					g()->tex.stone_floor[0]);
@@ -96,11 +98,11 @@ void	draw(void)
 					g()->tex.wood_floor[0]);
 		if (g()->m_start.button[0]->count <= 0)
 			mlx_image_to_window(g()->mlx, g()->m_start.button[0],
-					(g()->window.c_width * SPRITE_SIZE) / 2,
+					(g()->window.c_width * SPRITE_SIZE) / 2-32,
 					(g()->window.c_height * SPRITE_SIZE) / 2);
 		if (g()->m_start.button[1]->count <= 0)
 			mlx_image_to_window(g()->mlx, g()->m_start.button[1],
-					(g()->window.c_width * SPRITE_SIZE) / 2,
+					(g()->window.c_width * SPRITE_SIZE) / 2-32,
 					(g()->window.c_height * SPRITE_SIZE) / 2 + 128);
 	}
 	if (g()->state == GAME)
@@ -124,22 +126,30 @@ void	step(void *param)
 			else if (is_key_pressed(MLX_KEY_W))
 			{
 				g()->m_start.button_slected += 1;
+				if (g()->m_start.button_slected > 1)
+					g()->m_start.button_slected = 0;
+				printf("Button : %d\n", g()->m_start.button_slected);
 			}
 			else if (is_key_pressed(MLX_KEY_S))
 			{
 				g()->m_start.button_slected -= 1;
+				if (g()->m_start.button_slected < 0)
+					g()->m_start.button_slected = 1;
+				printf("Button : %d\n", g()->m_start.button_slected);
 			}
-			if (g()->m_start.button_slected > 1)
-				g()->m_start.button_slected = 0;
-			else if (g()->m_start.button_slected < 0)
-				g()->m_start.button_slected = 1;
+			
+			if (is_key_pressed(MLX_KEY_ENTER) && g()->m_start.button_slected == 0)
+			{
+				mlx_delete_image(g()->mlx, g()->m_start.button[0]);
+				mlx_delete_image(g()->mlx, g()->m_start.button[1]);
+				g()->state = GAME;
+			}
 			
 		}
 		else if (g()->state == GAME)
 		{
 			move();
 			player_animation_dir();
-			mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
 			if (is_key_pressed(MLX_KEY_P))
 			{
 				g()->mouse_id += 1;
@@ -168,6 +178,7 @@ void	step(void *param)
 		}
 		frame = 0;
 		draw();
+		mlx_get_mouse_pos(g()->mlx, &g()->mouse.x, &g()->mouse.y);
 	}
 	frame += g()->delta_time;
 	//uptade time
@@ -222,6 +233,7 @@ int32_t	main(void)
 
 	//MLX
 	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", true);
+	g()->test = string_to_image(g()->mlx, "Play");
 
 	//load texture
 	init_grass_texture();

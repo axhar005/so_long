@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/08 16:46:28 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:01:24 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_window
 	int32_t			r_width;
 }					t_window;
 
-//hitbox
+// hitbox
 typedef struct s_hitbox
 {
 	int32_t			top;
@@ -95,7 +95,7 @@ typedef struct s_hitbox
 	int32_t			right;
 }					t_hitbox;
 
-//movement
+// movement
 typedef struct s_movement
 {
 	int32_t			hspd;
@@ -170,6 +170,7 @@ typedef struct s_animation
 typedef struct s_game
 {
 	mlx_t			*mlx;
+	mlx_image_t		*test;
 	t_texture		tex;
 	double			delta_time;
 	double			current_time;
@@ -197,22 +198,20 @@ typedef struct s_game
 
 // prototype
 
-//game
+// game
 
 t_game				*g(void);
 
-//key function
+// key function
 
 bool				is_key_pressed(keys_t key);
 
-//draw
+// draw
 
-void	map_image_to_window(mlx_image_t **img,
-							t_pos2 co);
-void	map_image_index_to_window(mlx_image_t *img,
-								t_pos2 co);
+void				map_image_to_window(mlx_image_t **img, t_pos2 co);
+void				map_image_index_to_window(mlx_image_t *img, t_pos2 co);
 
-//map
+// map
 
 t_map				***allocate_2d_map_array(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_map ***array, int32_t rows,
@@ -222,7 +221,7 @@ void				print_2d_map_array(t_map ***array, int32_t cols,
 void				set_map(int32_t x, int32_t y, int32_t width,
 						int32_t height);
 
-//texture
+// texture
 
 void				init_grass_texture(void);
 void				init_hill_texture(void);
@@ -234,12 +233,12 @@ void				init_crack_texture(void);
 void				init_wood_wall_texture(void);
 void				init_stone_wall_texture(void);
 
-//image
+// image
 
 void				init_img(t_img *img);
 void				del_img(t_img *img);
 
-//tiling
+// tiling
 
 void				auto_tiling(int32_t x, int32_t y, int32_t width,
 						int32_t height);
@@ -248,7 +247,7 @@ void				auto_tilling_corner(mlx_image_t **img, t_pos2 co,
 						int32_t id);
 bool				place_tile(t_vec2 pos, int32_t id);
 
-//tile type
+// tile type
 
 void				set_grass(void);
 void				set_hill(void);
@@ -261,30 +260,29 @@ void				set_stone_floor(void);
 void				set_wood_wall(void);
 void				set_stone_wall(void);
 
-//string
+// string
 
 int					ft_strnum(char **str);
 char				ft_itoc(int i);
 
-//collision
+// collision
 
 bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
-//animation
+// animation
 
-void	play_animation(t_animation *animation,
-					char **direction);
+void				play_animation(t_animation *animation, char **direction);
 void				init_player_animation(void);
 bool				is_tilable(int32_t id);
 
-//movement
+// movement
 
 void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 						bool is_vertical);
 void				player_animation_dir(void);
 void				move(void);
 
-//math
+// math
 
 int					sign(int nb);
 bool				is_even(int nb);
