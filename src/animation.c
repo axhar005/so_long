@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/07 10:17:18 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/17 14:41:47 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	play_animation(t_animation *animation, char **sheet)
 	}
 	if (animation->clock >= animation->speed)
 	{
-		if (animation->loop >= ft_strnum(sheet))
+		if (animation->loop >= line_count(sheet))
 			animation->loop = 0;
 		animation->index = ft_atoi(sheet[animation->loop]);
 		animation->loop += 1;

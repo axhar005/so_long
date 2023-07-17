@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/10 14:17:05 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/17 16:18:02 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,18 @@ typedef struct s_menu
 	mlx_image_t		*background;
 	mlx_image_t		*button[2];
 }					t_menu;
+
+typedef struct s_parsing
+{
+	char			**map;
+	size_t			height;
+	size_t			width;
+	size_t			char_E;
+	size_t			char_P;
+	size_t			char_C;
+	size_t			char_0;
+	size_t			char_1;
+}					t_parsing;
 
 typedef struct s_window
 {
@@ -169,7 +181,7 @@ typedef struct s_tile
 typedef struct s_animation
 {
 	int32_t			index;
-	int32_t			loop;
+	size_t			loop;
 	double			speed;
 	double			clock;
 	char			**sheet;
@@ -212,9 +224,10 @@ typedef struct s_game
 
 // prototype
 
-// game
+// static function
 
 t_game				*g(void);
+t_parsing			*pars(void);
 
 // key function
 
@@ -260,6 +273,7 @@ int32_t				point_distance(t_vec2 bow, t_vec2 target);
 void				auto_tiling_corner(mlx_image_t **img, t_pos2 co,
 						int32_t id);
 bool				place_tile(t_vec2 pos, int32_t id);
+bool				replace_tile(t_vec2 pos, int32_t id);
 
 // tile type
 
@@ -279,8 +293,14 @@ void				set_tree(void);
 
 // string
 
-int					ft_strnum(char **str);
 char				ft_itoc(int i);
+void				print_2d_char_array(char **array);
+char				*ft_del_char(char *str, char c);
+size_t				line_count(char **str);
+size_t				total_count(char **str);
+size_t				char_count_2d(char **str, char c);
+size_t				char_count(char *str, char c);
+t_vec2				char_find_pos_2d(char **str, char c);
 
 // collision
 
@@ -304,4 +324,27 @@ void				move(void);
 int					sign(int nb);
 bool				is_even(int nb);
 
+// free
+
+void				**ft_sfree_2d(void **ptr);
+
+// error
+
+void				ft_exit(char *str);
+
+// load read
+
+char				**load_map(char *path);
+size_t				count_next_line(int fd);
+void				load_in_map(void);
+
+// parsing
+void				path_parsing(char *path);
+void				map_is_rectangle(char **map);
+void				map_is_closed(void);
+void				map_parsing_element(void);
+void				init_parsing(void);
+void				flood_fill(char **map, int x, int y);
+void				after_flood(void);
+void				map_parsing(void);
 #endif

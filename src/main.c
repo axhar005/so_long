@@ -6,8 +6,8 @@ void	init_window(void)
 	g()->window.height = 704;
 	g()->window.c_width = g()->window.width / SPRITE_SIZE;
 	g()->window.c_height = g()->window.height / SPRITE_SIZE;
-	g()->window.r_width = 20;
-	g()->window.r_height = 15;
+	g()->window.r_width = pars()->width;
+	g()->window.r_height = pars()->height;
 }
 
 void	selector(void)
@@ -15,7 +15,7 @@ void	selector(void)
 	if (point_distance(g()->playerGrid, g()->mouseGrid) <= g()->arm_range)
 	{
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_RIGHT))
-			if (place_tile(g()->mouseGrid, g()->mouse_id))
+			if (replace_tile(g()->mouseGrid, g()->mouse_id))
 				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y - 1}, 3, 3);
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT)
 			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALL)
@@ -23,6 +23,10 @@ void	selector(void)
 			g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life -= 5;
 			if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
 			{
+				// if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->under.name)
+				// {
+					
+				// }
 				place_tile(g()->mouseGrid, DIRT);
 				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y - 1}, 3, 3);
 			}
@@ -83,10 +87,7 @@ void	draw_grid(int32_t posX, int32_t posY)
 		}
 		co.pos2.x++;
 	}
-	selector();	
-	mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
-			((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
-			((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
+	
 }
 
 void	draw(void)
@@ -112,6 +113,10 @@ void	draw(void)
 	if (g()->state == GAME)
 	{
 		draw_grid(g()->cameraGrid.x, g()->cameraGrid.y);
+		selector();	
+		mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
+				((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
+				((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
 	}
 }
 
@@ -203,10 +208,20 @@ void	step(void *param)
 			/ SPRITE_SIZE);
 }
 
-int32_t	main(void)
+int32_t	main(int ac, char **av)
 {
-	g()->playerGrid.x = 5;
-	g()->playerGrid.y = 5;
+	if (ac == 2)
+    {
+        path_parsing(av[1]);
+        pars()->map = load_map(av[1]);
+        if (!pars()->map)
+            ft_exit("Error when loading map");
+        map_parsing();
+	}
+	else
+        ft_exit("Error one argument needed (map.ber)");
+
+	g()->playerGrid = char_find_pos_2d(pars()->map, 'p');
 	g()->player.x = g()->playerGrid.x * SPRITE_SIZE;
 	g()->player.y = g()->playerGrid.y * SPRITE_SIZE;
 	g()->p_hitbox.top = 16;
@@ -214,6 +229,7 @@ int32_t	main(void)
 	g()->p_hitbox.right = 12;
 	g()->arm_range = 100;
 	g()->state = GAME;
+	g()->mouse_id = 1;
 
 	init_window();
 	init_player_animation();
@@ -233,6 +249,7 @@ int32_t	main(void)
 
 	//GRID
 	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
+	load_in_map();
 	set_map(0, 0, g()->window.r_width, g()->window.r_height);
 	auto_tiling((t_vec2){0,0}, g()->window.r_width, g()->window.r_height);
 

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/04 19:56:13 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/05 12:28:46 by oboucher         ###   ########.fr       */
+/*   Created: 2023/07/17 14:46:45 by olivierbouc       #+#    #+#             */
+/*   Updated: 2023/07/17 14:53:10 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-t_game	*g(void)
+void    **ft_sfree_2d(void **ptr)
 {
-	static t_game *game;
-	if (!game)
-		game = ft_calloc(1, sizeof(t_game));
-	return (game);
+    void **temp;
+    if (!ptr)
+        return (NULL);
+    temp = ptr;
+    while (*ptr)
+        free(*ptr++);
+    free(temp);
+    return(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/10 09:26:59 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/17 16:37:12 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_tile	***allocate_2d_map_array(int32_t cols, int32_t rows)
 	int		i;
 	int		j;
 
-	map = calloc(cols + 1, sizeof(t_tile **));
+	map = ft_calloc(cols + 1, sizeof(t_tile **));
 	i = 0;
 	while (i < cols)
 	{
-		map[i] = calloc(rows + 1, sizeof(t_tile *));
+		map[i] = ft_calloc(rows + 1, sizeof(t_tile *));
 		j = 0;
 		while (j < rows)
-			map[i][j++] = calloc(1, sizeof(t_tile));
+			map[i][j++] = ft_calloc(1, sizeof(t_tile));
 		i++;
 	}
 	return (map);

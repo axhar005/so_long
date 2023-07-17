@@ -6,11 +6,25 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 09:34:56 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/10 14:16:52 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/10 19:59:50 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
+
+bool	replace_tile(t_vec2 pos, int32_t id)
+{
+	if ((pos.x >= 0 && pos.x < g()->window.r_width) && (pos.y >= 0 && pos.y < g()->window.r_height))
+	{
+		if (g()->tile_type[id].name)
+		{
+			tile_to_under(g()->map[pos.x][pos.y], &g()->map[pos.x][pos.y]->under);
+			*g()->map[pos.x][pos.y] = g()->tile_type[id];
+		}
+		return (true);
+	}
+	return (false);
+}
 
 bool	place_tile(t_vec2 pos, int32_t id)
 {
