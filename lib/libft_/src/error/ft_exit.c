@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 12:15:09 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/22 15:16:15 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/24 10:47:11 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

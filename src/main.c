@@ -132,9 +132,8 @@ void	step(void *param)
 	{
 		if (g()->state == START)
 		{
-			if (is_key_pressed(MLX_KEY_ESCAPE))
-				mlx_close_window(g()->mlx);
-			else if (is_key_pressed(MLX_KEY_W))
+			
+			if (is_key_pressed(MLX_KEY_W))
 			{
 				g()->m_start.button_slected += 1;
 				if (g()->m_start.button_slected > 1)
@@ -148,14 +147,17 @@ void	step(void *param)
 					g()->m_start.button_slected = 1;
 				printf("Button : %d\n", g()->m_start.button_slected);
 			}
-			
-			if (is_key_pressed(MLX_KEY_ENTER) && g()->m_start.button_slected == 0)
+			if ((g()->m_start.button_slected == 1 && is_key_pressed(MLX_KEY_ENTER)) || is_key_pressed(MLX_KEY_ESCAPE))
+			{
+				del_texture();
+				mlx_close_window(g()->mlx);
+			}
+			if (g()->m_start.button_slected == 0 && is_key_pressed(MLX_KEY_ENTER))
 			{
 				mlx_delete_image(g()->mlx, g()->m_start.button[0]);
 				mlx_delete_image(g()->mlx, g()->m_start.button[1]);
 				g()->state = GAME;
 			}
-			
 		}
 		else if (g()->state == GAME)
 		{

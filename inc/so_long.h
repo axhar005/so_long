@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/23 10:48:32 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/24 12:36:18 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 // include
 
-# include "../lib/MLX42/include/MLX42/MLX42.h"
-# include "../lib/libft/inc/libft.h"
+# include "../lib/MLX42_/include/MLX42/MLX42.h"
+# include "../lib/libft_/inc/libft.h"
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -252,6 +252,8 @@ void				set_map(int32_t x, int32_t y, int32_t width,
 // texture
 
 void				init_all_texture(void);
+void				del_texture(void);
+void				is_null_texture(void);
 
 // image
 

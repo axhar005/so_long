@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
+#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/24 09:52:07 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/24 12:35:50 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,21 +17,21 @@
 
 #--- LIBRARY NAME ---#
 NAME = so_long
-LDIR = lib/libft/
+LDIR = lib/libft_/
 LIBFT = libft.a
 
 #--- COMMAND VARIABLES ---#
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 RM = rm -f
 AR = ar rcs
 MK = mkdir -p
 
 #--- MLX42 CODAM ---#
-MLXDIR = lib/MLX42/build/
+MLXDIR = lib/MLX42_/build/
 MLXA = libmlx42.a
 MLX = $(MLXDIR)$(MLXA)
-MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/usr/local/opt/glfw/lib" #"/Users/$(USER)/.brew/opt/glfw/lib/"
+MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" #"/usr/local/opt/glfw/lib"
 
 #--- COLORS ---#
 GREEN	=	\033[1;32m
@@ -43,7 +43,7 @@ INCDIR = inc
 
 #--- SOURCE ---#
 SRCDIR	=	src
-SRC		= 	main.c utils_0.c utils_1.c texture.c string_0.c string_1.c animation.c \
+SRC		= 	main.c utils_0.c utils_1.c texture_0.c texture_1.c string_0.c string_1.c animation.c \
 			image.c player_utils.c movement.c auto_tiling_0.c auto_tiling_1.c \
 			set_tile_0.c set_tile_1.c set_tile_2.c draw_0.c static_function.c move_and_colide.c \
 			tiles_handling.c key.c collision.c tile_convertion.c free.c read.c load.c \
@@ -68,8 +68,8 @@ $(OBJDIR):
 	@$(MK) $(OBJDIR)
 
 mlx42:
-	@cmake lib/MLX42/ -B lib/MLX42/build
-	@cmake --build lib/MLX42/build -j4
+	@cmake lib/MLX42_/ -B lib/MLX42_/build
+	@cmake --build lib/MLX42_/build -j4
 	
 libft:
 	@$(MAKE) -C $(LDIR)
