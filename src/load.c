@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:18:35 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/17 16:41:20 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/22 15:41:16 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ char **load_map(char *path)
     i = 0;
     size = 0;
     if (!path)
-        ft_exit("Error, path not found");
+        ft_exit("Error: path not found");
     fd = open(path, O_RDONLY);
     if (fd < 0)
     {
         close(fd);
-        ft_exit("Error, file not found");
+        ft_exit("Error: file not found");
     }
     size = count_next_line(fd);
     if (size <= 0)
@@ -41,7 +41,7 @@ char **load_map(char *path)
     {
         close(fd);
         map = (char **)ft_sfree_2d((void **)map);
-        ft_exit("Error, file not found!!");
+        ft_exit("Error: file not found!!");
     }
     while (i < size)
     {
@@ -50,7 +50,7 @@ char **load_map(char *path)
         {
             map = (char **)ft_sfree_2d((void **)map);
             close(fd);
-            ft_exit("Error, when reading file (mayby empty line)");
+            ft_exit("Error: when reading file (mayby empty line)");
         }
         i++;
     }
@@ -70,7 +70,7 @@ void load_in_map(void)
         y = 0;
         while (pars()->map[x][y])
         {
-            if (pars()->map[x][y] == 'o' || pars()->map[x][y] == 'p')
+            if (pars()->map[x][y] == 'o' || pars()->map[x][y] == 'p' || pars()->map[x][y] == 'e')
                 g()->map[y][x]->id = GRASS;
             else if (pars()->map[x][y] == '1')
                 g()->map[y][x]->id = HILL;

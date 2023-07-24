@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/17 16:18:02 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/23 10:48:32 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,6 @@ typedef struct s_pos2
 	t_vec2			pos1;
 	t_vec2			pos2;
 }					t_pos2;
-
-typedef struct s_menu
-{
-	int32_t			button_slected;
-	mlx_image_t		*background;
-	mlx_image_t		*button[2];
-}					t_menu;
 
 typedef struct s_parsing
 {
@@ -178,6 +171,13 @@ typedef struct s_tile
 	t_tile_under	under;
 }					t_tile;
 
+typedef struct s_menu
+{
+	int32_t			button_slected;
+	t_tile			***map;
+	mlx_image_t		*button[4];
+}					t_menu;
+
 typedef struct s_animation
 {
 	int32_t			index;
@@ -251,15 +251,7 @@ void				set_map(int32_t x, int32_t y, int32_t width,
 
 // texture
 
-void				init_grass_texture(void);
-void				init_hill_texture(void);
-void				init_sand_texture(void);
-void				init_water_texture(void);
-void				init_player_texture(void);
-void				init_deep_dirt_texture(void);
-void				init_crack_texture(void);
-void				init_wood_wall_texture(void);
-void				init_stone_wall_texture(void);
+void				init_all_texture(void);
 
 // image
 
@@ -328,10 +320,6 @@ bool				is_even(int nb);
 
 void				**ft_sfree_2d(void **ptr);
 
-// error
-
-void				ft_exit(char *str);
-
 // load read
 
 char				**load_map(char *path);
@@ -339,7 +327,7 @@ size_t				count_next_line(int fd);
 void				load_in_map(void);
 
 // parsing
-void				path_parsing(char *path);
+void				path_parsing(char *path, char *ext);
 void				map_is_rectangle(char **map);
 void				map_is_closed(void);
 void				map_parsing_element(void);

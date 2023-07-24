@@ -55,7 +55,7 @@ void	draw_crack(t_pos2 co)
 	}
 }
 
-void	draw_grid(int32_t posX, int32_t posY)
+void	draw_grid(int32_t posX, int32_t posY, t_tile ***map)
 {
 	t_pos2	co;
 
@@ -74,10 +74,10 @@ void	draw_grid(int32_t posX, int32_t posY)
 			if ((co.pos1.x >= 0 && co.pos1.x < g()->window.r_width)
 				&& (co.pos1.y >= 0 && co.pos1.y < g()->window.r_height))
 			{
-				if (g()->map[co.pos1.x][co.pos1.y]->under.image)
-					map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->under.image, co, true);
-				if (g()->map[co.pos1.x][co.pos1.y]->image)
-					map_image_to_window(g()->map[co.pos1.x][co.pos1.y]->image, co, false);
+				if (map[co.pos1.x][co.pos1.y]->under.image)
+					map_image_to_window(map[co.pos1.x][co.pos1.y]->under.image, co, true);
+				if (map[co.pos1.x][co.pos1.y]->image)
+					map_image_to_window(map[co.pos1.x][co.pos1.y]->image, co, false);
 				auto_tiling_corner(g()->img.hill, co, HILL);
 				auto_tiling_corner(g()->img.wood_wall, co, WOOD_WALL);
 				auto_tiling_corner(g()->img.stone_wall, co, STONE_WALL);
@@ -94,13 +94,6 @@ void	draw(void)
 {
 	if (g()->state == START)
 	{
-		if (!g()->m_start.button[0])
-			g()->m_start.button[0] = mlx_texture_to_image(g()->mlx,
-					g()->tex.stone_floor[0]);
-
-		if (!g()->m_start.button[1])
-			g()->m_start.button[1] = mlx_texture_to_image(g()->mlx,
-					g()->tex.wood_floor[0]);
 		if (g()->m_start.button[0]->count <= 0)
 			mlx_image_to_window(g()->mlx, g()->m_start.button[0],
 					(g()->window.c_width * SPRITE_SIZE) / 2-32,
@@ -112,12 +105,21 @@ void	draw(void)
 	}
 	if (g()->state == GAME)
 	{
-		draw_grid(g()->cameraGrid.x, g()->cameraGrid.y);
+		draw_grid(g()->cameraGrid.x, g()->cameraGrid.y, g()->map);
 		selector();	
 		mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
 				((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
 				((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
 	}
+}
+
+void	init_menu_start(void)
+{
+	g()->m_start.button[1] = mlx_texture_to_image(g()->mlx,	
+					g()->tex.wood_floor[0]);
+	g()->m_start.button[0] = mlx_texture_to_image(g()->mlx,
+					g()->tex.stone_floor[0]);
+	g()->m_start.button_slected = 0;
 }
 
 void	step(void *param)
@@ -182,6 +184,7 @@ void	step(void *param)
 			{
 				del_img(&g()->old_img);
 				del_img(&g()->img);
+				init_menu_start();
 				g()->state = START;
 			}
 		}
@@ -212,18 +215,18 @@ int32_t	main(int ac, char **av)
 {
 	if (ac == 2)
     {
-        path_parsing(av[1]);
+        path_parsing(av[1], ".ber");
         pars()->map = load_map(av[1]);
         if (!pars()->map)
-            ft_exit("Error when loading map");
+            ft_exit("Error: when loading map");
         map_parsing();
 	}
 	else
-        ft_exit("Error one argument needed (map.ber)");
+        ft_exit("Error: one argument needed (map.ber)");
 
 	g()->playerGrid = char_find_pos_2d(pars()->map, 'p');
-	g()->player.x = g()->playerGrid.x * SPRITE_SIZE;
-	g()->player.y = g()->playerGrid.y * SPRITE_SIZE;
+	g()->player.x = g()->playerGrid.x * SPRITE_SIZE+32;
+	g()->player.y = g()->playerGrid.y * SPRITE_SIZE+32;
 	g()->p_hitbox.top = 16;
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
@@ -257,20 +260,7 @@ int32_t	main(int ac, char **av)
 	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", true);
 
 	//load texture
-	init_grass_texture();
-	init_sand_texture();
-	init_hill_texture();
-	init_water_texture();
-	init_player_texture();
-	init_deep_dirt_texture();
-	init_crack_texture();
-	init_wood_wall_texture();
-	init_stone_wall_texture();
-	g()->tex.wood_floor[0] = mlx_load_png("./asset/wood/wood_floor/wood_floor.png");
-	g()->tex.stone_floor[0] = mlx_load_png("./asset/stone/stone_floor/stone_floor.png");
-	g()->tex.selector[0] = mlx_load_png("./asset/selector.png");
-	g()->tex.dirt[0] = mlx_load_png("./asset/dirt/dirt_0.png");
-	g()->tex.tree[0] = mlx_load_png("./asset/tree/tree_0.png");
+	init_all_texture();
 
 	mlx_loop_hook(g()->mlx, step, NULL);
 	mlx_loop(g()->mlx);

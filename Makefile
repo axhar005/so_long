@@ -6,7 +6,7 @@
 #    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/17 16:22:04 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/22 16:06:40 by olivierbouc      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SRCDIR	=	src
 SRC		= 	main.c utils_0.c utils_1.c texture.c string_0.c string_1.c animation.c \
 			image.c player_utils.c movement.c auto_tiling_0.c auto_tiling_1.c \
 			set_tile_0.c set_tile_1.c set_tile_2.c draw_0.c static_function.c move_and_colide.c \
-			tiles_handling.c key.c collision.c tile_convertion.c free.c error.c read.c load.c \
+			tiles_handling.c key.c collision.c tile_convertion.c free.c read.c load.c \
 			parsing_0.c parsing_1.c
 VPATH	=	$(SRCDIR)
 
