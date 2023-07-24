@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 14:30:35 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 16:42:23 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@
 
 // struct
 
-enum				e_game
-{
-	SPRITE_SIZE = 64
-};
+# define SPRITE_SIZE 64
 
 enum				e_depth
 {
@@ -235,11 +232,17 @@ t_parsing			*pars(void);
 
 bool				is_key_pressed(keys_t key);
 
+//step
+
+void				selector(void);
+
 // draw
 
 void				map_image_to_window(mlx_image_t **img, t_pos2 co,
 						bool under);
 void				map_image_index_to_window(mlx_image_t *img, t_pos2 co);
+void				draw_crack(t_pos2 co);
+void				draw_grid(int32_t posX, int32_t posY, t_tile ***map);
 
 // map
 
@@ -332,6 +335,7 @@ size_t				count_next_line(int fd);
 void				load_in_map(void);
 
 // parsing
+
 void				path_parsing(char *path, char *ext);
 void				map_is_rectangle(char **map);
 void				map_is_closed(void);
@@ -340,4 +344,10 @@ void				init_parsing(void);
 void				flood_fill(char **map, int x, int y);
 void				after_flood(void);
 void				map_parsing(void);
+
+//init
+
+void				init_window(void);
+void				init_menu_start(void);
+
 #endif

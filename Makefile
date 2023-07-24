@@ -6,7 +6,7 @@
 #    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/24 12:35:50 by oboucher         ###   ########.fr        #
+#    Updated: 2023/07/24 16:42:39 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ SRC		= 	main.c utils_0.c utils_1.c texture_0.c texture_1.c string_0.c string_1.c
 			image.c player_utils.c movement.c auto_tiling_0.c auto_tiling_1.c \
 			set_tile_0.c set_tile_1.c set_tile_2.c draw_0.c static_function.c move_and_colide.c \
 			tiles_handling.c key.c collision.c tile_convertion.c free.c read.c load.c \
-			parsing_0.c parsing_1.c
+			parsing_0.c parsing_1.c init.c selector.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#
