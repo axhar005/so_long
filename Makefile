@@ -6,7 +6,7 @@
 #    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/22 16:06:40 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/24 09:52:07 by olivierbouc      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 $(OBJDIR)/%.o:	%.c
 	@$(CC) $(CFLAGS) -I$(INCDIR) -I. -c $< -o $@
 	
-all:	update init mlx42 libft $(NAME)
+all:	mlx42 libft $(NAME)
 	
 ${NAME}:	$(OBJDIR) $(OBJ)
 	@$(CC) $(CFLAGS) $(MLXFLAGS) -I$(INCDIR) -o $(NAME) $(MLX) $(OBJ) $(LDIR)$(LIBFT)
@@ -73,12 +73,6 @@ mlx42:
 	
 libft:
 	@$(MAKE) -C $(LDIR)
-	
-update:
-	@git submodule update --remote --recursive
-
-init:
-	@git submodule update --init --recursive
 
 run:	all
 	@./$(NAMES)
