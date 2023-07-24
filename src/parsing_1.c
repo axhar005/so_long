@@ -3,51 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:23:06 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/17 16:03:40 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/24 14:50:05 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../inc/so_long.h"
 
-void    flood_fill(char **map, int x, int y)
+void	copy_2d_char(void)
 {
-    if (map[x][y] == 'p' || map[x][y] == 'c' || map[x][y] == 'e' || map[x][y] == 'o' || map[x][y] == '1')
-        return;
-    if (map[x][y] == '0')
-        map[x][y] = 'o';
-    else if (map[x][y] == 'E')
-        map[x][y] = 'e';
-    else if (map[x][y] == 'C')
-        map[x][y] = 'c';
-    else if (map[x][y] == 'P')
-        map[x][y] = 'p';
+	int	x;
 
-    flood_fill(map, x-1, y);
-    flood_fill(map, x+1, y);
-    flood_fill(map, x, y-1);
-    flood_fill(map, x, y+1);
+	x = 0;
+	pars()->mapf = ft_gnl_calloc(pars()->height + 1, sizeof(char *));
+	while (pars()->map[x])
+	{
+		pars()->mapf[x] = ft_strdup(pars()->map[x]);
+		x++;
+	}
 }
 
-void after_flood(void)
+void	flood_fill(char **map, int x, int y)
 {
-    if (char_count_2d(pars()->map, 'e') != pars()->char_E)
-        ft_exit("Error, exit obstructed");
-    if (char_count_2d(pars()->map, 'c') != pars()->char_C)
-        ft_exit("Error, on or more collectible obstructed");
+	if (map[x][y] == 'p' || map[x][y] == 'c' || map[x][y] == 'e'
+		|| map[x][y] == 'o' || map[x][y] == '1' || map[x][y] == 'd'
+		|| map[x][y] == '3')
+		return ;
+	if (map[x][y] == '0')
+		map[x][y] = 'o';
+	else if (map[x][y] == '2')
+		map[x][y] = 'd';
+	else if (map[x][y] == 'E')
+		map[x][y] = 'e';
+	else if (map[x][y] == 'C')
+		map[x][y] = 'c';
+	else if (map[x][y] == 'P')
+		map[x][y] = 'p';
+	flood_fill(map, x - 1, y);
+	flood_fill(map, x + 1, y);
+	flood_fill(map, x, y - 1);
+	flood_fill(map, x, y + 1);
 }
 
-void map_parsing(void)
+void	after_flood(void)
 {
-    init_parsing();
-    map_is_rectangle(pars()->map);
-    map_is_closed();
-    map_parsing_element();
-    flood_fill(pars()->map, 1, 1);
-    after_flood();
-    print_2d_char_array(pars()->map);
-    // pars()->map = (char **)ft_sfree_2d((void **)pars()->map);
+	if (char_count_2d(pars()->mapf, 'e') != pars()->char_e)
+		ft_exit("Error\n> exit obstructed");
+	if (char_count_2d(pars()->mapf, 'c') != pars()->char_c)
+		ft_exit("Error\n> on or more collectible obstructed");
+	if (char_count_2d(pars()->mapf, 'p') != 1)
+		ft_exit("Error\n> player obstructed");
+	if (char_count_2d(pars()->mapf, 'e') != 1)
+		ft_exit("Error\n> exit obstructed");
+}
+
+void	map_parsing(void)
+{
+	init_parsing();
+	map_is_rectangle(pars()->map);
+	map_is_closed();
+	map_parsing_element();
+	copy_2d_char();
+	flood_fill(pars()->mapf, 1, 1);
+	after_flood();
+	print_2d_char_array(pars()->mapf);
+	// pars()->map = (char **)ft_sfree_2d((void **)pars()->map);
 }

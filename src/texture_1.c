@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 11:00:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 12:37:41 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:45:33 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	del_texture(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 20)
 	{
 		if (i < 4)
 			mlx_delete_texture(g()->tex.crack[i]);
+		if (i < 10)
+			mlx_delete_texture(g()->tex.player[i]);
 		if (i < 16)
 		{
 			mlx_delete_texture(g()->tex.grass[i]);

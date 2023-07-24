@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 12:36:18 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:30:35 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ typedef struct s_pos2
 typedef struct s_parsing
 {
 	char			**map;
+	char			**mapf;
 	size_t			height;
 	size_t			width;
-	size_t			char_E;
-	size_t			char_P;
-	size_t			char_C;
+	size_t			char_e;
+	size_t			char_p;
+	size_t			char_c;
 	size_t			char_0;
 	size_t			char_1;
 }					t_parsing;
@@ -176,6 +177,7 @@ typedef struct s_menu
 	int32_t			button_slected;
 	t_tile			***map;
 	mlx_image_t		*button[4];
+	char			*name[4];
 }					t_menu;
 
 typedef struct s_animation
@@ -253,7 +255,6 @@ void				set_map(int32_t x, int32_t y, int32_t width,
 
 void				init_all_texture(void);
 void				del_texture(void);
-void				is_null_texture(void);
 
 // image
 
@@ -321,6 +322,8 @@ bool				is_even(int nb);
 // free
 
 void				**ft_sfree_2d(void **ptr);
+void				free_map(void);
+void				clean_all(void);
 
 // load read
 

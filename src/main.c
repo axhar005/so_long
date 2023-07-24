@@ -149,7 +149,7 @@ void	step(void *param)
 			}
 			if ((g()->m_start.button_slected == 1 && is_key_pressed(MLX_KEY_ENTER)) || is_key_pressed(MLX_KEY_ESCAPE))
 			{
-				del_texture();
+				clean_all();
 				mlx_close_window(g()->mlx);
 			}
 			if (g()->m_start.button_slected == 0 && is_key_pressed(MLX_KEY_ENTER))
@@ -220,13 +220,13 @@ int32_t	main(int ac, char **av)
         path_parsing(av[1], ".ber");
         pars()->map = load_map(av[1]);
         if (!pars()->map)
-            ft_exit("Error: when loading map");
+            ft_exit("Error\n> when loading map");
         map_parsing();
 	}
 	else
-        ft_exit("Error: one argument needed (map.ber)");
+        ft_exit("Error> one argument needed (map.ber)");
 
-	g()->playerGrid = char_find_pos_2d(pars()->map, 'p');
+	g()->playerGrid = char_find_pos_2d(pars()->map, 'P');
 	g()->player.x = g()->playerGrid.x * SPRITE_SIZE+32;
 	g()->player.y = g()->playerGrid.y * SPRITE_SIZE+32;
 	g()->p_hitbox.top = 16;
@@ -259,7 +259,7 @@ int32_t	main(int ac, char **av)
 	auto_tiling((t_vec2){0,0}, g()->window.r_width, g()->window.r_height);
 
 	//MLX
-	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", true);
+	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", false);
 
 	//load texture
 	init_all_texture();
