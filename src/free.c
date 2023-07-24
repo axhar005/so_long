@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:46:45 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 14:44:50 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:33:14 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void	clean_all(void)
 	free_map();
 	ft_sfree_2d((void **)pars()->map);
 	ft_sfree_2d((void **)pars()->mapf);
+	ft_sfree_2d((void **)g()->p_animation.up);
+	ft_sfree_2d((void **)g()->p_animation.down);
+	ft_sfree_2d((void **)g()->p_animation.left);
+	ft_sfree_2d((void **)g()->p_animation.right);
 	del_texture();
 	del_img(&g()->old_img);
 	del_img(&g()->img);

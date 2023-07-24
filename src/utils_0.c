@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_0.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/17 16:37:12 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/24 17:48:10 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_tile	***allocate_2d_map_array(int32_t cols, int32_t rows)
 /// @param rows number of the array
 /// @param cols number of the array
 /// @param c the letter use for fill
-void	fill_2d_map_array(t_tile ***array, int32_t cols, int32_t rows, int32_t c)
+void	fill_2d_map_array(t_tile ***array, int32_t cols, int32_t rows,
+		int32_t c)
 {
 	int32_t	i;
 	int32_t	j;

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:21:46 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 14:50:32 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:52:09 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	map_is_closed(void)
 	x = 1;
 	while (x < pars()->height - 1)
 	{
-		if (pars()->map[x][0] != '1' || pars()->map[x][ft_strlen(pars()->map[x])
-			- 1] != '1')
+		if (pars()->map[x][0] != '1' 
+			|| pars()->map[x][ft_strlen(pars()->map[x])- 1] != '1')
 			ft_exit("Error\n> closed by walls needed");
 		x++;
 	}

@@ -6,17 +6,17 @@ void	draw(void)
 	{
 		if (g()->m_start.button[0]->count <= 0)
 			mlx_image_to_window(g()->mlx, g()->m_start.button[0],
-					(g()->window.c_width * SPRITE_SIZE) / 2-32,
+					(g()->window.c_width * SPRITE_SIZE) / 2 - 32,
 					(g()->window.c_height * SPRITE_SIZE) / 2);
 		if (g()->m_start.button[1]->count <= 0)
 			mlx_image_to_window(g()->mlx, g()->m_start.button[1],
-					(g()->window.c_width * SPRITE_SIZE) / 2-32,
+					(g()->window.c_width * SPRITE_SIZE) / 2 - 32,
 					(g()->window.c_height * SPRITE_SIZE) / 2 + 128);
 	}
 	if (g()->state == GAME)
 	{
 		draw_grid(g()->cameraGrid.x, g()->cameraGrid.y, g()->map);
-		selector();	
+		selector();
 		mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
 				((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
 				((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
@@ -25,7 +25,9 @@ void	draw(void)
 
 void	step(void *param)
 {
-	static double	frame = 0;
+	static double	frame;
+
+	frame = 0;
 	g()->p_move.spd = 10;
 	(void)param;
 	g()->delta_time = g()->mlx->delta_time * 30;
@@ -33,7 +35,6 @@ void	step(void *param)
 	{
 		if (g()->state == START)
 		{
-			
 			if (is_key_pressed(MLX_KEY_W))
 			{
 				g()->m_start.button_slected += 1;
@@ -48,12 +49,15 @@ void	step(void *param)
 					g()->m_start.button_slected = 1;
 				printf("Button : %d\n", g()->m_start.button_slected);
 			}
-			if ((g()->m_start.button_slected == 1 && is_key_pressed(MLX_KEY_ENTER)) || is_key_pressed(MLX_KEY_ESCAPE))
+			if ((g()->m_start.button_slected == 1
+					&& is_key_pressed(MLX_KEY_ENTER))
+				|| is_key_pressed(MLX_KEY_ESCAPE))
 			{
 				clean_all();
 				mlx_close_window(g()->mlx);
 			}
-			if (g()->m_start.button_slected == 0 && is_key_pressed(MLX_KEY_ENTER))
+			if (g()->m_start.button_slected == 0
+				&& is_key_pressed(MLX_KEY_ENTER))
 			{
 				mlx_delete_image(g()->mlx, g()->m_start.button[0]);
 				mlx_delete_image(g()->mlx, g()->m_start.button[1]);
@@ -117,54 +121,20 @@ void	step(void *param)
 int32_t	main(int ac, char **av)
 {
 	if (ac == 2)
-    {
-        path_parsing(av[1], ".ber");
-        pars()->map = load_map(av[1]);
-        if (!pars()->map)
-            ft_exit("Error\n> when loading map");
-        map_parsing();
+	{
+		path_parsing(av[1], ".ber");
+		pars()->map = load_map(av[1]);
+		if (!pars()->map)
+			ft_exit("Error\n> when loading map");
+		map_parsing();
 	}
 	else
-        ft_exit("Error> one argument needed (map.ber)");
-
-	g()->playerGrid = char_find_pos_2d(pars()->map, 'P');
-	g()->player.x = g()->playerGrid.x * SPRITE_SIZE+32;
-	g()->player.y = g()->playerGrid.y * SPRITE_SIZE+32;
-	g()->p_hitbox.top = 16;
-	g()->p_hitbox.left = 12;
-	g()->p_hitbox.right = 12;
-	g()->arm_range = 100;
-	g()->state = GAME;
-	g()->mouse_id = 1;
-
-	init_window();
-	init_player_animation();
-
-	//set tile type
-	set_grass();
-	set_hill();
-	set_dirt();
-	set_water();
-	set_sand();
-	set_deep_dirt();
-	set_wood_floor();
-	set_wood_wall();
-	set_stone_floor();
-	set_stone_wall();
-	set_tree();
-
-	//GRID
-	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
-	load_in_map();
-	set_map(0, 0, g()->window.r_width, g()->window.r_height);
-	auto_tiling((t_vec2){0,0}, g()->window.r_width, g()->window.r_height);
-
+		ft_exit("Error> one argument needed (map.ber)");
+	init_all();
 	//MLX
 	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", false);
-
 	//load texture
 	init_all_texture();
-
 	mlx_loop_hook(g()->mlx, step, NULL);
 	mlx_loop(g()->mlx);
 	mlx_terminate(g()->mlx);

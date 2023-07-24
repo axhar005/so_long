@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 16:42:23 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:38:55 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,5 +349,8 @@ void				map_parsing(void);
 
 void				init_window(void);
 void				init_menu_start(void);
+void				init_val(void);
+void				init_all_tiles(void);
+void				init_all(void);
 
 #endif

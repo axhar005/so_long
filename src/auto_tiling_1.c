@@ -12,19 +12,19 @@
 
 #include "../inc/so_long.h"
 
-static	void norm1(mlx_image_t **img, t_pos2 co, int32_t id)
+static void	norm1(mlx_image_t **img, t_pos2 co, int32_t id)
 {
 	if (g()->map[co.pos1.x][co.pos1.y]->tile_index == 4)
-		{
-			if (g()->map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[16], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
-				map_image_index_to_window(img[17], co);
-			if (g()->map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[18], co);
-			if (g()->map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
-				map_image_index_to_window(img[19], co);
-		}
+	{
+		if (g()->map[co.pos1.x - 1][co.pos1.y - 1]->id != id)
+			map_image_index_to_window(img[16], co);
+		if (g()->map[co.pos1.x + 1][co.pos1.y - 1]->id != id)
+			map_image_index_to_window(img[17], co);
+		if (g()->map[co.pos1.x - 1][co.pos1.y + 1]->id != id)
+			map_image_index_to_window(img[18], co);
+		if (g()->map[co.pos1.x + 1][co.pos1.y + 1]->id != id)
+			map_image_index_to_window(img[19], co);
+	}
 }
 
 static void	norm2(mlx_image_t **img, t_pos2 co, int32_t id)

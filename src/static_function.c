@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   static_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:56:13 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/20 12:38:58 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/24 17:49:10 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 t_game	*g(void)
 {
-	static t_game game;
+	static t_game	game;
+
 	return (&game);
 }
 
 t_parsing	*pars(void)
 {
 	static t_parsing pars;
+
 	return (&pars);
 }

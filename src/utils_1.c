@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:55 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/05 17:05:47 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:48:05 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	is_even(int nb)
 
 bool	is_tilable(int32_t id)
 {
-	if (id == GRASS || id == HILL || id == WATER || id == SAND 
+	if (id == GRASS || id == HILL || id == WATER || id == SAND
 		|| id == DEEP_DIRT || id == WOOD_WALL || id == STONE_WALL)
 		return (true);
 	return (false);

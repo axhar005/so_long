@@ -17,15 +17,21 @@ static int32_t	calculate_auto_tiling(int32_t x, int32_t y, int32_t c)
 	int32_t	val;
 
 	val = 0;
-	if ((x >= 0 && x < g()->window.r_width) && (y >= 0 && y < g()->window.r_height))
+	if ((x >= 0 && x < g()->window.r_width) && (y >= 0
+			&& y < g()->window.r_height))
 	{
-		if ((y - 1 >= 0 && g()->map[x][y - 1]->id == c) || (y - 1 >= 0 && g()->map[x][y - 1]->under.id == c))
+		if ((y - 1 >= 0 && g()->map[x][y - 1]->id == c) || (y - 1 >= 0
+				&& g()->map[x][y - 1]->under.id == c))
 			val += 1;
-		if ((x + 1 < g()->window.r_width && g()->map[x + 1][y]->id == c) || (x + 1 < g()->window.r_width && g()->map[x + 1][y]->under.id == c))
+		if ((x + 1 < g()->window.r_width && g()->map[x + 1][y]->id == c) || (x
+				+ 1 < g()->window.r_width && g()->map[x + 1][y]->under.id == c))
 			val += 10;
-		if ((y + 1 < g()->window.r_height && g()->map[x][y + 1]->id == c) || (y + 1 < g()->window.r_height && g()->map[x][y + 1]->under.id == c))
+		if ((y + 1 < g()->window.r_height && g()->map[x][y + 1]->id == c) || (y
+				+ 1 < g()->window.r_height && g()->map[x][y
+				+ 1]->under.id == c))
 			val += 100;
-		if ((x - 1 >= 0 && g()->map[x - 1][y]->id == c) || (x - 1 >= 0 && g()->map[x - 1][y]->under.id == c))
+		if ((x - 1 >= 0 && g()->map[x - 1][y]->id == c) || (x - 1 >= 0
+				&& g()->map[x - 1][y]->under.id == c))
 			val += 1000;
 		return (val);
 	}
@@ -80,14 +86,17 @@ void	auto_tiling(t_vec2 pos, int32_t width, int32_t height)
 		{
 			xx = pos.x + i;
 			yy = pos.y + j;
-			if ((xx >= 0 && xx < g()->window.r_width) && (yy >= 0 && yy < g()->window.r_height))
+			if ((xx >= 0 && xx < g()->window.r_width) && (yy >= 0
+					&& yy < g()->window.r_height))
 			{
 				if (is_tilable(g()->map[xx][yy]->id))
 					g()->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx,
-								yy, g()->map[xx][yy]->id));
+																							yy,
+																							g()->map[xx][yy]->id));
 				else if (is_tilable(g()->map[xx][yy]->under.id))
 					g()->map[xx][yy]->under.tile_index = index_auto_tiling(calculate_auto_tiling(xx,
-								yy, g()->map[xx][yy]->under.id));
+																									yy,
+																									g()->map[xx][yy]->under.id));
 			}
 			j++;
 		}

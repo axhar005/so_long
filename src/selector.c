@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:41:38 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 16:41:50 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:49:26 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,17 @@ void	selector(void)
 	{
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_RIGHT))
 			if (replace_tile(g()->mouseGrid, g()->mouse_id))
-				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y - 1}, 3, 3);
+				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y
+						- 1}, 3, 3);
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT)
-			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->depth == WALL)
+			&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->id == TREE)
 		{
 			g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life -= 5;
 			if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
 			{
-				// if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->under.name)
-				// {
-					
-				// }
 				place_tile(g()->mouseGrid, DIRT);
-				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y - 1}, 3, 3);
+				auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y
+						- 1}, 3, 3);
 			}
 		}
 		mlx_image_to_window(g()->mlx, g()->img.selector[0], (g()->mouseGrid.x
