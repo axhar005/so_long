@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:20:19 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/08 19:43:12 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:48:07 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ bool	norm2(keys_t key, keys_t *array, int32_t i)
 
 bool	is_key_pressed(keys_t key)
 {
-	static keys_t array[10];
-	int32_t i;
+	static keys_t	array[10];
+	int32_t			i;
 
 	i = 0;
 	if (mlx_is_key_down(g()->mlx, key))
@@ -61,5 +61,13 @@ bool	is_key_pressed(keys_t key)
 	{
 		return (norm2(key, array, i));
 	}
+	return (false);
+}
+
+bool	mouse_button(int32_t x, int32_t y, int32_t width, int32_t height)
+{
+	if (g()->mouse.x > x && g()->mouse.x < x + width)
+		if (g()->mouse.y > y && g()->mouse.y < y + height)
+			return (true);
 	return (false);
 }

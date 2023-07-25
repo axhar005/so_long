@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:46:45 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 17:33:14 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:23:24 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,36 @@ void	**ft_sfree_2d(void **ptr)
 	return (NULL);
 }
 
-void	free_map(void)
+void	free_map(t_tile ***map)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	while (g()->map[x])
+	while (map[x])
 	{
 		y = 0;
-		while (g()->map[x][y])
+		while (map[x][y])
 		{
-			ft_sfree(g()->map[x][y]);
+			ft_sfree(map[x][y]);
 			y++;
 		}
-		free(g()->map[x]);
+		free(map[x]);
 		x++;
 	}
-	free(g()->map);
+	free(map);
 }
 
 void	clean_all(void)
 {
-	free_map();
+	del_img(&g()->old_img);
+	del_img(&g()->img);
+	del_texture();
+	free_map(g()->map);
 	ft_sfree_2d((void **)pars()->map);
 	ft_sfree_2d((void **)pars()->mapf);
 	ft_sfree_2d((void **)g()->p_animation.up);
 	ft_sfree_2d((void **)g()->p_animation.down);
 	ft_sfree_2d((void **)g()->p_animation.left);
 	ft_sfree_2d((void **)g()->p_animation.right);
-	del_texture();
-	del_img(&g()->old_img);
-	del_img(&g()->img);
 }

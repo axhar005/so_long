@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 17:38:55 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:31:31 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ enum				e_depth
 enum				e_states
 {
 	START,
+	PAUSE,
 	INVENTORY,
 	GAME
 };
@@ -172,9 +173,8 @@ typedef struct s_tile
 typedef struct s_menu
 {
 	int32_t			button_slected;
-	t_tile			***map;
-	mlx_image_t		*button[4];
-	char			*name[4];
+	mlx_image_t		*button[5];
+	mlx_texture_t	*tex[5];
 }					t_menu;
 
 typedef struct s_animation
@@ -218,7 +218,6 @@ typedef struct s_game
 	t_hitbox		p_hitbox;
 	t_animation		p_animation;
 	t_window		window;
-	t_menu			m_start;
 }					t_game;
 
 // prototype
@@ -227,14 +226,20 @@ typedef struct s_game
 
 t_game				*g(void);
 t_parsing			*pars(void);
+t_menu				*menu(void);
 
 // key function
 
 bool				is_key_pressed(keys_t key);
+bool				mouse_button(int32_t x, int32_t y, int32_t width,
+						int32_t height);
 
 //step
 
 void				selector(void);
+void				step_menu(void);
+void				step_game(void);
+void				step_update(void);
 
 // draw
 
@@ -243,6 +248,7 @@ void				map_image_to_window(mlx_image_t **img, t_pos2 co,
 void				map_image_index_to_window(mlx_image_t *img, t_pos2 co);
 void				draw_crack(t_pos2 co);
 void				draw_grid(int32_t posX, int32_t posY, t_tile ***map);
+void				draw_menu(void);
 
 // map
 
@@ -258,11 +264,14 @@ void				set_map(int32_t x, int32_t y, int32_t width,
 
 void				init_all_texture(void);
 void				del_texture(void);
+void				is_null_texture(void);
 
 // image
 
 void				init_img(t_img *img);
 void				del_img(t_img *img);
+void				init_menu_img(t_menu *menu);
+void				del_menu_img(t_menu *menu);
 
 // tiling
 
@@ -325,7 +334,7 @@ bool				is_even(int nb);
 // free
 
 void				**ft_sfree_2d(void **ptr);
-void				free_map(void);
+void				free_map(t_tile ***map);
 void				clean_all(void);
 
 // load read
@@ -348,7 +357,7 @@ void				map_parsing(void);
 //init
 
 void				init_window(void);
-void				init_menu_start(void);
+void				init_menu(void);
 void				init_val(void);
 void				init_all_tiles(void);
 void				init_all(void);

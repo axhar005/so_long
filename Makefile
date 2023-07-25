@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
+#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/24 22:11:45 by olivierbouc      ###   ########.fr        #
+#    Updated: 2023/07/25 15:33:38 by oboucher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ MK = mkdir -p
 MLXDIR = lib/MLX42_/build/
 MLXA = libmlx42.a
 MLX = $(MLXDIR)$(MLXA)
-MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/usr/local/opt/glfw/lib" #"/Users/$(USER)/.brew/opt/glfw/lib/"
+MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" #"/usr/local/opt/glfw/lib"
 
 #--- COLORS ---#
 GREEN	=	\033[1;32m
@@ -44,10 +44,10 @@ INCDIR = inc
 #--- SOURCE ---#
 SRCDIR	=	src
 SRC		= 	main.c utils_0.c utils_1.c texture_0.c texture_1.c string_0.c string_1.c animation.c \
-			image.c player_utils.c movement.c auto_tiling_0.c auto_tiling_1.c \
-			set_tile_0.c set_tile_1.c set_tile_2.c draw_0.c static_function.c move_and_colide.c \
+			image_0.c image_1.c player_utils.c movement.c auto_tiling_0.c auto_tiling_1.c \
+			set_tile_0.c set_tile_1.c set_tile_2.c draw_0.c draw_1.c static_function.c move_and_colide.c \
 			tiles_handling.c key.c collision.c tile_convertion.c free.c read.c load.c \
-			parsing_0.c parsing_1.c init.c selector.c
+			parsing_0.c parsing_1.c init.c selector.c step_0.c step_1.c step_2.c
 VPATH	=	$(SRCDIR)
 
 #--- OBJECT ---#

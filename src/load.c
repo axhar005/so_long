@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:18:35 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 14:45:48 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:15:59 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	**load_map(char *path)
 		i++;
 	}
 	close(fd);
-	print_2d_char_array(map);
 	return (map);
 }
 

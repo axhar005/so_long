@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:23:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 17:53:03 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:16:23 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_val(void)
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
 	g()->arm_range = 100;
-	g()->state = GAME;
+	g()->state = START;
 	g()->mouse_id = 1;
 	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
 	load_in_map();
@@ -62,11 +62,8 @@ void	init_all_tiles(void)
 	set_tree();
 }
 
-void	init_menu_start(void)
+void	init_menu(void)
 {
-	g()->m_start.button[1] = mlx_texture_to_image(g()->mlx,
-													g()->tex.wood_floor[0]);
-	g()->m_start.button[0] = mlx_texture_to_image(g()->mlx,
-													g()->tex.stone_floor[0]);
-	g()->m_start.button_slected = 0;
+	menu()->button_slected = 0;
+	init_menu_img(menu());
 }

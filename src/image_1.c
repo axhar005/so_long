@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   static_function.c                                  :+:      :+:    :+:   */
+/*   image_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/04 19:56:13 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 14:26:04 by oboucher         ###   ########.fr       */
+/*   Created: 2023/07/25 13:01:43 by oboucher          #+#    #+#             */
+/*   Updated: 2023/07/25 13:28:58 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-t_game	*g(void)
+void    del_menu_img(t_menu *menu)
 {
-	static t_game	game;
+    int i;
 
-	return (&game);
+    i = 0;
+    while (i < 5)
+    {
+        mlx_delete_image(g()->mlx, menu->button[i]);
+        i++;
+    }
 }
 
-t_parsing	*pars(void)
+void    init_menu_img(t_menu *menu)
 {
-	static t_parsing pars;
+    int i;
 
-	return (&pars);
-}
-
-t_menu	*menu(void)
-{
-	static t_menu menu;
-
-	return (&menu);
+    i = 0;
+    while (i < 5)
+    {
+        menu->button[i] = mlx_texture_to_image(g()->mlx, menu->tex[i]);
+        i++;
+    }
 }

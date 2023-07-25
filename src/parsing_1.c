@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:23:06 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 14:50:05 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:15:51 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,4 @@ void	map_parsing(void)
 	copy_2d_char();
 	flood_fill(pars()->mapf, 1, 1);
 	after_flood();
-	print_2d_char_array(pars()->mapf);
-	// pars()->map = (char **)ft_sfree_2d((void **)pars()->map);
 }
