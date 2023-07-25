@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:23:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 15:16:23 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:34:36 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ void	init_val(void)
 	g()->playerGrid = char_find_pos_2d(pars()->map, 'P');
 	g()->player.x = g()->playerGrid.x * SPRITE_SIZE + 32;
 	g()->player.y = g()->playerGrid.y * SPRITE_SIZE + 32;
+	g()->old_PlayerGrid.x = g()->playerGrid.x;
+	g()->old_PlayerGrid.y = g()->playerGrid.y;
 	g()->p_hitbox.top = 16;
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
-	g()->arm_range = 100;
+	g()->arm_range = 1;
 	g()->state = START;
+	g()->dev_mod = false;
 	g()->mouse_id = 1;
 	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
 	load_in_map();

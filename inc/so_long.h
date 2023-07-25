@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 15:31:31 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:34:15 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,14 +203,17 @@ typedef struct s_game
 	int32_t			p_direction;
 	int32_t			arm_range;
 	int32_t			state;
+	int32_t			feet_step;
+	int32_t			cut_tree;
+	bool			dev_mod;
 	t_img			img;
 	t_img			old_img;
 	t_tile			***map;
 	t_tile			tile_type[20];
 	t_vec2			playerGrid;
+	t_vec2			old_PlayerGrid;
 	t_vec2			player;
 	t_vec2			cameraGrid;
-	t_vec2			camera;
 	t_vec2			offSet;
 	t_vec2			mouse;
 	t_vec2			mouseGrid;

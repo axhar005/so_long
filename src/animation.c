@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/17 14:41:47 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/25 15:52:54 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_player_animation(void)
 {
-	g()->p_animation.up = ft_split("2,3", ',');
+	g()->p_animation.up = ft_split("2,3",',');
 	g()->p_animation.down = ft_split("0,1", ',');
 	g()->p_animation.left = ft_split("5,4,6,4", ',');
 	g()->p_animation.right = ft_split("8,7,9,7", ',');
