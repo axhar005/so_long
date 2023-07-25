@@ -27,7 +27,6 @@ void	step(void *param)
 {
 	static double	frame;
 
-	frame = 0;
 	g()->p_move.spd = 10;
 	(void)param;
 	g()->delta_time = g()->mlx->delta_time * 30;
@@ -133,7 +132,6 @@ int32_t	main(int ac, char **av)
 	init_all();
 	//MLX
 	g()->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", false);
-	//load texture
 	init_all_texture();
 	mlx_loop_hook(g()->mlx, step, NULL);
 	mlx_loop(g()->mlx);

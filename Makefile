@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+         #
+#    By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 12:34:33 by oboucher          #+#    #+#              #
-#    Updated: 2023/07/24 17:35:34 by oboucher         ###   ########.fr        #
+#    Updated: 2023/07/24 22:11:45 by olivierbouc      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ MK = mkdir -p
 MLXDIR = lib/MLX42_/build/
 MLXA = libmlx42.a
 MLX = $(MLXDIR)$(MLXA)
-MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" #"/usr/local/opt/glfw/lib"
+MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/usr/local/opt/glfw/lib" #"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 #--- COLORS ---#
 GREEN	=	\033[1;32m

@@ -1,0 +1,4 @@
+0 = grass
+1 = hill
+2 = send
+3 = water
