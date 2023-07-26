@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:21:46 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 17:52:09 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:07:10 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	map_parsing_element(void)
 		ft_exit("Error\n> one player 'P' needed");
 	if (pars()->char_0 + pars()->char_1 + pars()->char_e + pars()->char_p
 		+ pars()->char_c != total_count(pars()->map))
-		ft_exit("Error\n> we need and accept only this chars (0,1,2,3,E,P,C)");
+		ft_exit("Error\n> we need and accept only this chars (0,1,2,3,L,E,P,C)");
 }
 
 void	init_parsing(void)
@@ -73,7 +73,7 @@ void	init_parsing(void)
 	pars()->height = line_count(pars()->map);
 	pars()->width = ft_strlen(pars()->map[0]);
 	pars()->char_0 = char_count_2d(pars()->map, '0')
-		+ char_count_2d(pars()->map, '2');
+		+ char_count_2d(pars()->map, '2') + char_count_2d(pars()->map, 'L');
 	pars()->char_1 = char_count_2d(pars()->map, '1')
 		+ char_count_2d(pars()->map, '3');
 	pars()->char_e = char_count_2d(pars()->map, 'E');

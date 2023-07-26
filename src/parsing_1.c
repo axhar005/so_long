@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:23:06 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 14:15:51 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:09:54 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	flood_fill(char **map, int x, int y)
 {
 	if (map[x][y] == 'p' || map[x][y] == 'c' || map[x][y] == 'e'
 		|| map[x][y] == 'o' || map[x][y] == '1' || map[x][y] == 'd'
-		|| map[x][y] == '3')
+		|| map[x][y] == '3' || map[x][y] == 'l')
 		return ;
 	if (map[x][y] == '0')
 		map[x][y] = 'o';
@@ -41,6 +41,8 @@ void	flood_fill(char **map, int x, int y)
 		map[x][y] = 'c';
 	else if (map[x][y] == 'P')
 		map[x][y] = 'p';
+	else if (map[x][y] == 'L')
+		map[x][y] = 'l';
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x, y - 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:23:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 16:34:36 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:05:12 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ void	init_val(void)
 	g()->p_hitbox.top = 16;
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
+	g()->lamiGrid.x = 1;
+	g()->lamiGrid.y = 1;
+	g()->lami.x = g()->lamiGrid.x * SPRITE_SIZE + 32;
+	g()->lami.y = g()->lamiGrid.y * SPRITE_SIZE + 32;
 	g()->arm_range = 1;
 	g()->state = START;
 	g()->dev_mod = false;

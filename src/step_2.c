@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   step_update.c                                      :+:      :+:    :+:   */
+/*   step_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:28:41 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 15:30:35 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:04:55 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	step_update(void)
 	// update player grid pos
 	g()->playerGrid.x = g()->player.x / SPRITE_SIZE;
 	g()->playerGrid.y = g()->player.y / SPRITE_SIZE;
+	g()->lamiGrid.x = g()->lami.x / SPRITE_SIZE;
+	g()->lamiGrid.y = g()->lami.y / SPRITE_SIZE;
 	// update offset
 	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE / 2;
 	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE / 2;
@@ -31,3 +33,4 @@ void	step_update(void)
 	g()->mouseGrid.y = g()->cameraGrid.y + ((g()->mouse.y + g()->offSet.y)
 			/ SPRITE_SIZE);
 }
+

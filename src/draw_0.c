@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:14:35 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 16:43:18 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:32:25 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ void	draw_grid(int32_t posX, int32_t posY, t_tile ***map)
 				&& (co.pos1.y >= 0 && co.pos1.y < g()->window.r_height))
 			{
 				norm1(map, co);
+				if (co.pos1.x == g()->lamiGrid.x && co.pos1.y == g()->lamiGrid.y)
+				{
+					map_image_index_to_window(g()->img.player[g()->p_animation.index], co);
+				}
 			}
 			co.pos2.y++;
 		}

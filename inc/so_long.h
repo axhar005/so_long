@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 16:34:15 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:02:08 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,8 @@ typedef struct s_game
 	t_img			old_img;
 	t_tile			***map;
 	t_tile			tile_type[20];
+	t_vec2			lami;
+	t_vec2			lamiGrid;
 	t_vec2			playerGrid;
 	t_vec2			old_PlayerGrid;
 	t_vec2			player;
