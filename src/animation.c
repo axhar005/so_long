@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 15:52:54 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/26 10:29:01 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@ void	init_player_animation(void)
 	g()->p_animation.down = ft_split("0,1", ',');
 	g()->p_animation.left = ft_split("5,4,6,4", ',');
 	g()->p_animation.right = ft_split("8,7,9,7", ',');
+	g()->p_animation.clock = 0;
+	g()->p_animation.speed = 1.8;
+	g()->p_animation.index = 0;
+	g()->p_animation.loop = 0;
+}
+
+void	init_lami_animation(void)
+{
+	g()->p_animation.up = ft_split("0,1,2,3,4,5",',');
+	g()->p_animation.down = ft_split("0,1,2,3,4,5", ',');
+	g()->p_animation.left = ft_split("0,1,2,3,4,5", ',');
+	g()->p_animation.right = ft_split("0,1,2,3,4,5", ',');
 	g()->p_animation.clock = 0;
 	g()->p_animation.speed = 1.8;
 	g()->p_animation.index = 0;

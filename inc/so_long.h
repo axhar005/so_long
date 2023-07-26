@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 20:02:08 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/07/26 12:56:32 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <time.h>
 
 // struct
 
@@ -192,6 +193,15 @@ typedef struct s_animation
 
 }					t_animation;
 
+typedef struct s_lami
+{
+	t_vec2			pos;
+	t_vec2			grid;
+	double			time;
+	t_movement		move;
+	t_animation		animation;
+}					t_lami;
+
 // all game struct
 typedef struct s_game
 {
@@ -210,8 +220,6 @@ typedef struct s_game
 	t_img			old_img;
 	t_tile			***map;
 	t_tile			tile_type[20];
-	t_vec2			lami;
-	t_vec2			lamiGrid;
 	t_vec2			playerGrid;
 	t_vec2			old_PlayerGrid;
 	t_vec2			player;
@@ -232,6 +240,7 @@ typedef struct s_game
 t_game				*g(void);
 t_parsing			*pars(void);
 t_menu				*menu(void);
+t_lami				*lami(void);
 
 // key function
 
@@ -286,6 +295,7 @@ void				auto_tiling_corner(mlx_image_t **img, t_pos2 co,
 						int32_t id);
 bool				place_tile(t_vec2 pos, int32_t id);
 bool				replace_tile(t_vec2 pos, int32_t id);
+bool				is_tilable(int32_t id);
 
 // tile type
 
@@ -322,7 +332,7 @@ bool				tile_collision(int x, int y, int w, int h, int32_t c);
 
 void				play_animation(t_animation *animation, char **direction);
 void				init_player_animation(void);
-bool				is_tilable(int32_t id);
+void				init_lami_animation(void);
 
 // movement
 

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:56:13 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 14:26:04 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/26 09:54:20 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ t_menu	*menu(void)
 	static t_menu menu;
 
 	return (&menu);
+}
+
+t_lami	*lami(void)
+{
+	static t_lami lami;
+
+	return (&lami);
 }
