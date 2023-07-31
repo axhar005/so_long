@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:10 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:28:02 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /// @param rows number of the array
 /// @param cols number of the array
 /// @return the array
-t_tile	***allocate_2d_map_array(int32_t cols, int32_t rows)
+t_tile	***allocate_2d_map(int32_t cols, int32_t rows)
 {
 	t_tile	***map;
 	int		i;

@@ -1,40 +1,86 @@
 #include "../inc/so_long.h"
 
+void	draw_feet_count(void)
+{
+	static mlx_image_t	*old_temp;
+	static mlx_image_t	*temp;
+	char				*msg;
+
+	msg = ft_stringf("%d", g()->feet_step);
+	mlx_delete_image(g()->mlx, old_temp);
+	old_temp = temp;
+	temp = mlx_put_string(g()->mlx, msg, ((g()->window.c_width * SPRITE_SIZE)
+				/ 2) - (5 * ft_strlen(msg)), ((g()->window.c_height
+					* SPRITE_SIZE) / 2) - SPRITE_SIZE);
+	ft_sfree(msg);
+}
+
+int	rand_range(int min, int max)
+{
+	int	temp;
+	int	r_size;
+	int	r_number;
+
+	if (min > max)
+	{
+		temp = min;
+		min = max;
+		max = temp;
+	}
+	r_size = max - min + 1;
+	r_number = (rand() % r_size) + min;
+	return (r_number);
+}
+
 void	draw_lami(void)
 {
 	t_vec2	pos;
 
 	pos.x = lami()->pos.x - g()->cameraGrid.x * 64;
 	pos.y = lami()->pos.y - g()->cameraGrid.y * 64;
-	mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index], pos.x
+	mlx_image_to_window(g()->mlx, g()->img.lami[lami()->animation.index], pos.x
 			- g()->offSet.x, pos.y - g()->offSet.y);
+}
+
+void	death(void)
+{
+	if (g()->player.x - g()->p_hitbox.left > lami()->pos.x - lami()->hitbox.left
+		&& g()->player.x + g()->p_hitbox.right < (lami()->pos.x
+			+ lami()->hitbox.right) + SPRITE_SIZE)
+	{
+		if (g()->player.y - -g()->p_hitbox.top
+			- lami()->hitbox.top > lami()->pos.y
+			&& g()->player.y < (lami()->pos.y + lami()->hitbox.bot)
+			+ SPRITE_SIZE)
+			ft_exit("You died !");
+	}
 }
 
 void	step_lami(void)
 {
-	int32_t r1;
-	int32_t r2;
+	static int32_t	last_h;
 
-	if (g()->current_time >= lami()->time + 5000)
+	if (g()->current_time >= lami()->time + rand_range(5000, 100000))
 	{
-		r1 = rand() % 2;
-		if (r1 == 0)
-			r1 = -1;
-		r2 = rand() % 2;
-		if (r2 == 0)
-			r2 = -1;
-
-		lami()->move.hspd = r1;
-		lami()->move.vspd = r2;
+		lami()->move.hspd = rand() % 2;
+		if (lami()->move.hspd == 0)
+			lami()->move.hspd = -1;
+		lami()->move.vspd = rand() % 2;
+		if (lami()->move.vspd == 0)
+			lami()->move.vspd = -1;
 		lami()->time = g()->current_time;
 	}
-	// lami()->move.hspd = (mlx_is_key_down(g()->mlx, MLX_KEY_RIGHT)
-	// 		- mlx_is_key_down(g()->mlx, MLX_KEY_LEFT)) * lami()->move.spd;
-	// lami()->move.vspd = (mlx_is_key_down(g()->mlx, MLX_KEY_DOWN)
-	// 		- mlx_is_key_down(g()->mlx, MLX_KEY_UP)) * lami()->move.spd;
-
-	movement(&lami()->pos, &lami()->move.hspd, g()->p_hitbox, false);
-	movement(&lami()->pos, &lami()->move.vspd, g()->p_hitbox, true);
+	if (lami()->move.hspd != 0)
+		last_h = lami()->move.hspd;
+	if (lami()->move.hspd == 0 && lami()->move.vspd == 0)
+		last_h = 0;
+	movement(&lami()->pos, &lami()->move.hspd, lami()->hitbox, false);
+	movement(&lami()->pos, &lami()->move.vspd, lami()->hitbox, true);
+	if (lami()->move.hspd == 1 || (lami()->move.hspd == 0 && last_h == 1))
+		play_animation(&lami()->animation, lami()->animation.right);
+	else if (lami()->move.hspd == -1 || (lami()->move.hspd == 0 
+		&& last_h == -1))
+		play_animation(&lami()->animation, lami()->animation.left);
 }
 
 void	draw(void)
@@ -51,6 +97,35 @@ void	draw(void)
 		mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
 				((g()->window.c_width * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2,
 				((g()->window.c_height * SPRITE_SIZE) / 2) - SPRITE_SIZE / 2);
+		draw_feet_count();
+	}
+}
+
+void	step_portal(void)
+{
+	static double	laste_time;
+	static t_vec2	exit_pos;
+	t_vec2			origin;
+
+	origin.x = g()->player.x - SPRITE_SIZE / 2;
+	origin.y = g()->player.y - SPRITE_SIZE / 2;
+	if (exit_pos.x == 0 && exit_pos.y == 0)
+		exit_pos = char_find_pos_2d(pars()->map, 'E');
+	if (g()->cut_tree == pars()->char_c)
+	{
+		if (g()->current_time >= laste_time + 100)
+		{
+			if (g()->map[exit_pos.x][exit_pos.y]->tile_index < 3)
+				g()->map[exit_pos.x][exit_pos.y]->tile_index += 1;
+			else
+				g()->map[exit_pos.x][exit_pos.y]->tile_index = 1;
+			laste_time = g()->current_time;
+		}
+		if (tile_collision(origin.x + g()->p_hitbox.left, (origin.y
+					+ g()->p_hitbox.top), SPRITE_SIZE - (g()->p_hitbox.right
+					+ g()->p_hitbox.left), SPRITE_SIZE - (g()->p_hitbox.bot
+					+ g()->p_hitbox.top), PORTAL))
+			ft_exit("Good Job");
 	}
 }
 
@@ -70,6 +145,8 @@ void	step(void *param)
 		{
 			step_game();
 			step_lami();
+			step_portal();
+			death();
 		}
 		frame = 0;
 		draw();

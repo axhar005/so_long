@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:46:45 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 15:46:33 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:55:06 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,8 @@ void	clean_all(void)
 	ft_sfree_2d((void **)g()->p_animation.down);
 	ft_sfree_2d((void **)g()->p_animation.left);
 	ft_sfree_2d((void **)g()->p_animation.right);
+	ft_sfree_2d((void **)lami()->animation.up);
+	ft_sfree_2d((void **)lami()->animation.down);
+	ft_sfree_2d((void **)lami()->animation.left);
+	ft_sfree_2d((void **)lami()->animation.right);
 }

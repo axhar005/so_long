@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:23:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/26 12:52:04 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:28:09 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_all(void)
 	init_window();
 	init_all_tiles();
 	init_player_animation();
+	init_lami_animation();
 	init_val();
 }
 
@@ -41,16 +42,19 @@ void	init_val(void)
 	g()->p_hitbox.left = 12;
 	g()->p_hitbox.right = 12;
 	g()->p_move.spd = 10;
-	lami()->grid.x = 8;
-	lami()->grid.y = 4;
+	lami()->grid = char_find_pos_2d(pars()->map, 'E');
 	lami()->move.spd = 4;
 	lami()->pos.x = lami()->grid.x * SPRITE_SIZE;
 	lami()->pos.y = lami()->grid.y * SPRITE_SIZE;
-	g()->arm_range = 1;
+	lami()->hitbox.top = 10;
+	lami()->hitbox.left = 16;
+	lami()->hitbox.right = 16;
+	lami()->time = -1000000;
+	g()->arm_range = 10;
 	g()->state = START;
 	g()->dev_mod = false;
 	g()->mouse_id = 1;
-	g()->map = allocate_2d_map_array(g()->window.r_width, g()->window.r_height);
+	g()->map = allocate_2d_map(g()->window.r_width, g()->window.r_height);
 	load_in_map();
 	set_map(0, 0, g()->window.r_width, g()->window.r_height);
 	auto_tiling((t_vec2){0, 0}, g()->window.r_width, g()->window.r_height);
@@ -69,6 +73,7 @@ void	init_all_tiles(void)
 	set_stone_floor();
 	set_stone_wall();
 	set_tree();
+	set_portal();
 }
 
 void	init_menu(void)

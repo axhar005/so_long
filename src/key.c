@@ -6,13 +6,13 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:20:19 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 14:48:07 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:25:20 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-bool	norm1(keys_t key, keys_t *array, int32_t i)
+static bool	norm1(keys_t key, keys_t *array, int32_t i)
 {
 	while (i < 10)
 	{

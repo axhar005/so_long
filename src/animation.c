@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:55 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/26 10:29:01 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:53:31 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	init_player_animation(void)
 
 void	init_lami_animation(void)
 {
-	g()->p_animation.up = ft_split("0,1,2,3,4,5",',');
-	g()->p_animation.down = ft_split("0,1,2,3,4,5", ',');
-	g()->p_animation.left = ft_split("0,1,2,3,4,5", ',');
-	g()->p_animation.right = ft_split("0,1,2,3,4,5", ',');
-	g()->p_animation.clock = 0;
-	g()->p_animation.speed = 1.8;
-	g()->p_animation.index = 0;
-	g()->p_animation.loop = 0;
+	lami()->animation.up = ft_split("0,1,2,3,4,5",',');
+	lami()->animation.down = ft_split("0,1,2,3,4,5", ',');
+	lami()->animation.left = ft_split("6,7,8,9,10,11", ',');
+	lami()->animation.right = ft_split("0,1,2,3,4,5", ',');
+	lami()->animation.clock = 0;
+	lami()->animation.speed = 1.8;
+	lami()->animation.index = 0;
+	lami()->animation.loop = 0;
 }
 
 void	play_animation(t_animation *animation, char **sheet)

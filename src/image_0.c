@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:32:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 13:01:25 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:51:01 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,14 @@ static void	norm1(t_img *m, int i)
 	while (i < 20)
 	{
 		if (i < 4)
+		{
 			m->crack[i] = mlx_texture_to_image(g()->mlx, g()->tex.crack[i]);
+			m->portal[i] = mlx_texture_to_image(g()->mlx, g()->tex.portal[i]);
+		}
 		if (i < 10)
 			m->player[i] = mlx_texture_to_image(g()->mlx, g()->tex.player[i]);
+		if (i < 12)
+			m->lami[i] = mlx_texture_to_image(g()->mlx, g()->tex.lami[i]);
 		if (i < 16)
 		{
 			m->grass[i] = mlx_texture_to_image(g()->mlx, g()->tex.grass[i]);
@@ -60,9 +65,14 @@ static void	norm2(t_img *img, int i)
 	while (i < 20)
 	{
 		if (i < 4)
+		{
 			mlx_delete_image(g()->mlx, img->crack[i]);
+			mlx_delete_image(g()->mlx, img->portal[i]);
+		}
 		if (i < 10)
 			mlx_delete_image(g()->mlx, img->player[i]);
+		if (i < 12)
+			mlx_delete_image(g()->mlx, img->lami[i]);
 		if (i < 16)
 		{
 			mlx_delete_image(g()->mlx, img->grass[i]);

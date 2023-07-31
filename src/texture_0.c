@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:23 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 15:17:25 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:55:50 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ void	init_all_texture(void)
 	while (i < 20)
 	{
 		if (i < 4)
+		{
 			g()->tex.crack[i] = mlx_png_free(ft_stringf("./asset/crack/crack_%d.png", i));
+			g()->tex.portal[i] = mlx_png_free(ft_stringf("./asset/portal/portal_%d.png", i));
+		}
+		if (i < 12)
+			g()->tex.lami[i] = mlx_png_free(ft_stringf("./asset/lami/lami_%d.png", i));
 		if (i < 16)
 		{
 			g()->tex.grass[i] = mlx_png_free(ft_stringf("./asset/grass/grass_%d.png",i));

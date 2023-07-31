@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/26 12:56:32 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:28:13 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <time.h>
+# include <unistd.h>
 
 // struct
 
@@ -54,7 +54,8 @@ enum				e_tile
 	WOOD_WALL,
 	STONE_FLOOR,
 	STONE_WALL,
-	TREE
+	TREE,
+	PORTAL
 };
 
 // storage of pos x and y
@@ -127,6 +128,8 @@ typedef struct s_texture
 	mlx_texture_t	*stone_wall[20];
 	mlx_texture_t	*crack[4];
 	mlx_texture_t	*tree[1];
+	mlx_texture_t	*portal[4];
+	mlx_texture_t	*lami[12];
 }					t_texture;
 
 // storage of all image (instance)
@@ -146,6 +149,8 @@ typedef struct s_img
 	mlx_image_t		*selector[1];
 	mlx_image_t		*crack[4];
 	mlx_image_t		*tree[1];
+	mlx_image_t		*portal[4];
+	mlx_image_t		*lami[12];
 }					t_img;
 
 typedef struct s_tile_under
@@ -199,6 +204,7 @@ typedef struct s_lami
 	t_vec2			grid;
 	double			time;
 	t_movement		move;
+	t_hitbox		hitbox;
 	t_animation		animation;
 }					t_lami;
 
@@ -213,8 +219,8 @@ typedef struct s_game
 	int32_t			p_direction;
 	int32_t			arm_range;
 	int32_t			state;
-	int32_t			feet_step;
-	int32_t			cut_tree;
+	size_t			feet_step;
+	size_t			cut_tree;
 	bool			dev_mod;
 	t_img			img;
 	t_img			old_img;
@@ -266,7 +272,7 @@ void				draw_menu(void);
 
 // map
 
-t_tile				***allocate_2d_map_array(int32_t rows, int32_t cols);
+t_tile				***allocate_2d_map(int32_t rows, int32_t cols);
 void				fill_2d_map_array(t_tile ***array, int32_t rows,
 						int32_t cols, int32_t c);
 void				print_2d_map_array(t_tile ***array, int32_t cols,
@@ -312,6 +318,7 @@ void				set_stone_floor(void);
 void				set_wood_wall(void);
 void				set_stone_wall(void);
 void				set_tree(void);
+void				set_portal(void);
 
 // string
 
