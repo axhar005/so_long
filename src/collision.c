@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:52:05 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/08 17:52:47 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:55:47 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	tile_collision(int x, int y, int w, int h, int32_t c)
 {
-	t_vec2 loop;
+	t_vec2	loop;
 
 	loop.x = 0;
 	while (loop.x < w)

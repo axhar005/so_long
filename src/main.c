@@ -111,7 +111,7 @@ void	step_portal(void)
 	origin.y = g()->player.y - SPRITE_SIZE / 2;
 	if (exit_pos.x == 0 && exit_pos.y == 0)
 		exit_pos = char_find_pos_2d(pars()->map, 'E');
-	if (g()->cut_tree == pars()->char_c)
+	if (g()->cut_tree >= pars()->char_c)
 	{
 		if (g()->current_time >= laste_time + 100)
 		{

@@ -12,7 +12,8 @@
 
 #include "../inc/so_long.h"
 
-static int32_t	calculate_auto_tiling(int32_t x, int32_t y, int32_t c)
+//calculate auto tiling
+static int32_t	ct(int32_t x, int32_t y, int32_t c)
 {
 	int32_t	val;
 
@@ -38,10 +39,11 @@ static int32_t	calculate_auto_tiling(int32_t x, int32_t y, int32_t c)
 	return (-1);
 }
 
-static int32_t	index_auto_tiling(int32_t val)
+//index auto tiling
+static int32_t	it(int32_t val)
 {
 	int32_t	i;
-	int		numMappings;
+	int		nummappings;
 
 	i = 0;
 	int32_t mapping[][2] = {
@@ -61,8 +63,8 @@ static int32_t	index_auto_tiling(int32_t val)
 		{10, 13},
 		{100, 14},
 		{1000, 15}};
-	numMappings = sizeof(mapping) / sizeof(mapping[0]);
-	while (i < numMappings)
+	nummappings = sizeof(mapping) / sizeof(mapping[0]);
+	while (i < nummappings)
 	{
 		if (val == mapping[i][0])
 			return (mapping[i][1]);
@@ -71,31 +73,37 @@ static int32_t	index_auto_tiling(int32_t val)
 	return (-1);
 }
 
+static void	norm1(t_pos2 c, t_tile ***m)
+{
+	if (is_tilable(g()->map[c.pos2.x][c.pos2.y]->id))
+		m[c.pos2.x][c.pos2.y]->tile_index = \
+			it(ct(c.pos2.x, c.pos2.y, m[c.pos2.x][c.pos2.y]->id));
+	else if (is_tilable(m[c.pos2.x][c.pos2.y]->under.id))
+		m[c.pos2.x][c.pos2.y]->under.tile_index = \
+			it(ct(c.pos2.x, c.pos2.y, m[c.pos2.x][c.pos2.y]->under.id));
+}
+
 void	auto_tiling(t_vec2 pos, int32_t width, int32_t height)
 {
-	int32_t i;
-	int32_t j;
-	int32_t xx;
-	int32_t yy;
+	t_pos2	c;
+	t_tile	***m;
 
-	i = 0;
-	while (i <= width)
+	c.pos1.x = 0;
+	m = g()->map;
+	while (c.pos1.x <= width)
 	{
-		j = 0;
-		while (j <= height)
+		c.pos1.y = 0;
+		while (c.pos1.y <= height)
 		{
-			xx = pos.x + i;
-			yy = pos.y + j;
-			if ((xx >= 0 && xx < g()->window.r_width) && (yy >= 0
-					&& yy < g()->window.r_height))
+			c.pos2.x = pos.x + c.pos1.x;
+			c.pos2.y = pos.y + c.pos1.y;
+			if ((c.pos2.x >= 0 && c.pos2.x < g()->window.r_width)
+				&& (c.pos2.y >= 0 && c.pos2.y < g()->window.r_height))
 			{
-				if (is_tilable(g()->map[xx][yy]->id))
-					g()->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx,yy,g()->map[xx][yy]->id));
-				else if (is_tilable(g()->map[xx][yy]->under.id))
-					g()->map[xx][yy]->under.tile_index = index_auto_tiling(calculate_auto_tiling(xx,yy,g()->map[xx][yy]->under.id));
+				norm1(c, m);
 			}
-			j++;
+			c.pos1.y++;
 		}
-		i++;
+		c.pos1.x++;
 	}
 }
