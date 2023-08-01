@@ -90,13 +90,9 @@ void	auto_tiling(t_vec2 pos, int32_t width, int32_t height)
 					&& yy < g()->window.r_height))
 			{
 				if (is_tilable(g()->map[xx][yy]->id))
-					g()->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx,
-																							yy,
-																							g()->map[xx][yy]->id));
+					g()->map[xx][yy]->tile_index = index_auto_tiling(calculate_auto_tiling(xx,yy,g()->map[xx][yy]->id));
 				else if (is_tilable(g()->map[xx][yy]->under.id))
-					g()->map[xx][yy]->under.tile_index = index_auto_tiling(calculate_auto_tiling(xx,
-																									yy,
-																									g()->map[xx][yy]->under.id));
+					g()->map[xx][yy]->under.tile_index = index_auto_tiling(calculate_auto_tiling(xx,yy,g()->map[xx][yy]->under.id));
 			}
 			j++;
 		}
