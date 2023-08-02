@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:28:41 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 14:33:10 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 15:09:09 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	step_portal(void)
 					+ g()->p_hitbox.top)}, SPRITE_SIZE - (g()->p_hitbox.right
 				+ g()->p_hitbox.left), SPRITE_SIZE - (g()->p_hitbox.bot
 				+ g()->p_hitbox.top), PORTAL))
-			ft_exit("Good Job");
+			ft_exit("Good job mate !");
 	}
 }
 

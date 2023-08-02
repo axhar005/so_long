@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:29:51 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/08/02 14:31:16 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 15:11:57 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int32_t	main(int ac, char **av)
 	else
 		ft_exit("Error> one argument needed (map.ber)");
 	init_all();
-	ga->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", true);
+	ga->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", false);
 	init_all_texture();
 	init_menu();
 	mlx_loop_hook(g()->mlx, step, NULL);
