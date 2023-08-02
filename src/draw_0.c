@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   draw_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:14:35 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/01 13:12:49 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 11:37:09 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
+
 void	map_image_to_window(mlx_image_t **img, t_pos2 co, bool under)
 {
 	int32_t	p1x;
@@ -20,24 +21,22 @@ void	map_image_to_window(mlx_image_t **img, t_pos2 co, bool under)
 	p1y = co.pos1.y;
 	if (under)
 	{
-		mlx_image_to_window(g()->mlx,
-							img[g()->map[p1x][p1y]->under.tile_index],
-							(co.pos2.x * SPRITE_SIZE) - g()->offSet.x,
-							(co.pos2.y * SPRITE_SIZE) - g()->offSet.y);
+		mlx_image_to_window(g()->mlx, img[g()->map[p1x][p1y]->under.tile_index],
+			(co.pos2.x * SPRITE_SIZE) - g()->offSet.x, (co.pos2.y * SPRITE_SIZE)
+			- g()->offSet.y);
 	}
 	else
 	{
-		mlx_image_to_window(g()->mlx,
-							img[g()->map[p1x][p1y]->tile_index],
-							(co.pos2.x * SPRITE_SIZE) - g()->offSet.x,
-							(co.pos2.y * SPRITE_SIZE) - g()->offSet.y);
+		mlx_image_to_window(g()->mlx, img[g()->map[p1x][p1y]->tile_index],
+			(co.pos2.x * SPRITE_SIZE) - g()->offSet.x, (co.pos2.y * SPRITE_SIZE)
+			- g()->offSet.y);
 	}
 }
 
 void	map_image_index_to_window(mlx_image_t *img, t_pos2 co)
 {
 	mlx_image_to_window(g()->mlx, img, (co.pos2.x * SPRITE_SIZE)
-			- g()->offSet.x, (co.pos2.y * SPRITE_SIZE) - g()->offSet.y);
+		- g()->offSet.x, (co.pos2.y * SPRITE_SIZE) - g()->offSet.y);
 }
 
 void	draw_crack(t_pos2 co)
@@ -72,7 +71,7 @@ static void	norm1(t_tile ***map, t_pos2 co)
 
 void	draw_grid(int32_t posX, int32_t posY, t_tile ***map)
 {
-	t_pos2 co;
+	t_pos2	co;
 
 	del_img(&g()->old_img);
 	g()->old_img = g()->img;

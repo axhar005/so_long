@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   step_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:27:06 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 16:40:58 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:43:33 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	step_game(void)
 	feet_step_count();
 	player_animation_dir();
 	norm1();
-	if (is_key_pressed(MLX_KEY_PAGE_UP))
-		g()->dev_mod = !g()->dev_mod;		
+	if (is_key_pressed(MLX_KEY_X))
+		g()->dev_mod = !g()->dev_mod;
 	if (is_key_pressed(MLX_KEY_M))
 		print_2d_map_array(g()->map, g()->window.r_width, g()->window.r_height);
 	if (is_key_pressed(MLX_KEY_ESCAPE))

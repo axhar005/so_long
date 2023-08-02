@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   static_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:56:13 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/26 09:54:20 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:42:09 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ t_game	*g(void)
 
 t_parsing	*pars(void)
 {
-	static t_parsing pars;
+	static t_parsing	pars;
 
 	return (&pars);
 }
 
 t_menu	*menu(void)
 {
-	static t_menu menu;
+	static t_menu	menu;
 
 	return (&menu);
 }
 
 t_lami	*lami(void)
 {
-	static t_lami lami;
+	static t_lami	lami;
 
 	return (&lami);
 }

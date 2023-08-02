@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:46:45 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/31 12:55:06 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:06:19 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	clean_all(void)
 {
 	del_img(&g()->old_img);
 	del_img(&g()->img);
-	del_texture();
 	free_map(g()->map);
 	ft_sfree_2d((void **)pars()->map);
 	ft_sfree_2d((void **)pars()->mapf);
@@ -61,4 +60,6 @@ void	clean_all(void)
 	ft_sfree_2d((void **)lami()->animation.down);
 	ft_sfree_2d((void **)lami()->animation.left);
 	ft_sfree_2d((void **)lami()->animation.right);
+	mlx_close_window(g()->mlx);
+	mlx_terminate(g()->mlx);
 }

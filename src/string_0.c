@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:46 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:56 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:45:38 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ size_t	total_count(char **str)
 
 char	*ft_del_char(char *str, char c)
 {
-	char *new;
-	size_t charnum;
-	size_t i;
-	size_t j;
+	char	*new;
+	size_t	charnum;
+	size_t	i;
+	size_t	j;
 
 	charnum = char_count(str, c);
 	i = 0;

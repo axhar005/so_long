@@ -39,35 +39,40 @@ static int32_t	ct(int32_t x, int32_t y, int32_t c)
 	return (-1);
 }
 
+static void	array_set(int32_t *mapping)
+{
+	mapping[0] = 110;
+	mapping[1] = 1110;
+	mapping[2] = 1100;
+	mapping[3] = 111;
+	mapping[4] = 1111;
+	mapping[5] = 1101;
+	mapping[6] = 11;
+	mapping[7] = 1011;
+	mapping[8] = 1001;
+	mapping[9] = 101;
+	mapping[10] = 1010;
+	mapping[11] = 0;
+	mapping[12] = 1;
+	mapping[13] = 10;
+	mapping[14] = 100;
+	mapping[15] = 1000;
+}
+
 //index auto tiling
 static int32_t	it(int32_t val)
 {
 	int32_t	i;
+	int32_t	mapping[16];
 	int		nummappings;
 
 	i = 0;
-	int32_t mapping[][2] = {
-		{110, 0},
-		{1110, 1},
-		{1100, 2},
-		{111, 3},
-		{1111, 4},
-		{1101, 5},
-		{11, 6},
-		{1011, 7},
-		{1001, 8},
-		{101, 9},
-		{1010, 10},
-		{0, 11},
-		{1, 12},
-		{10, 13},
-		{100, 14},
-		{1000, 15}};
+	array_set(mapping);
 	nummappings = sizeof(mapping) / sizeof(mapping[0]);
 	while (i < nummappings)
 	{
-		if (val == mapping[i][0])
-			return (mapping[i][1]);
+		if (val == mapping[i])
+			return (i);
 		i++;
 	}
 	return (-1);

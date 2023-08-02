@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tiles_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 09:34:56 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:17 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:16:35 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	replace_tile(t_vec2 pos, int32_t id)
 		if (g()->tile_type[id].name)
 		{
 			tile_to_under(g()->map[pos.x][pos.y],
-					&g()->map[pos.x][pos.y]->under);
+				&g()->map[pos.x][pos.y]->under);
 			*g()->map[pos.x][pos.y] = g()->tile_type[id];
 		}
 		return (true);
@@ -42,9 +42,9 @@ bool	place_tile(t_vec2 pos, int32_t id)
 
 void	set_map(int32_t x, int32_t y, int32_t width, int32_t height)
 {
-	int32_t i;
-	int32_t j;
-	t_vec2 map;
+	int32_t	i;
+	int32_t	j;
+	t_vec2	map;
 
 	i = 0;
 	while (i < width)

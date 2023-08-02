@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:55 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:05 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:29:29 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ bool	is_tilable(int32_t id)
 
 int32_t	point_distance(t_vec2 bow, t_vec2 target)
 {
-	int32_t cal1;
-	int32_t cal2;
-	int32_t res;
+	int32_t	cal1;
+	int32_t	cal2;
+	int32_t	res;
 
 	cal1 = (bow.x - target.x);
 	cal2 = (bow.y - target.y);
@@ -48,4 +48,21 @@ int32_t	point_distance(t_vec2 bow, t_vec2 target)
 	if (res < 0)
 		res *= -1;
 	return (res);
+}
+
+int	rand_range(int min, int max)
+{
+	int	temp;
+	int	r_size;
+	int	r_number;
+
+	if (min > max)
+	{
+		temp = min;
+		min = max;
+		max = temp;
+	}
+	r_size = max - min + 1;
+	r_number = (rand() % r_size) + min;
+	return (r_number);
 }

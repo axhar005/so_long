@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:21:46 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 20:07:10 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 13:35:00 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	map_is_closed(void)
 	x = 1;
 	while (x < pars()->height - 1)
 	{
-		if (pars()->map[x][0] != '1' 
-			|| pars()->map[x][ft_strlen(pars()->map[x])- 1] != '1')
+		if (pars()->map[x][0] != '1' || pars()->map[x][ft_strlen(pars()->map[x])
+			- 1] != '1')
 			ft_exit("Error\n> closed by walls needed");
 		x++;
 	}
@@ -70,13 +70,16 @@ void	map_parsing_element(void)
 
 void	init_parsing(void)
 {
-	pars()->height = line_count(pars()->map);
-	pars()->width = ft_strlen(pars()->map[0]);
-	pars()->char_0 = char_count_2d(pars()->map, '0')
+	t_parsing	*par;
+
+	par = pars();
+	par->height = line_count(pars()->map);
+	par->width = ft_strlen(pars()->map[0]);
+	par->char_0 = char_count_2d(pars()->map, '0')
 		+ char_count_2d(pars()->map, '2') + char_count_2d(pars()->map, 'L');
-	pars()->char_1 = char_count_2d(pars()->map, '1')
+	par->char_1 = char_count_2d(pars()->map, '1')
 		+ char_count_2d(pars()->map, '3');
-	pars()->char_e = char_count_2d(pars()->map, 'E');
-	pars()->char_p = char_count_2d(pars()->map, 'P');
-	pars()->char_c = char_count_2d(pars()->map, 'C');
+	par->char_e = char_count_2d(pars()->map, 'E');
+	par->char_p = char_count_2d(pars()->map, 'P');
+	par->char_c = char_count_2d(pars()->map, 'C');
 }

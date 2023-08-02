@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:52:05 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/01 12:55:47 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 11:26:58 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-bool	tile_collision(int x, int y, int w, int h, int32_t c)
+bool	tile_collision(t_vec2 pos, int w, int h, int32_t c)
 {
 	t_vec2	loop;
 
@@ -24,13 +24,13 @@ bool	tile_collision(int x, int y, int w, int h, int32_t c)
 		{
 			if (c == 's')
 			{
-				if (g()->map[(x + loop.x) / SPRITE_SIZE][(y + loop.y)
+				if (g()->map[(pos.x + loop.x) / SPRITE_SIZE][(pos.y + loop.y)
 					/ SPRITE_SIZE]->solid == true)
 					return (true);
 			}
 			else
 			{
-				if (g()->map[(x + loop.x) / SPRITE_SIZE][(y + loop.y)
+				if (g()->map[(pos.x + loop.x) / SPRITE_SIZE][(pos.y + loop.y)
 					/ SPRITE_SIZE]->id == c)
 					return (true);
 			}

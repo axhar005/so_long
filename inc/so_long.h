@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/31 17:28:13 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:28:33 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,12 +254,14 @@ bool				is_key_pressed(keys_t key);
 bool				mouse_button(int32_t x, int32_t y, int32_t width,
 						int32_t height);
 
-//step
+// step
 
 void				selector(void);
 void				step_menu(void);
 void				step_game(void);
 void				step_update(void);
+void				step_portal(void);
+void				step_lami(void);
 
 // draw
 
@@ -269,6 +271,8 @@ void				map_image_index_to_window(mlx_image_t *img, t_pos2 co);
 void				draw_crack(t_pos2 co);
 void				draw_grid(int32_t posX, int32_t posY, t_tile ***map);
 void				draw_menu(void);
+void				draw_lami(void);
+void				draw_feet_count(void);
 
 // map
 
@@ -333,7 +337,7 @@ t_vec2				char_find_pos_2d(char **str, char c);
 
 // collision
 
-bool				tile_collision(int x, int y, int w, int h, int32_t c);
+bool				tile_collision(t_vec2 pos, int w, int h, int32_t c);
 
 // animation
 
@@ -348,10 +352,11 @@ void				movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox,
 void				player_animation_dir(void);
 void				move(void);
 
-// math
+// utiles
 
 int					sign(int nb);
 bool				is_even(int nb);
+int					rand_range(int min, int max);
 
 // free
 
@@ -376,7 +381,7 @@ void				flood_fill(char **map, int x, int y);
 void				after_flood(void);
 void				map_parsing(void);
 
-//init
+// init
 
 void				init_window(void);
 void				init_menu(void);

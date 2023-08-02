@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_0.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:54:37 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/31 17:28:02 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:17:48 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	fill_2d_map_array(t_tile ***array, int32_t cols, int32_t rows,
 /// @param array the array
 void	print_2d_map_array(t_tile ***array, int32_t cols, int32_t rows)
 {
-	int32_t x;
-	int32_t y;
+	int32_t	x;
+	int32_t	y;
 
 	y = 0;
 	while (y < rows)

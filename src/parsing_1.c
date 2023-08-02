@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:23:06 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/25 20:09:54 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 13:36:40 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	copy_2d_char(void)
 {
-	int	x;
+	int			x;
+	t_parsing	*par;
 
+	par = pars();
 	x = 0;
-	pars()->mapf = ft_gnl_calloc(pars()->height + 1, sizeof(char *));
+	par->mapf = ft_gnl_calloc(pars()->height + 1, sizeof(char *));
 	while (pars()->map[x])
 	{
 		pars()->mapf[x] = ft_strdup(pars()->map[x]);

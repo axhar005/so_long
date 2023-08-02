@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_tile_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 11:21:54 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/31 11:35:57 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:38:48 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

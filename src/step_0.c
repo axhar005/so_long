@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   step_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:24:24 by oboucher          #+#    #+#             */
-/*   Updated: 2023/07/25 15:44:27 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:06:36 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ static void	norm1(void)
 		if (menu()->button_slected < 0)
 			menu()->button_slected = 1;
 	}
-	if ((menu()->button_slected == 1 && (is_key_pressed(MLX_KEY_ENTER)
-				|| is_key_pressed(MLX_KEY_SPACE)))
-		|| is_key_pressed(MLX_KEY_ESCAPE))
+	if ((menu()->button_slected == 1 && (is_key_pressed(MLX_KEY_ENTER) || \
+		is_key_pressed(MLX_KEY_SPACE))) || is_key_pressed(MLX_KEY_ESCAPE))
 	{
 		clean_all();
-		mlx_close_window(g()->mlx);
+		ft_exit(NULL);
 	}
 	if (menu()->button_slected == 0 && (is_key_pressed(MLX_KEY_ENTER)
 			|| is_key_pressed(MLX_KEY_SPACE)))
@@ -59,7 +58,7 @@ void	step_menu(void)
 		if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT))
 		{
 			clean_all();
-			mlx_close_window(g()->mlx);
+			ft_exit(NULL);
 		}
 	}
 }

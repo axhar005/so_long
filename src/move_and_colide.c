@@ -6,7 +6,7 @@
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:28:11 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/07 20:23:38 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 13:24:05 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static void	move_colide_vertical(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
 {
-	if (tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top) + *dir,
-			SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE
-			- (hitbox.bot + hitbox.top), 's'))
+	if (tile_collision((t_vec2){pos->x + hitbox.left, (pos->y + hitbox.top) \
+		+ *dir}, SPRITE_SIZE - (hitbox.right + hitbox.left), \
+		SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
 	{
-		while (!tile_collision(pos->x + hitbox.left, (pos->y + hitbox.top)
-				+ sign(*dir), SPRITE_SIZE - (hitbox.right + hitbox.left),
-				SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
+		while (!tile_collision((t_vec2){pos->x + hitbox.left, \
+			(pos->y + hitbox.top) + sign(*dir)}, \
+			SPRITE_SIZE - (hitbox.right + hitbox.left), \
+			SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
 			pos->y += sign(*dir);
 		*dir = 0;
 	}
@@ -28,13 +29,13 @@ static void	move_colide_vertical(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
 
 static void	move_colide_horizontal(t_vec2 *pos, int32_t *dir, t_hitbox hitbox)
 {
-	if (tile_collision(pos->x + hitbox.left + *dir, (pos->y + hitbox.top),
-			SPRITE_SIZE - (hitbox.right + hitbox.left), SPRITE_SIZE
-			- (hitbox.bot + hitbox.top), 's'))
+	if (tile_collision((t_vec2){pos->x + hitbox.left + *dir, \
+		(pos->y + hitbox.top)}, SPRITE_SIZE - (hitbox.right + hitbox.left), \
+		SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
 	{
-		while (!tile_collision(pos->x + hitbox.left + sign(*dir), (pos->y
-					+ hitbox.top), SPRITE_SIZE - (hitbox.right + hitbox.left),
-				SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
+		while (!tile_collision((t_vec2){pos->x + hitbox.left + sign(*dir),
+				(pos->y + hitbox.top)}, SPRITE_SIZE - (hitbox.right
+				+ hitbox.left), SPRITE_SIZE - (hitbox.bot + hitbox.top), 's'))
 			pos->x += sign(*dir);
 		*dir = 0;
 	}
@@ -57,8 +58,8 @@ static void	norm2(int32_t *dir, int32_t *md, int32_t size)
 
 void	movement(t_vec2 *pos, int32_t *dir, t_hitbox hitbox, bool is_vertical)
 {
-	int32_t *md;
-	int32_t size;
+	int32_t	*md;
+	int32_t	size;
 
 	if (is_vertical == true)
 	{

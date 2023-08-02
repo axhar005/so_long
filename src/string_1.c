@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:07:25 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:52 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:47:15 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ size_t	char_count(char *str, char c)
 
 t_vec2	char_find_pos_2d(char **str, char c)
 {
-	size_t x;
-	size_t y;
-	t_vec2 pos;
+	size_t	x;
+	size_t	y;
+	t_vec2	pos;
 
 	x = 0;
 	pos.x = 0;

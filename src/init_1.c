@@ -1,35 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   init_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/17 15:17:30 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/08/02 13:37:52 by olivierbouc      ###   ########.fr       */
+/*   Created: 2023/08/02 13:17:26 by olivierbouc       #+#    #+#             */
+/*   Updated: 2023/08/02 13:17:58 by olivierbouc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-size_t	count_next_line(int fd)
+void	init_menu(void)
 {
-	char	*buffer;
-	size_t	count;
-
-	count = 0;
-	if (BUFFER_SIZE <= 0 || fd > OPEN_MAX)
-		return (-1);
-	buffer = ft_gnl_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buffer)
-		return (-1);
-	while (read(fd, buffer, BUFFER_SIZE) > 0)
-	{
-		count += char_count(buffer, '\n');
-		ft_gnl_bzero(buffer, BUFFER_SIZE);
-	}
-	if (buffer)
-		count++;
-	buffer = ft_sfree(buffer);
-	return (count);
+	menu()->button_slected = 0;
+	init_menu_img(menu());
 }
