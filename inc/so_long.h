@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 14:28:33 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 16:59:37 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

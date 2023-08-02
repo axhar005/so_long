@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:23:06 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/08/02 13:36:40 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 17:01:44 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ void	copy_2d_char(void)
 		pars()->mapf[x] = ft_strdup(pars()->map[x]);
 		x++;
 	}
+}
+
+static void	limit_lengh(void)
+{
+	if (ft_strlen(pars()->map[0]) >= 10000)
+		ft_exit("Error\n> map x to long");
+	if (pars()->height >= 10000)
+		ft_exit("Error\n> map y to long");
 }
 
 void	flood_fill(char **map, int x, int y)
@@ -53,8 +61,6 @@ void	flood_fill(char **map, int x, int y)
 
 void	after_flood(void)
 {
-	if (char_count_2d(pars()->mapf, 'e') != pars()->char_e)
-		ft_exit("Error\n> exit obstructed");
 	if (char_count_2d(pars()->mapf, 'c') != pars()->char_c)
 		ft_exit("Error\n> on or more collectible obstructed");
 	if (char_count_2d(pars()->mapf, 'p') != 1)
@@ -65,11 +71,17 @@ void	after_flood(void)
 
 void	map_parsing(void)
 {
+	int	x;
+	int	y;
+
+	x = char_find_pos_2d(pars()->map, 'P').x;
+	y = char_find_pos_2d(pars()->map, 'P').y;
 	init_parsing();
 	map_is_rectangle(pars()->map);
 	map_is_closed();
+	limit_lengh();
 	map_parsing_element();
 	copy_2d_char();
-	flood_fill(pars()->mapf, 1, 1);
+	flood_fill(pars()->mapf, y, x);
 	after_flood();
 }

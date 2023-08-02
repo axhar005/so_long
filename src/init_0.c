@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:23:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 13:19:06 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/02 17:53:57 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_val(void)
 	ga->p_hitbox.left = 12;
 	ga->p_hitbox.right = 12;
 	ga->p_move.spd = 10;
-	ga->arm_range = 10;
+	ga->arm_range = 1;
 	ga->state = START;
 	ga->mouse_id = 1;
 	ga->map = allocate_2d_map(g()->window.r_width, g()->window.r_height);
