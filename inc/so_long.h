@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:06:31 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 16:59:37 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:17:33 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 // struct
 
 # define SPRITE_SIZE 64
+# define SPEED	5
+# define NAME "SO_LONG BY OLIVIER"
 
 enum				e_depth
 {
@@ -226,13 +228,13 @@ typedef struct s_game
 	t_img			old_img;
 	t_tile			***map;
 	t_tile			tile_type[20];
-	t_vec2			playerGrid;
-	t_vec2			old_PlayerGrid;
+	t_vec2			playergrid;
+	t_vec2			old_playergrid;
 	t_vec2			player;
-	t_vec2			cameraGrid;
-	t_vec2			offSet;
+	t_vec2			cameragrid;
+	t_vec2			offset;
 	t_vec2			mouse;
-	t_vec2			mouseGrid;
+	t_vec2			mousegrid;
 	t_movement		p_move;
 	t_hitbox		p_hitbox;
 	t_animation		p_animation;

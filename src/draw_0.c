@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:14:35 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 11:37:09 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/03 11:18:26 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ void	map_image_to_window(mlx_image_t **img, t_pos2 co, bool under)
 	if (under)
 	{
 		mlx_image_to_window(g()->mlx, img[g()->map[p1x][p1y]->under.tile_index],
-			(co.pos2.x * SPRITE_SIZE) - g()->offSet.x, (co.pos2.y * SPRITE_SIZE)
-			- g()->offSet.y);
+			(co.pos2.x * SPRITE_SIZE) - g()->offset.x, (co.pos2.y * SPRITE_SIZE)
+			- g()->offset.y);
 	}
 	else
 	{
 		mlx_image_to_window(g()->mlx, img[g()->map[p1x][p1y]->tile_index],
-			(co.pos2.x * SPRITE_SIZE) - g()->offSet.x, (co.pos2.y * SPRITE_SIZE)
-			- g()->offSet.y);
+			(co.pos2.x * SPRITE_SIZE) - g()->offset.x, (co.pos2.y * SPRITE_SIZE)
+			- g()->offset.y);
 	}
 }
 
 void	map_image_index_to_window(mlx_image_t *img, t_pos2 co)
 {
 	mlx_image_to_window(g()->mlx, img, (co.pos2.x * SPRITE_SIZE)
-		- g()->offSet.x, (co.pos2.y * SPRITE_SIZE) - g()->offSet.y);
+		- g()->offset.x, (co.pos2.y * SPRITE_SIZE) - g()->offset.y);
 }
 
 void	draw_crack(t_pos2 co)

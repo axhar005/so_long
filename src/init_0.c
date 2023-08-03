@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:23:26 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 17:53:57 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:15:38 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	init_val(void)
 	t_game	*ga;
 
 	ga = g();
-	ga->playerGrid = char_find_pos_2d(pars()->map, 'P');
-	ga->player.x = g()->playerGrid.x * SPRITE_SIZE + 32;
-	ga->player.y = g()->playerGrid.y * SPRITE_SIZE + 32;
-	ga->old_PlayerGrid.x = g()->playerGrid.x;
-	ga->old_PlayerGrid.y = g()->playerGrid.y;
+	ga->playergrid = char_find_pos_2d(pars()->map, 'P');
+	ga->player.x = g()->playergrid.x * SPRITE_SIZE + 32;
+	ga->player.y = g()->playergrid.y * SPRITE_SIZE + 32;
+	ga->old_playergrid.x = g()->playergrid.x;
+	ga->old_playergrid.y = g()->playergrid.y;
 	ga->p_hitbox.top = 16;
 	ga->p_hitbox.left = 12;
 	ga->p_hitbox.right = 12;

@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:41:38 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 17:52:06 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:17:33 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 static void	norm1(void)
 {
-	mlx_image_to_window(g()->mlx, g()->img.selector[0], (g()->mouseGrid.x
-			- g()->cameraGrid.x) * 64 - g()->offSet.x, (g()->mouseGrid.y
-			- g()->cameraGrid.y) * 64 - g()->offSet.y);
+	mlx_image_to_window(g()->mlx, g()->img.selector[0], (g()->mousegrid.x
+			- g()->cameragrid.x) * 64 - g()->offset.x, (g()->mousegrid.y
+			- g()->cameragrid.y) * 64 - g()->offset.y);
 }
 
 void	selector(void)
 {
-	if (point_distance(g()->playerGrid, g()->mouseGrid) <= g()->arm_range)
+	if (point_distance(g()->playergrid, g()->mousegrid) <= g()->arm_range)
 	{
-		if (g()->mouseGrid.x >= 0 
-			&& g()->mouse.x < g()->window.r_width * SPRITE_SIZE)
+		if ((g()->mousegrid.x >= 0 \
+			&& g()->mousegrid.x <= g()->window.r_width * SPRITE_SIZE))
 		{
 			if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_RIGHT)
 				&& g()->dev_mod == true)
-				if (replace_tile(g()->mouseGrid, g()->mouse_id))
-					auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y
+				if (replace_tile(g()->mousegrid, g()->mouse_id))
+					auto_tiling((t_vec2){g()->mousegrid.x - 1, g()->mousegrid.y
 						- 1}, 3, 3);
 			if (mlx_is_mouse_down(g()->mlx, MLX_MOUSE_BUTTON_LEFT)
-				&& g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->id == TREE)
+				&& g()->map[g()->mousegrid.x][g()->mousegrid.y]->id == TREE)
 			{
-				g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life -= 5;
-				if (g()->map[g()->mouseGrid.x][g()->mouseGrid.y]->life <= 0)
+				g()->map[g()->mousegrid.x][g()->mousegrid.y]->life -= SPEED;
+				if (g()->map[g()->mousegrid.x][g()->mousegrid.y]->life <= 0)
 				{
 					g()->cut_tree++;
-					place_tile(g()->mouseGrid, DIRT);
-					auto_tiling((t_vec2){g()->mouseGrid.x - 1, g()->mouseGrid.y
+					place_tile(g()->mousegrid, DIRT);
+					auto_tiling((t_vec2){g()->mousegrid.x - 1, g()->mousegrid.y
 						- 1}, 3, 3);
 				}
 			}

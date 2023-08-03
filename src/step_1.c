@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:27:06 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 17:56:07 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:15:38 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static void	norm1(void)
 
 static void	feet_step_count(void)
 {
-	if (g()->old_PlayerGrid.x != g()->playerGrid.x
-		|| g()->old_PlayerGrid.y != g()->playerGrid.y)
+	if (g()->old_playergrid.x != g()->playergrid.x
+		|| g()->old_playergrid.y != g()->playergrid.y)
 	{
 		g()->feet_step += 1;
-		g()->old_PlayerGrid.x = g()->playerGrid.x;
-		g()->old_PlayerGrid.y = g()->playerGrid.y;
+		g()->old_playergrid.x = g()->playergrid.x;
+		g()->old_playergrid.y = g()->playergrid.y;
 		ft_printf("feet : %d\n", g()->feet_step);
 	}
 }

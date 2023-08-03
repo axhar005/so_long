@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   step_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:28:41 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 15:09:09 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/03 11:17:33 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	step_update(void)
 {
 	g()->current_time += mlx_get_time();
-	g()->playerGrid.x = g()->player.x / SPRITE_SIZE;
-	g()->playerGrid.y = g()->player.y / SPRITE_SIZE;
+	g()->playergrid.x = g()->player.x / SPRITE_SIZE;
+	g()->playergrid.y = g()->player.y / SPRITE_SIZE;
 	lami()->grid.x = lami()->pos.x / SPRITE_SIZE;
 	lami()->grid.y = lami()->pos.y / SPRITE_SIZE;
-	g()->offSet.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE / 2;
-	g()->offSet.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE / 2;
-	g()->cameraGrid.x = g()->playerGrid.x - g()->window.c_width / 2;
-	g()->cameraGrid.y = g()->playerGrid.y - g()->window.c_height / 2;
-	g()->mouseGrid.x = g()->cameraGrid.x + ((g()->mouse.x + g()->offSet.x)
+	g()->offset.x = (g()->player.x % SPRITE_SIZE) - SPRITE_SIZE / 2;
+	g()->offset.y = (g()->player.y % SPRITE_SIZE) - SPRITE_SIZE / 2;
+	g()->cameragrid.x = g()->playergrid.x - g()->window.c_width / 2;
+	g()->cameragrid.y = g()->playergrid.y - g()->window.c_height / 2;
+	g()->mousegrid.x = g()->cameragrid.x + ((g()->mouse.x + g()->offset.x)
 		/ SPRITE_SIZE);
-	g()->mouseGrid.y = g()->cameraGrid.y + ((g()->mouse.y + g()->offSet.y)
+	g()->mousegrid.y = g()->cameragrid.y + ((g()->mouse.y + g()->offset.y)
 		/ SPRITE_SIZE);
 }
 

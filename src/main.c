@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:29:51 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/08/02 15:11:57 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/03 11:15:17 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	draw(void)
 	}
 	else if (g()->state == GAME)
 	{
-		draw_grid(g()->cameraGrid.x, g()->cameraGrid.y, g()->map);
+		draw_grid(g()->cameragrid.x, g()->cameragrid.y, g()->map);
 		selector();
 		draw_lami();
 		mlx_image_to_window(g()->mlx, g()->img.player[g()->p_animation.index],
@@ -87,7 +87,7 @@ int32_t	main(int ac, char **av)
 	else
 		ft_exit("Error> one argument needed (map.ber)");
 	init_all();
-	ga->mlx = mlx_init(g()->window.width, g()->window.height, "MLX42", false);
+	ga->mlx = mlx_init(g()->window.width, g()->window.height, NAME, false);
 	init_all_texture();
 	init_menu();
 	mlx_loop_hook(g()->mlx, step, NULL);

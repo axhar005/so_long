@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olivierboucher <olivierboucher@student.    +#+  +:+       +#+        */
+/*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:22:40 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/02 14:29:14 by olivierbouc      ###   ########.fr       */
+/*   Updated: 2023/08/03 11:18:27 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	draw_lami(void)
 {
 	t_vec2	pos;
 
-	pos.x = lami()->pos.x - g()->cameraGrid.x * 64;
-	pos.y = lami()->pos.y - g()->cameraGrid.y * 64;
+	pos.x = lami()->pos.x - g()->cameragrid.x * 64;
+	pos.y = lami()->pos.y - g()->cameragrid.y * 64;
 	mlx_image_to_window(g()->mlx, g()->img.lami[lami()->animation.index], pos.x
-		- g()->offSet.x, pos.y - g()->offSet.y);
+		- g()->offset.x, pos.y - g()->offset.y);
 }
 
 void	draw_feet_count(void)
