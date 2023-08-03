@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:28:41 by oboucher          #+#    #+#             */
-/*   Updated: 2023/08/03 11:17:33 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:44:00 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	step_portal(void)
 	origin.y = g()->player.y - SPRITE_SIZE / 2;
 	if (exit_pos.x == 0 && exit_pos.y == 0)
 		exit_pos = char_find_pos_2d(pars()->map, 'E');
-	if (g()->cut_tree >= pars()->char_c)
+	if (g()->cut_tree >= pars()->char_c 
+		&& g()->map[exit_pos.x][exit_pos.y]->id == PORTAL)
 	{
 		if (g()->current_time >= laste_time + 100)
 		{
