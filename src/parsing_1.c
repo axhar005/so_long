@@ -6,7 +6,7 @@
 /*   By: oboucher <oboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:23:06 by olivierbouc       #+#    #+#             */
-/*   Updated: 2023/08/04 12:02:39 by oboucher         ###   ########.fr       */
+/*   Updated: 2023/08/04 12:28:29 by oboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	copy_2d_char(void)
 
 static void	limit_lengh(void)
 {
-	if (ft_strlen(pars()->map[0]) * pars()->height > 515)
+	if (ft_strlen(pars()->map[0]) * pars()->height > 265225)
 		ft_exit("Error\n> map to big mate !");
 }
 
