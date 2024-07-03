@@ -3,6 +3,8 @@
 Welcome to the GitHub repository for my 2D game project using the `mlx42` library! My name is Olivier Boucher, and I am a student passionate about game development. This repository contains all the files and resources needed to understand and contribute to my game.
 
 <img src="https://imgur.com/PhHo9TH.png" alt="Main Game Image" width="400">
+<img src="https://imgur.com/fPcvOrA.gif" alt="Camera System GIF" width="400">
+
 
 ## Game Description
 
